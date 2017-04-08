@@ -1,0 +1,76 @@
+<LinearLayout xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/menuIcon"
+    android:layout_width="match_parent"
+    android:layout_height="180dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+
+    android:background="@drawable/samosa">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:layout_marginTop="70dp"
+
+        android:background="@drawable/back">
+
+        <TextView
+             android:id="@+id/orderName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:text="Pizza"
+            android:textColor="#ffffff"
+            android:textSize="40sp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/cost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/orderName"
+            android:layout_alignBaseline="@+id/orderName"
+            android:layout_marginLeft="15dp"
+            android:layout_centerVertical="true"
+
+            android:text="Rs 50 + Sc 3"
+            android:textColor="#ffffff"
+            android:textSize="15sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="3dp"
+            android:layout_centerVertical="true"
+            android:layout_below="@+id/orderName"
+            android:layout_marginTop="1dp"
+            android:layout_marginLeft="20dp"
+            android:text="Boys Hostel C-217"
+            android:textColor="#ffffff"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/viewDetails"
+            android:layout_width="wrap_content"
+            android:clickable="true"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="3dp"
+            android:layout_marginRight="1dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginLeft="20dp"
+            android:text="View Details >>"
+            android:textColor="#ffffff"
+            android:textSize="15sp"
+            android:layout_alignTop="@+id/address" />
+    </RelativeLayout>
+
+</LinearLayout>

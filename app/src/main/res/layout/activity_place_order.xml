@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#2A343C">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:text="1 Samosa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView2"
+            android:textColor="@android:color/background_light"
+            android:textStyle="normal|bold"
+            android:fontFamily="serif"
+            android:layout_marginTop="52dp"
+            android:layout_below="@+id/textView"
+            android:layout_centerHorizontal="true"
+            android:textSize="80px" />
+
+        <TextView
+            android:text="Placed By : Sarthak Madan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView3"
+            android:textColor="@android:color/background_light"
+            android:fontFamily="sans-serif-smallcaps"
+            android:textStyle="normal|bold"
+            android:textSize="40px"
+            android:layout_below="@+id/textView2"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp" />
+
+        <TextView
+            android:text="Address : C-217"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView7"
+            android:textSize="40px"
+            android:fontFamily="sans-serif-smallcaps"
+            android:textStyle="normal|bold"
+            android:textColor="@android:color/background_light"
+            android:layout_below="@+id/textView3"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:text="Contact : 9999029972"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView8"
+            android:textSize="40px"
+            android:fontFamily="sans-serif-smallcaps"
+            android:textColor="@android:color/background_light"
+            android:textStyle="normal|bold"
+            android:layout_below="@+id/textView7"
+            android:layout_alignEnd="@+id/textView4" />
+
+        <TextView
+            android:text="Rs. 50.0 | 5 SC"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView4"
+            android:textColor="@android:color/background_light"
+            android:fontFamily="sans-serif-condensed"
+            android:textStyle="normal|bold"
+            android:textSize="80px"
+            android:layout_marginTop="44dp"
+            android:layout_below="@+id/textView8"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:text="Order Details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView"
+            android:textColor="@android:color/background_light"
+            android:textStyle="normal|bold"
+
+            android:fontFamily="sans-serif-condensed"
+            android:lineSpacingExtra="10sp"
+            android:textAlignment="textStart"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault"
+            android:textSize="90px"
+            android:layout_marginTop="63dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignStart="@+id/textView4" />
+
+        <Button
+            android:text="Accept Order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView4"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="52dp"
+            android:id="@+id/button"
+            style="@android:style/Widget.Holo.Light.Button.Toggle"
+            android:elevation="22dp"
+            android:fontFamily="sans-serif-condensed"
+            android:textStyle="normal|bold"
+            android:textColor="@android:color/background_light"
+            android:background="@android:color/holo_blue_dark"
+            android:padding="10dp"
+            android:textSize="35px" />
+    </RelativeLayout>
+</LinearLayout>

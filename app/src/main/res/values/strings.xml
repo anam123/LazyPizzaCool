@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">StartupScreens</string>
+
+    <string name="title_activity_welcome">Home Screen</string>
+    <string name="next">NEXT</string>
+    <string name="skip">SKIP</string>
+    <string name="start">GOT IT</string>
+    <string name="slide_1_title">Lazy Pizza</string>
+    <string name="slide_1_desc">The easiest way to order food within IIIT Delhi!</string>
+
+    <string name="slide_2_title">Enter Location</string>
+    <string name="slide_2_desc">Enter your current location to get stuff delivered to you.</string>
+
+    <string name="slide_3_title">Select food</string>
+    <string name="slide_3_desc">Select from the day\'s canteen menu.</string>
+
+    <string name="slide_4_title">Put on MarketPlace</string>
+    <string name="slide_4_desc">People who are near the canteen/Cdx will pick up the order for you. Exchange our virtual currency Super
+    Coins as delivery charge.</string>
+
+    <string name="slide_5_title">Viola, Get stuff delivered.</string>
+    <string name="slide_5_desc">In order to earn Super coins, you need to deliver the stuff for others.</string>
+
+    <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
+    <string name="play_again">Play Again</string>
+
+    <string name="enterPhone">Please enter your phone number below.</string>
+    <string name="title_activity_main2">Main2Activity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+</resources>
