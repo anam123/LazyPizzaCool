@@ -117,6 +117,29 @@ public class data {
     public static void addItem(String name, String price){  //Adds a new item to the list of items
         setValue("items/"+name+"/",price);
     }
+    public static ArrayList<HashMap<String,String>> getItems(){
+        final ArrayList<HashMap<String,String>> items = new ArrayList<HashMap<String, String>>();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("items/");
+        ValueEventListener mp = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                int i=0;
+                for (DataSnapshot counter: dataSnapshot.getChildren()) {
+                    HashMap<String,String> temp=new HashMap<String,String>();
+                    temp.put("name",counter.getValue().toString());
+                    temp.put("price",counter.child("price").getValue().toString());
+                    items.add(i,temp);
+                    i++;
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        };
+        myRef.addListenerForSingleValueEvent(mp);
+        return items;
+    }
 
     public static void addToMarket(String item, String SC, String price, String Remarks, String destination){
         String uid=String.valueOf(Math.round(Math.random()*10e10));
