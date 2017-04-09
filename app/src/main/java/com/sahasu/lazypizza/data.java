@@ -28,13 +28,39 @@ public class data {
     public static String SC;
     public static String phone;
     public static ArrayList<HashMap<String,String>> market; //count,data key, data value
+    public static ArrayList<HashMap<String,String>> items;
     public static Context loginContext;
     public static boolean isOld=false;
+    public static boolean marketLoaded=false,itemsLoaded=false;
 
     public static void initialize(){
         market=new ArrayList<HashMap<String, String>>();
+        items = new ArrayList<HashMap<String, String>>();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("marketplace/");
+        DatabaseReference myRef2 = database.getReference("items/");
+        ValueEventListener mp2 = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                int i=0;
+                for (DataSnapshot counter: dataSnapshot.getChildren()) {
+                    HashMap<String,String> temp=new HashMap<String,String>();
+                    temp.put("name",counter.getValue().toString());
+                    temp.put("price",counter.child("price").getValue().toString());
+                    items.add(i,temp);
+                    i++;
+                }
+                itemsLoaded=true;
+                if(isOld){
+                    if(marketLoaded&&itemsLoaded)
+                        GoogleLogin.gotoMain(loginContext);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        };
+        myRef2.addListenerForSingleValueEvent(mp2);
         ValueEventListener mp = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -56,9 +82,12 @@ public class data {
                     i++;
 
                 }
+                marketLoaded=true;
                 //Call method to reload the marketplace here
-                if(isOld)
-                    GoogleLogin.gotoMain(loginContext);
+                if(isOld){
+                    if(marketLoaded&&itemsLoaded)
+                        GoogleLogin.gotoMain(loginContext);
+                }
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -117,29 +146,9 @@ public class data {
     public static void addItem(String name, String price){  //Adds a new item to the list of items
         setValue("items/"+name+"/",price);
     }
-    public static ArrayList<HashMap<String,String>> getItems(){
-        final ArrayList<HashMap<String,String>> items = new ArrayList<HashMap<String, String>>();
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("items/");
-        ValueEventListener mp = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                int i=0;
-                for (DataSnapshot counter: dataSnapshot.getChildren()) {
-                    HashMap<String,String> temp=new HashMap<String,String>();
-                    temp.put("name",counter.getValue().toString());
-                    temp.put("price",counter.child("price").getValue().toString());
-                    items.add(i,temp);
-                    i++;
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        };
-        myRef.addListenerForSingleValueEvent(mp);
-        return items;
-    }
+//    public static ArrayList<HashMap<String,String>> getItems(){         //Deprecated. Just use data.items
+//        return items;
+//    }
 
     public static void addToMarket(String item, String SC, String price, String Remarks, String destination){
         String uid=String.valueOf(Math.round(Math.random()*10e10));
