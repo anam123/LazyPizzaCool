@@ -25,13 +25,9 @@ public class Menu_PlaceOrder extends AppCompatActivity {
         {
             Intent in = getIntent();
             final String orderName = in.getStringExtra("orderName");
-            String placeby = in.getStringExtra("placeBy"); // replace with Usr name from data and remove if condition
-            if(placeby.equals(null))
-                placeby="Agam";
+            String placeby = data.name;
             final String address = in.getStringExtra("address");
-            String contact = in.getStringExtra("contact"); //replace with user contact no. from data and remove if condition
-            if(contact.equals(""))
-                contact="8130065495";
+            String contact = data.phone;
             final String cost = in.getStringExtra("cost");
 
             order_name = (TextView) findViewById(R.id.orderSummName);
@@ -53,7 +49,7 @@ public class Menu_PlaceOrder extends AppCompatActivity {
             cost_value.setText(fi);
             add.setText(t);
 
-
+            button.setText("Place Order");
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
