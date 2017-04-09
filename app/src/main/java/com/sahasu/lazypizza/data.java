@@ -45,7 +45,7 @@ public class data {
                 int i=0;
                 for (DataSnapshot counter: dataSnapshot.getChildren()) {
                     HashMap<String,String> temp=new HashMap<String,String>();
-                    temp.put("name",counter.getValue().toString());
+                    temp.put("name",counter.getKey().toString());
                     temp.put("price",counter.child("price").getValue().toString());
                     items.add(i,temp);
                     i++;

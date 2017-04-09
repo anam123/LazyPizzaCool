@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 } else if (tabId == R.id.tab_groups) {
                     // The tab with id R.id.tab_groups was selected,
                     // change your content accordingly.
-                    frag = new menuFood();
+                    frag = new MenuMain();
                 } else if (tabId == R.id.tab_chats) {
                     // The tab with id R.id.tab_chats was selected,
                     // change your content accordingly.

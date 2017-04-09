@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#2A343C">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:text="1 Samosa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/orderSummName"
+            android:textColor="@android:color/background_light"
+            android:textStyle="normal|bold"
+            android:fontFamily="serif"
+            android:layout_marginTop="52dp"
+            android:layout_below="@+id/textView0"
+            android:layout_centerHorizontal="true"
+            android:textSize="80px" />
+
+        <TextView
+            android:text="Placed By : Sarthak Madan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/orderSummUsr"
+            android:textColor="@android:color/background_light"
+            android:fontFamily="sans-serif-smallcaps"
+            android:textStyle="normal|bold"
+            android:textSize="40px"
+            android:layout_below="@+id/orderSummName"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp" />
+
+        <TextView
+            android:text="Address : C-217"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/orderSummAdd"
+            android:textSize="40px"
+            android:fontFamily="sans-serif-smallcaps"
+            android:textStyle="normal|bold"
+            android:textColor="@android:color/background_light"
+            android:layout_below="@+id/orderSummUsr"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:text="Contact : 9999029972"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/orderSummContact"
+            android:textSize="40px"
+            android:fontFamily="sans-serif-smallcaps"
+            android:textColor="@android:color/background_light"
+            android:textStyle="normal|bold"
+            android:layout_below="@+id/orderSummAdd"
+            android:layout_alignEnd="@+id/orderSummCost" />
+
+        <TextView
+            android:text="Rs. 50.0 | 5 SC"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/orderSummCost"
+            android:textColor="@android:color/background_light"
+            android:fontFamily="sans-serif-condensed"
+            android:textStyle="normal|bold"
+            android:textSize="80px"
+            android:layout_marginTop="44dp"
+            android:layout_below="@+id/orderSummAdd"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:text="Order Details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView0"
+            android:textColor="@android:color/background_light"
+            android:textStyle="normal|bold"
+
+            android:fontFamily="sans-serif-condensed"
+            android:lineSpacingExtra="10sp"
+            android:textAlignment="textStart"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault"
+            android:textSize="90px"
+            android:layout_marginTop="63dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignStart="@+id/orderSummCost" />
+
+        <Button
+            android:text="Place Order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/orderSummCost"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="52dp"
+            android:id="@+id/orderSummButton"
+            style="@android:style/Widget.Holo.Light.Button.Toggle"
+            android:elevation="22dp"
+            android:fontFamily="sans-serif-condensed"
+            android:textStyle="normal|bold"
+            android:textColor="@android:color/background_light"
+            android:background="@android:color/holo_blue_dark"
+            android:padding="10dp"
+            android:textSize="35px" />
+    </RelativeLayout>
+</LinearLayout>
