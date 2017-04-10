@@ -21,6 +21,9 @@
     <string name="slide_5_title">Viola, Get stuff delivered.</string>
     <string name="slide_5_desc">In order to earn Super coins, you need to deliver the stuff for others.</string>
 
+    <string name="signin_title">Google Sign In</string>
+    <string name="signin_desc">Please use your IIIT Delhi e-mail to Sign In</string>
+
     <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
     <string name="play_again">Play Again</string>
 
