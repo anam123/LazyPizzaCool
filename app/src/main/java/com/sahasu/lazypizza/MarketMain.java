@@ -87,7 +87,8 @@ public class MarketMain extends Fragment {
 //        if (exit) {
 //            finish(); // finish activity
 //        } else {
-//            Toast.makeText(this, "Press Back again to Exit.",
+//            Toast.makeText(this, "Press Back
+// again to Exit.",
 //                    Toast.LENGTH_SHORT).show();
 //            exit = true;
 //            new Handler().postDelayed(new Runnable() {

@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "626132587912-9i1gfr9lbk178ekghk4komqa3qt9vheg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bajaj.agam.lazypizzaa",
+            "certificate_hash": "87e104c339344a3ceffba9ddaabfb2ff1b05278a"
+          }
+        },
+        {
           "client_id": "626132587912-rg1n8s36jbmrpo7lai38om0etnutrn3r.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -58,6 +66,22 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "626132587912-jsdu6deotaacl0r2tc53gq7f7n74gh86.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sahasu.lazypizza",
+            "certificate_hash": "06e62aa6d109a829dbe1e24b2c3ecf41aef5c850"
+          }
+        },
+        {
+          "client_id": "626132587912-74t4u9hk2ops98qgran0i4epsdmgsfhk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sahasu.lazypizza",
+            "certificate_hash": "a8165fb9ac6c86eb1485683c31bbf264f3219086"
+          }
+        },
         {
           "client_id": "626132587912-p2itm8v7q0nbg8if1tiiplgul0orhj4h.apps.googleusercontent.com",
           "client_type": 1,

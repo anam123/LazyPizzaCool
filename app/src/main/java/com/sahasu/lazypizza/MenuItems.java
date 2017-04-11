@@ -8,6 +8,7 @@ public class MenuItems {
     private String title;
     private int cost;
     private int s_coins;
+    private int imageResId;
 
     public void setTitle(String title) {
         this.title = title;
@@ -25,7 +26,7 @@ public class MenuItems {
         this.imageResId = imageResId;
     }
 
-    private int imageResId;
+
 
     public String getTitle() {
         return title;

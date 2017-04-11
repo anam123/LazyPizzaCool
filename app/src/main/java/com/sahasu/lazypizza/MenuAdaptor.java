@@ -10,10 +10,13 @@ import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -26,7 +29,7 @@ public class MenuAdaptor extends RecyclerView.Adapter<MenuAdaptor.MyHolder>{
     public MenuAdaptor(List<MenuInfo> menuData, Context c)
     {
         this.inflater = LayoutInflater.from(c);
-        this.menuData=menuData;
+        this.menuData = menuData;
     }
 
     @Override
@@ -74,12 +77,13 @@ public class MenuAdaptor extends RecyclerView.Adapter<MenuAdaptor.MyHolder>{
             final AlertDialog.Builder alert = new AlertDialog.Builder(itemView.getContext());
             alert.setTitle("Enter Location");
 
-            final TextView input = new TextView (itemView.getContext());
-            alert.setView(input);
+            final EditText input_loc = new EditText(itemView.getContext());
+            alert.setView(input_loc.getRootView());
+            //alert.setView(input_loc);
 
             alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int whichButton) {
-                    String loc=input.getText().toString();
+                    String loc=input_loc.getText().toString();
                     intent.putExtra("address",loc);
 //                    MenuInfo info;
 //                    info = menuData.get(getAdapterPosition());
@@ -89,9 +93,9 @@ public class MenuAdaptor extends RecyclerView.Adapter<MenuAdaptor.MyHolder>{
                     final AlertDialog.Builder alert2 = new AlertDialog.Builder(itemView.getContext());
                     alert2.setTitle("Enter Super Coins");
 
-                    final TextView input2 = new TextView (itemView.getContext());
+                    final EditText input2 = new EditText (itemView.getContext());
                     input2.setRawInputType(InputType.TYPE_CLASS_NUMBER);
-                    alert2.setView(input2);
+                    alert2.setView(input2.getRootView());
 
                     alert2.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
@@ -105,11 +109,13 @@ public class MenuAdaptor extends RecyclerView.Adapter<MenuAdaptor.MyHolder>{
                         }
                     });
 
-                    alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+                    alert2.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
                             dialog.dismiss();
                         }
                     });
+                    alert2.show();
 
                 }
             });
