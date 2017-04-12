@@ -13,7 +13,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -53,7 +55,7 @@ public class data {
                     i++;
                 }
                 itemsLoaded=true;
-                if(isOld){
+                if(isOld && !GoogleLogin.loadedMain){
                     if(marketLoaded&&itemsLoaded)
                         GoogleLogin.gotoMain(loginContext);
                 }
@@ -83,15 +85,19 @@ public class data {
                     temp.put("item",counter.child("item").getValue().toString());
                     temp.put("phone",counter.child("phone").getValue().toString());
                     temp.put("price",counter.child("price").getValue().toString());
+                    if(counter.child("timestamp").getValue()!=null)
+                        temp.put("timestamp",counter.child("timestamp").getValue().toString());
                     market.add(i,temp);
                     i++;
 
                 }
                 marketLoaded=true;
                 //Call method to reload the marketplace here
-                if(isOld){
+                if(isOld && !GoogleLogin.loadedMain){
                     if(marketLoaded&&itemsLoaded)
                         GoogleLogin.gotoMain(loginContext);
+                }else if(GoogleLogin.loadedMain){
+                    //@TODO Call Method to repopulate here
                 }
             }
             @Override
@@ -114,7 +120,7 @@ public class data {
     }
 
     public static class marketItem{
-        public String item,SC,price,Remarks,destination,email,accepted,phone,deliveryboy,deliveryboyphone;
+        public String item,SC,price,Remarks,destination,email,accepted,phone,deliveryboy,deliveryboyphone,timestamp;
         public marketItem(String item,String SC,String price,String Remarks,String destination,String email,String accepted,
                           String phone,String deliveryboy,String deliveryboyphone){
             this.item =item;
@@ -127,6 +133,9 @@ public class data {
             this.phone = phone;
             this.deliveryboy = deliveryboy;
             this.deliveryboyphone = deliveryboyphone;
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+            String currentDateandTime = sdf.format(new Date());
+            this.timestamp=currentDateandTime;
         }
     }
 
@@ -257,7 +266,7 @@ public class data {
                 String currentSC = snapshot.child(emailToString(email)).child("SC").getValue().toString();
                 float SCBalance=Float.parseFloat(currentSC);
                 if(SCBalance<Float.parseFloat(SC)){         //Insufficient Balance
-                    Toast.makeText(Menu_PlaceOrder.context ,"Amount Successfully Transferred!", Toast.LENGTH_SHORT).show();;
+                    Toast.makeText(Menu_PlaceOrder.context ,"Not Enough Balance!", Toast.LENGTH_SHORT).show();;
                     return;
                 }
                 addToEscrow(Float.parseFloat(SC));
