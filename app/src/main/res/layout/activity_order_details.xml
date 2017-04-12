@@ -72,18 +72,19 @@
             android:textSize="20dp"
             android:text="Location"
             android:textColor="@color/text_primary_color" />
+
         <TextView
-            android:id="@+id/orderDetails"
+            android:id="@+id/orderDetailsLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="15dp"
-
-
             android:layout_below="@+id/foodTitle"
-            android:textSize="16dp"
+            android:layout_marginLeft="20dp"
+
+
+            android:layout_marginTop="15dp"
             android:text="Boys Hostel C-217"
-            android:textColor="@color/secondary_text_color" />
+            android:textColor="@color/secondary_text_color"
+            android:textSize="16dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -142,6 +143,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:visibility="invisible"
             android:id="@+id/orderDetailsDeliveryBoyLayout"
             >
         <TextView

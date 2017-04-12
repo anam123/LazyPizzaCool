@@ -22,6 +22,8 @@ public class MyOrders extends AppCompatActivity {
     // Array of strings...
     String[] orderTitle = {"If", "you", "are", "seeing", "this", "something is", "not", "right!"};
     String[] orderDescription = {"","","","","","","",""};
+    ArrayList<HashMap<String,String>> arrayList=new ArrayList<>();
+    ArrayList<Integer> index = new ArrayList<Integer>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +31,7 @@ public class MyOrders extends AppCompatActivity {
         setContentView(R.layout.activity_my_orders);
 
         simpleListView=(ListView)findViewById(R.id.simpleListView);
-        ArrayList<HashMap<String,String>> arrayList=new ArrayList<>();
+
 
         for (int i = 0; i < com.sahasu.lazypizza.data.market.size(); i++) {
             if(com.sahasu.lazypizza.data.market.get(i).get("accepted").equals("1"))
@@ -40,6 +42,7 @@ public class MyOrders extends AppCompatActivity {
                     hashMap.put("name",com.sahasu.lazypizza.data.market.get(i).get("item"));
                     hashMap.put("desc","Rs. " + com.sahasu.lazypizza.data.market.get(i).get("price"));
                     arrayList.add(hashMap);
+                    index.add(i);
                 }
             }
             else
@@ -50,6 +53,7 @@ public class MyOrders extends AppCompatActivity {
                     hashMap.put("name",com.sahasu.lazypizza.data.market.get(i).get("item"));
                     hashMap.put("desc","Rs. " + com.sahasu.lazypizza.data.market.get(i).get("price"));
                     arrayList.add(hashMap);
+                    index.add(i);
                 }
             }
         }
@@ -75,11 +79,20 @@ public class MyOrders extends AppCompatActivity {
         //perform listView item click event
         simpleListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //Toast.makeText(getApplicationContext(),orderTitle[i],Toast.LENGTH_LONG).show();//show the selected image in toast according to position
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Toast.makeText(getApplicationContext(),position+" is the position",Toast.LENGTH_LONG).show();//show the selected image in toast according to position
 
                 // Open the order details activity from here and pass the details
+                int marketIndex = index.get(position);
                 Intent orderDetails = new Intent(getApplicationContext(), com.sahasu.lazypizza.orderDetails.class);
+                orderDetails.putExtra("Item",com.sahasu.lazypizza.data.market.get(marketIndex).get("item"));
+                orderDetails.putExtra("Price", com.sahasu.lazypizza.data.market.get(marketIndex).get("price"));
+                orderDetails.putExtra("Destination", com.sahasu.lazypizza.data.market.get(marketIndex).get("destination"));
+                orderDetails.putExtra("Accepted", com.sahasu.lazypizza.data.market.get(marketIndex).get("accepted"));
+                orderDetails.putExtra("Time", "1:42 AM");
+                orderDetails.putExtra("DeliveryEmail", com.sahasu.lazypizza.data.market.get(marketIndex).get("deliveryboy"));
+                orderDetails.putExtra("DeliveryPhone", com.sahasu.lazypizza.data.market.get(marketIndex).get("deliveryboyphone"));
+                orderDetails.putExtra("SC", com.sahasu.lazypizza.data.market.get(marketIndex).get("SC"));
                 startActivity(orderDetails);
             }
         });
