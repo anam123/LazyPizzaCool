@@ -26,7 +26,8 @@
         <activity android:name=".GoogleLogin" />
         <activity android:name=".PhoneNumber" />
         <activity android:name=".MyOrders" />
-        <activity android:name=".orderDetails"></activity>
+        <activity android:name=".orderDetails" />
+        <activity android:name=".MyBalance"></activity>
     </application>
 
 </manifest>

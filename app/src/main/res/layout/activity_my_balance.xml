@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+<View
+    android:id="@+id/myRectangleView"
+    android:layout_width="match_parent"
+    android:layout_height="65dp"
+    android:background="@drawable/backsolid"/>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="20dp"
+
+    android:layout_marginLeft="30dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/orderDetailsTitle"
+            android:layout_height="wrap_content"
+            android:text="Balance"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/slide_title"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center_horizontal"
+        android:id="@+id/lay"
+        android:orientation="vertical">
+
+
+    <ImageView
+            android:layout_width="@dimen/img_width_height"
+            android:layout_height="@dimen/img_width_height"
+            android:src="@drawable/sccoin"
+            android:layout_margin="@dimen/icons_margin_bottom"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="@dimen/desc_padding"
+            android:paddingRight="@dimen/desc_padding"
+            android:text="You have"
+            android:textAlignment="center"
+            android:textColor="@color/secondary_text_color"
+            android:textSize="@dimen/slide_desc" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="25"
+            android:id="@+id/balanceSc"
+            android:textColor="@color/text_primary_color"
+            android:textSize="50dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:paddingLeft="@dimen/desc_padding"
+            android:paddingRight="@dimen/desc_padding"
+            android:text="Super Coins"
+            android:textAlignment="center"
+            android:textColor="@color/secondary_text_color"
+            android:textSize="20dp" />
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/lay"
+        android:id="@+id/line"
+        android:layout_marginTop="50dp"
+        android:background="@color/divider_color"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:paddingLeft="@dimen/desc_padding"
+        android:layout_below="@+id/line"
+        android:layout_marginTop="10dp"
+        android:paddingRight="@dimen/desc_padding"
+        android:text="More offers to earn super coins coming soon."
+        android:textAlignment="center"
+        android:textColor="@color/divider_color"
+        android:textSize="15dp" />
+
+
+
+    </RelativeLayout>
+

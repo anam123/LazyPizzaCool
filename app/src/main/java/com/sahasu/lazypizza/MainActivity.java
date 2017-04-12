@@ -107,12 +107,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.profile) {
             // Handle the camera action
         } else if (id == R.id.balance) {
-
+            Intent mybalance = new Intent(getApplicationContext(),MyBalance.class);
+            startActivity(mybalance);
         } else if (id == R.id.orders) {
             Intent order = new Intent(getApplicationContext(),MyOrders.class);
             startActivity(order);
         } else if (id == R.id.use) {
 
+            com.sahasu.lazypizza.PrefManager prefManager;
+            prefManager = new com.sahasu.lazypizza.PrefManager(this);
+            prefManager.setFirstTimeLaunch(true);
+
+            Intent welcome = new Intent(getApplicationContext(),WelcomeActivity.class);
+            startActivity(welcome);
         } else if (id == R.id.logout) {
 
         }
