@@ -82,6 +82,7 @@ public class MarketAdaptor extends RecyclerView.Adapter<MarketAdaptor.MyViewHold
             intent.putExtra("address", info.address);
             intent.putExtra("contact", info.phone_no);
             intent.putExtra("cost", info.cost);
+            intent.putExtra("UID",info.UID);
             v.getContext().startActivity(intent);
         }
     }

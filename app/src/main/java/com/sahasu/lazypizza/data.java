@@ -65,9 +65,12 @@ public class data {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 int i=0;
+                market.clear();
                 for (DataSnapshot counter: dataSnapshot.getChildren()) {
                     HashMap<String,String> temp=new HashMap<String,String>();
-                    temp.put("UID",counter.getValue().toString());
+                    temp.put("UID",counter.getKey().toString());
+                  //  Log.d("VERY EASY TO FIND TAG", counter.getKey().toString());
+                    //Toast.makeText(loginContext, counter.getValue().toString(), Toast.LENGTH_SHORT);
                     temp.put("email",stringToEmail(counter.child("email").getValue().toString()));
                     temp.put("Remarks",counter.child("Remarks").getValue().toString());
                     temp.put("accepted",counter.child("accepted").getValue().toString());
@@ -113,20 +116,21 @@ public class data {
         DatabaseReference myRef = database.getReference(path);
         myRef.setValue(value);
     }
-    static boolean flag=false;
+
     //Transfer SC from one account to the other
     public static void transferSC(final String senderEmail, final String receiverEmail, final float transferAmount){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("users/");
+        Log.d("LOGGING OUTSIDE" , "ASFKLJASLFKJAKLJSFLKJASlk");
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
+                Log.d("FIND HERE DATA","/"+emailToString(senderEmail)+"/");
                 String senderSC = snapshot.child(emailToString(senderEmail)).child("SC").getValue().toString();
-                String receiverSC = snapshot.child(emailToString(senderEmail)).child("SC").getValue().toString();
+                String receiverSC = snapshot.child(emailToString(receiverEmail)).child("SC").getValue().toString();
                 float senderSCBalance=Float.parseFloat(senderSC);
                 float receiverSCBalance = Float.parseFloat(receiverSC);
                 if(senderSCBalance<transferAmount){         //Not Enough Money
-                    flag=true;
                     return;
                 }else{
                     senderSCBalance-=transferAmount;
@@ -172,21 +176,20 @@ public class data {
 
     public static void orderCompleted(String UID, String email, String deliveryboyemail, String SC){
         transferSC(email,deliveryboyemail,Float.valueOf(SC));
-        if(!flag) {
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
-            DatabaseReference myRef = database.getReference("marketplace/" + UID + "/");
-            myRef.removeValue();
-        }else{
-            flag=false;
-        }
+        Log.d("THE VALUE OF TEST UID", "/"+UID+"/");
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        Log.d("THE VALUE OF UID", "/"+UID+"/");
+        DatabaseReference myRef = database.getReference("marketplace/" + UID + "/");
+        myRef.removeValue();
+
     }
 
     public static String emailToString(String email){
-        String s=email.replaceAll("\\.",",");
+        String s=email.replaceAll("\\.",",").replaceAll(" ","");
         return s;
     }
     public static String stringToEmail(String string){
-        String s=string.replaceAll(",","\\.");
+        String s=string.replaceAll(",","\\.").replaceAll(" ","");
         return s;
     }
 

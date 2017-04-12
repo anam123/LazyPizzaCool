@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -67,13 +68,14 @@ public class MarketMain extends Fragment {
             int[] icons = {R.drawable.pizza, R.drawable.pizza, R.drawable.cheezydibble, R.drawable.cheezydibble,R.drawable.food,R.drawable.cake,R.drawable.cheetos,R.drawable.cake,R.drawable.cheezydibble};
             for (int i = 0; i < com.sahasu.lazypizza.data.market.size(); i++) {
                 MarketInfo current = new MarketInfo();
-                current.img_id=icons[i];
+                current.img_id=icons[i%icons.length];
                 current.order_name = com.sahasu.lazypizza.data.market.get(i).get("item");
                 current.address = com.sahasu.lazypizza.data.market.get(i).get("destination");
                 current.cost = "Rs " + com.sahasu.lazypizza.data.market.get(i).get("price") + " + " + com.sahasu.lazypizza.data.market.get(i).get("SC") + " SC";
                 current.place_by = com.sahasu.lazypizza.data.market.get(i).get("email");
                 current.phone_no = com.sahasu.lazypizza.data.market.get(i).get("phone");
                 current.UID =  com.sahasu.lazypizza.data.market.get(i).get("UID");
+              //  Log.d("VERY EASY TO FIND TAG", com.sahasu.lazypizza.data.market.get(i).get("UID"));
                 data.add(current);
             }
         }

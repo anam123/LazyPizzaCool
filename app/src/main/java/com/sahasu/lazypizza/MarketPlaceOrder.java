@@ -3,6 +3,7 @@ package com.sahasu.lazypizza;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +19,7 @@ public class MarketPlaceOrder extends AppCompatActivity {
     TextView cost_value;
     TextView add;
     Button accept_order;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +59,9 @@ public class MarketPlaceOrder extends AppCompatActivity {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(v.getContext(), "ORDER ACCEPTED", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(v.getContext(), UID, Toast.LENGTH_SHORT).show();
+                    Log.d("ANOTHER EASY TAG", UID);
+
                     data.orderCompleted(UID,placeby,data.email,cost.split(" ")[3]);
                     Intent intent = new Intent(v.getContext(), MainActivity.class);
                     startActivity(intent);
