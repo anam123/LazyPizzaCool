@@ -109,7 +109,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.balance) {
 
         } else if (id == R.id.orders) {
-
+            Intent order = new Intent(getApplicationContext(),MyOrders.class);
+            startActivity(order);
         } else if (id == R.id.use) {
 
         } else if (id == R.id.logout) {

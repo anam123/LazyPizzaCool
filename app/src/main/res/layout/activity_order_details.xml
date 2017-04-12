@@ -1,41 +1,213 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:background="@color/bg_screen2">
+    android:background="#fff">
 
+    <View
+        android:id="@+id/myRectangleView"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:background="@drawable/backsolid"/>
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:gravity="center_horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="30dp"
         android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="@dimen/img_width_height"
-            android:layout_height="@dimen/img_width_height"
-            android:src="@drawable/location"
-            android:layout_margin="@dimen/icons_margin_bottom"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:id="@+id/orderDetailsTitle"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/slide_2_title"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/slide_title"
-            android:textStyle="bold" />
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:id="@+id/orderDetailsTitle"
+                android:layout_height="wrap_content"
+                android:text="Pizza"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/slide_title"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:id="@+id/orderDetailsPrice"
+
+                android:layout_height="wrap_content"
+                android:text="Rs 50 + SC 3"
+                android:textColor="@android:color/white"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:id="@+id/orderDetailsDesc"
-            android:paddingLeft="@dimen/desc_padding"
-            android:paddingRight="@dimen/desc_padding"
-            android:text="@string/slide_2_desc"
-            android:textAlignment="center"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/slide_desc" />
+            android:id="@+id/detailstext"
+            android:layout_marginBottom="15dp"
+            android:text="Details"
+            android:textStyle="bold"
+            android:textColor="@color/text_primary_color"
+            android:textSize="20dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="20dp"
+
+            android:textSize="20dp"
+            android:text="Location"
+            android:textColor="@color/text_primary_color" />
+        <TextView
+            android:id="@+id/orderDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+
+
+            android:layout_below="@+id/foodTitle"
+            android:textSize="16dp"
+            android:text="Boys Hostel C-217"
+            android:textColor="@color/secondary_text_color" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="20dp"
+
+                android:textSize="20dp"
+                android:text="Time"
+                android:textColor="@color/text_primary_color" />
+            <TextView
+                android:id="@+id/orderDetailsTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+
+
+                android:layout_below="@+id/foodTitle"
+                android:textSize="16dp"
+                android:text="Boys Hostel C-217"
+                android:textColor="@color/secondary_text_color" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="20dp"
+
+                android:textSize="20dp"
+                android:text="Status"
+                android:textColor="@color/text_primary_color" />
+            <TextView
+                android:id="@+id/orderDetailsAccepted"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:textSize="16dp"
+                android:text="Accepted"
+                android:textColor="@color/secondary_text_color" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:id="@+id/orderDetailsDeliveryBoyLayout"
+            >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="15dp"
+            android:text="Being delivered by"
+            android:textStyle="bold"
+            android:textColor="@color/text_primary_color"
+            android:textSize="20dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="20dp"
+
+                android:textSize="20dp"
+                android:text="E-mail"
+                android:textColor="@color/text_primary_color" />
+            <TextView
+                android:id="@+id/orderDetailsDeliveryBoy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+
+                android:textSize="16dp"
+                android:text="Accepted"
+                android:textColor="@color/secondary_text_color" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="20dp"
+
+                android:textSize="20dp"
+                android:text="Phone"
+                android:textColor="@color/text_primary_color" />
+            <TextView
+                android:id="@+id/orderDetailsDeliveryBoyPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:textSize="16dp"
+                android:text="Accepted"
+                android:textColor="@color/secondary_text_color" />
+        </LinearLayout>
+        </LinearLayout>
 
     </LinearLayout>
 

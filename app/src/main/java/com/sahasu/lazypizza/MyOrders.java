@@ -3,6 +3,7 @@ package com.sahasu.lazypizza;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,33 +20,63 @@ public class MyOrders extends AppCompatActivity {
 
     ListView simpleListView;
     // Array of strings...
-    String[] orderTitle = {"If", "you", "are", "seeing",
-            "this", "something is", "not", "right!"};
-    String[] orderDescription = {"This was not supposed to happen,This was not supposed to happen,aasd,aasd,aasd,aasd,aasd,aasd"};
+    String[] orderTitle = {"If", "you", "are", "seeing", "this", "something is", "not", "right!"};
+    String[] orderDescription = {"","","","","","","",""};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_my_orders);
+
         simpleListView=(ListView)findViewById(R.id.simpleListView);
         ArrayList<HashMap<String,String>> arrayList=new ArrayList<>();
-        for (int i=0;i<orderTitle.length;i++)
+
+        for (int i = 0; i < com.sahasu.lazypizza.data.market.size(); i++) {
+            if(com.sahasu.lazypizza.data.market.get(i).get("accepted").equals("1"))
+            {
+                if(com.sahasu.lazypizza.data.market.get(i).get("email").equals(data.email))
+                {
+                    HashMap<String,String> hashMap=new HashMap<String, String>();//create a hashmap to store the data in key value pair
+                    hashMap.put("name",com.sahasu.lazypizza.data.market.get(i).get("item"));
+                    hashMap.put("desc","Rs. " + com.sahasu.lazypizza.data.market.get(i).get("price"));
+                    arrayList.add(hashMap);
+                }
+            }
+            else
+            {
+                if(com.sahasu.lazypizza.data.market.get(i).get("email").equals(data.email))
+                {
+                    HashMap<String,String> hashMap=new HashMap<String, String>();//create a hashmap to store the data in key value pair
+                    hashMap.put("name",com.sahasu.lazypizza.data.market.get(i).get("item"));
+                    hashMap.put("desc","Rs. " + com.sahasu.lazypizza.data.market.get(i).get("price"));
+                    arrayList.add(hashMap);
+                }
+            }
+        }
+
+        /*for (int i=0;i<orderTitle.length;i++)
         {
             HashMap<String,String> hashMap=new HashMap<>();//create a hashmap to store the data in key value pair
             hashMap.put("name",orderTitle[i]);
-            hashMap.put("image",orderDescription[i]+"");
+            hashMap.put("desc",orderDescription[i]+"");
             arrayList.add(hashMap);//add the hashmap into arrayList
-        }
-        String[] from={"name","image"};//string array
-        int[] to={R.id.textView,R.id.imageView};//int array of views id's
-        SimpleAdapter simpleAdapter=new SimpleAdapter(this,arrayList,R.layout.activitymyorders_listview,from,to);//Create object and set the parameters for simpleAdapter
+        }*/
+        String[] from={"name","desc"}; //string array
+        int[] to={R.id.foodTitle, R.id.foodDesc}; //int array of views id's
+        SimpleAdapter simpleAdapter = null;
+        simpleAdapter = new SimpleAdapter(this,arrayList,R.layout.activitymyorders_listview,from,to);//Create object and set the parameters for simpleAdapter
+        if(simpleAdapter == null)
+            Log.d("SIMPLE","Null simple adapter");
+        if(simpleListView == null)
+            Log.d("SIMPLE","Null simple List view");
+
         simpleListView.setAdapter(simpleAdapter);//sets the adapter for listView
 
         //perform listView item click event
         simpleListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getApplicationContext(),orderTitle[i],Toast.LENGTH_LONG).show();//show the selected image in toast according to position
+                //Toast.makeText(getApplicationContext(),orderTitle[i],Toast.LENGTH_LONG).show();//show the selected image in toast according to position
 
                 // Open the order details activity from here and pass the details
                 Intent orderDetails = new Intent(getApplicationContext(), com.sahasu.lazypizza.orderDetails.class);

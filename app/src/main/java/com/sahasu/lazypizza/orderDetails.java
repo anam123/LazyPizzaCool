@@ -14,10 +14,6 @@ public class orderDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_details);
 
-        orderDetailsTitle = (TextView) findViewById(R.id.orderDetailsTitle);
-        orderDetailsTitle.setText("PIZZAAA");
-
-        orderDetailsDesc = (TextView) findViewById(R.id.orderDetailsDesc);
 
 
     }
