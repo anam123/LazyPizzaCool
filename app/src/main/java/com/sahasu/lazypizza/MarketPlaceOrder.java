@@ -1,5 +1,6 @@
 package com.sahasu.lazypizza;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -19,13 +20,13 @@ public class MarketPlaceOrder extends AppCompatActivity {
     TextView cost_value;
     TextView add;
     Button accept_order;
-
+    public static Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_order);
-
+        context=getApplicationContext();
         if(getIntent() != null)
         {
             Intent in = getIntent();
@@ -60,7 +61,7 @@ public class MarketPlaceOrder extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(v.getContext(), UID, Toast.LENGTH_SHORT).show();
-                    Log.d("ANOTHER EASY TAG", UID);
+                    Log.d("ANOTHER EASY TAG", "/"+cost+"/");
 
                     data.orderCompleted(UID,placeby,data.email,cost.split(" ")[3]);
                     Intent intent = new Intent(v.getContext(), MainActivity.class);

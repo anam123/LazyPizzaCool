@@ -41,11 +41,11 @@ public class Wallet extends Fragment {
         return v;
     }
 
-    public static void incorrectEmail(int i)
+    public static void incorrectEmail(int i, String error)
     {
         if(i ==0)
         {
-            Toast.makeText(context, "THIS USER DOES NOT EXIST", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
             Email.setText("");
             amountSC.setText("");
             Email.setHint("Enter Email Address");

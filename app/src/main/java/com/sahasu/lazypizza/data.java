@@ -44,6 +44,7 @@ public class data {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 int i=0;
+                items.clear();
                 for (DataSnapshot counter: dataSnapshot.getChildren()) {
                     HashMap<String,String> temp=new HashMap<String,String>();
                     temp.put("name",counter.getKey().toString());
@@ -142,6 +143,63 @@ public class data {
         myRef.setValue(value);
     }
 
+    public static void addToEscrow(final float amount){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference();
+        Log.d("Very Important!!!!!", "Add to Escrow Called");
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                String senderSC = snapshot.child("users").child(emailToString(email)).child("SC").getValue().toString();
+                String receiverSC;
+                if(snapshot.child("escrow").child(emailToString(email)).getValue()==null) {
+                    setValue("escrow/" + emailToString(email), "0");
+                    receiverSC="0";
+                }else {
+                    receiverSC = snapshot.child("escrow").child(emailToString(email)).getValue().toString();
+                }
+                float senderSCBalance=Float.parseFloat(senderSC);
+                float receiverSCBalance = Float.parseFloat(receiverSC);
+                senderSCBalance-=amount;
+                receiverSCBalance+=amount;
+                setValue("escrow/"+emailToString(email),String.valueOf(receiverSCBalance));
+                setValue("users/"+emailToString(email)+"/SC/",String.valueOf(senderSCBalance));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        };
+        myRef.addListenerForSingleValueEvent(postListener);
+    }
+    public static void getFromEscrow(final float amount, final String receiverEmail, final String senderEmail){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference();
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                String receiverSC = snapshot.child("users").child(emailToString(receiverEmail)).child("SC").getValue().toString();
+                if(snapshot.child("escrow").child(emailToString(senderEmail)).getValue()==null){
+                    Toast.makeText(Menu_PlaceOrder.context ,"Doesn't Exist", Toast.LENGTH_SHORT).show();;
+                    return;
+                }
+                Log.d("Very Important!!!!!", String.valueOf(amount));
+                String senderSC = snapshot.child("escrow").child(emailToString(senderEmail)).getValue().toString();
+                float senderSCBalance=Float.parseFloat(senderSC);
+                float receiverSCBalance = Float.parseFloat(receiverSC);
+                senderSCBalance-=amount;
+                receiverSCBalance+=amount;
+                setValue("escrow/"+emailToString(senderEmail),String.valueOf(senderSCBalance));
+                setValue("users/"+emailToString(receiverEmail)+"/SC/",String.valueOf(receiverSCBalance));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        };
+        myRef.addListenerForSingleValueEvent(postListener);
+    }
+
     //Transfer SC from one account to the other
     public static void transferSC(final String senderEmail, final String receiverEmail, final float transferAmount){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -151,8 +209,12 @@ public class data {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 Log.d("FIND HERE DATA","/"+emailToString(receiverEmail)+"/");
+                if(senderEmail.equals(receiverEmail)){
+                    Wallet.incorrectEmail(0,"CAN'T SEND SC TO YOURSELF");
+                    return;
+                }
                 if(snapshot.child(emailToString(receiverEmail)).child("SC").getValue()==null){
-                    Wallet.incorrectEmail(0);
+                    Wallet.incorrectEmail(0,"THIS USER DOES NOT EXIST");
                     return;
                 }
                 String senderSC = snapshot.child(emailToString(senderEmail)).child("SC").getValue().toString();
@@ -160,6 +222,7 @@ public class data {
                 float senderSCBalance=Float.parseFloat(senderSC);
                 float receiverSCBalance = Float.parseFloat(receiverSC);
                 if(senderSCBalance<transferAmount){         //Not Enough Money
+                    Wallet.incorrectEmail(0,"INSUFFICIENT FUNDS");
                     return;
                 }else{
                     senderSCBalance-=transferAmount;
@@ -167,7 +230,7 @@ public class data {
                     setValue("users/"+emailToString(receiverEmail)+"/SC/",String.valueOf(receiverSCBalance));
                     setValue("users/"+emailToString(senderEmail)+"/SC/",String.valueOf(senderSCBalance));
                 }
-                Wallet.incorrectEmail(1);
+                Wallet.incorrectEmail(1,"");
             }
 
             @Override
@@ -184,9 +247,29 @@ public class data {
 //        return items;
 //    }
 
-    public static void addToMarket(String item, String SC, String price, String Remarks, String destination){
-        String uid=String.valueOf(Math.round(Math.random()*10e10));
-        setValues("marketplace/"+uid,item+" ",SC,price+" ",Remarks+" ",destination+" ",emailToString(email),"0",phone+" "," "," ");
+    public static void addToMarket(final String item, final String SC, final String price, final String Remarks, final String destination){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("users/");
+        Log.d("LOGGING OUTSIDE" , "ASFKLJASLFKJAKLJSFLKJASlk");
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                String currentSC = snapshot.child(emailToString(email)).child("SC").getValue().toString();
+                float SCBalance=Float.parseFloat(currentSC);
+                if(SCBalance<Float.parseFloat(SC)){         //Insufficient Balance
+                    Toast.makeText(Menu_PlaceOrder.context ,"Amount Successfully Transferred!", Toast.LENGTH_SHORT).show();;
+                    return;
+                }
+                addToEscrow(Float.parseFloat(SC));
+                String uid=String.valueOf(Math.round(Math.random()*10e10));
+                setValues("marketplace/"+uid,item+" ",SC,price,Remarks+" ",destination+" ",emailToString(email),"0",phone+" "," "," ");
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        myRef.addListenerForSingleValueEvent(postListener);
 //        setValue("marketplace/"+uid+"/item/",item+" ");
 //        setValue("marketplace/"+uid+"/SC/",SC+" ");
 //        setValue("marketplace/"+uid+"/price/",price+" ");
@@ -206,8 +289,8 @@ public class data {
     }
 
     public static void orderCompleted(String UID, String email, String deliveryboyemail, String SC){
-        transferSC(email,deliveryboyemail,Float.valueOf(SC));
-        Log.d("THE VALUE OF TEST UID", "/"+UID+"/");
+        Log.d("THE VALUE OF SC UID", "/"+SC+"/");
+        getFromEscrow(Float.valueOf(SC),deliveryboyemail,email);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         Log.d("THE VALUE OF UID", "/"+UID+"/");
         DatabaseReference myRef = database.getReference("marketplace/" + UID + "/");

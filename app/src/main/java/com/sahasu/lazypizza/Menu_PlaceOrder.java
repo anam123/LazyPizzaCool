@@ -1,8 +1,10 @@
 package com.sahasu.lazypizza;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -15,12 +17,13 @@ public class Menu_PlaceOrder extends AppCompatActivity {
     TextView contact_no;
     TextView cost_value;
     TextView add;
+    public static Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu__place_order);
-
+        context=getApplicationContext();
         if(getIntent() != null)
         {
             Intent in = getIntent();
@@ -56,6 +59,8 @@ public class Menu_PlaceOrder extends AppCompatActivity {
                 public void onClick(View v) {
                     Toast.makeText(v.getContext(), "ORDER PLACED", Toast.LENGTH_SHORT).show();
 //                    data.orderCompleted(UID,placeby,data.email,cost.split(" ")[3]);
+                    Log.d("LOGGING OUTSIDE" , "a");
+
                     data.addToMarket(orderName,scs,cost," ",address);
                     Intent intent = new Intent(v.getContext(), MainActivity.class);
                     startActivity(intent);
