@@ -27,8 +27,9 @@ public class Menu_PlaceOrder extends AppCompatActivity {
             final String orderName = in.getStringExtra("orderName");
             String placeby = data.name;
             final String address = in.getStringExtra("address");
-            String contact = data.phone;
+            final String contact = data.phone;
             final String cost = in.getStringExtra("cost");
+            final String scs = in.getStringExtra("scs");
 
             order_name = (TextView) findViewById(R.id.orderSummName);
             place_by = (TextView) findViewById(R.id.orderSummUsr);
@@ -46,7 +47,7 @@ public class Menu_PlaceOrder extends AppCompatActivity {
             order_name.setText(f);
             place_by.setText(s);
             contact_no.setText(fo);
-            cost_value.setText(fi);
+            cost_value.setText("Rs. "+fi+" + "+scs+" SC");
             add.setText(t);
 
             button.setText("Place Order");
@@ -55,6 +56,7 @@ public class Menu_PlaceOrder extends AppCompatActivity {
                 public void onClick(View v) {
                     Toast.makeText(v.getContext(), "ORDER PLACED", Toast.LENGTH_SHORT).show();
 //                    data.orderCompleted(UID,placeby,data.email,cost.split(" ")[3]);
+                    data.addToMarket(orderName,scs,cost," ",address);
                     Intent intent = new Intent(v.getContext(), MainActivity.class);
                     startActivity(intent);
                 }

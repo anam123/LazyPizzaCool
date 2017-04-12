@@ -72,7 +72,7 @@ public class MenuAdaptor extends RecyclerView.Adapter<MenuAdaptor.MyHolder>{
         public void onClick(final View v) {
 
             Toast.makeText(itemView.getContext(), "Clicked button at position : " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
-            final Intent intent = new Intent(itemView.getContext(), MarketPlaceOrder.class);
+            final Intent intent = new Intent(itemView.getContext(), Menu_PlaceOrder.class);
 
             final AlertDialog.Builder alert = new AlertDialog.Builder(itemView.getContext());
             alert.setTitle("Enter Location");
@@ -103,7 +103,8 @@ public class MenuAdaptor extends RecyclerView.Adapter<MenuAdaptor.MyHolder>{
                             MenuInfo info;
                             info = menuData.get(getAdapterPosition());
                             intent.putExtra("orderName", info.getOrder_name());
-                            intent.putExtra("cost", info.getCost()+" +  "+sc);
+                            intent.putExtra("cost", info.getCost());
+                            intent.putExtra("scs",sc);
                             v.getContext().startActivity(intent);
 
                         }
