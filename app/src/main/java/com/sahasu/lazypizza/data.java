@@ -15,6 +15,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -111,8 +112,30 @@ public class data {
         context.startActivity(phoneIntent);
     }
 
+    public static class marketItem{
+        public String item,SC,price,Remarks,destination,email,accepted,phone,deliveryboy,deliveryboyphone;
+        public marketItem(String item,String SC,String price,String Remarks,String destination,String email,String accepted,
+                          String phone,String deliveryboy,String deliveryboyphone){
+            this.item =item;
+            this.SC = SC;
+            this.Remarks = Remarks;
+            this.price= price;
+            this.destination =destination;
+            this.email = email;
+            this.accepted = accepted;
+            this.phone = phone;
+            this.deliveryboy = deliveryboy;
+            this.deliveryboyphone = deliveryboyphone;
+        }
+    }
 
-    
+    public static void setValues(String path, String item,String SC,String price,String Remarks,String destination,String email,String accepted,
+                                 String phone,String deliveryboy,String deliveryboyphone){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference(path);
+        marketItem current=new marketItem(item,SC,price,Remarks,destination,email,accepted,phone,deliveryboy,deliveryboyphone);
+        myRef.setValue(current);
+    }
     public static void setValue(String path, String value){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference(path);
@@ -127,7 +150,11 @@ public class data {
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                Log.d("FIND HERE DATA","/"+emailToString(senderEmail)+"/");
+                Log.d("FIND HERE DATA","/"+emailToString(receiverEmail)+"/");
+                if(snapshot.child(emailToString(receiverEmail)).child("SC").getValue()==null){
+                    Wallet.incorrectEmail(0);
+                    return;
+                }
                 String senderSC = snapshot.child(emailToString(senderEmail)).child("SC").getValue().toString();
                 String receiverSC = snapshot.child(emailToString(receiverEmail)).child("SC").getValue().toString();
                 float senderSCBalance=Float.parseFloat(senderSC);
@@ -140,6 +167,7 @@ public class data {
                     setValue("users/"+emailToString(receiverEmail)+"/SC/",String.valueOf(receiverSCBalance));
                     setValue("users/"+emailToString(senderEmail)+"/SC/",String.valueOf(senderSCBalance));
                 }
+                Wallet.incorrectEmail(1);
             }
 
             @Override
@@ -158,16 +186,17 @@ public class data {
 
     public static void addToMarket(String item, String SC, String price, String Remarks, String destination){
         String uid=String.valueOf(Math.round(Math.random()*10e10));
-        setValue("marketplace/"+uid+"/item/",item+" ");
-        setValue("marketplace/"+uid+"/SC/",SC+" ");
-        setValue("marketplace/"+uid+"/price/",price+" ");
-        setValue("marketplace/"+uid+"/Remarks/",Remarks+" ");
-        setValue("marketplace/"+uid+"/destination/",destination+" ");
-        setValue("marketplace/"+uid+"/email/", emailToString(email)+" ");
-        setValue("marketplace/"+uid+"/accepted/","0");
-        setValue("marketplace/"+uid+"/phone/",phone+" ");
-        setValue("marketplace/"+uid+"/deliveryboy/"," ");
-        setValue("marketplace/"+uid+"/deliveryboyphone/"," ");
+        setValues("marketplace/"+uid,item+" ",SC,price+" ",Remarks+" ",destination+" ",emailToString(email),"0",phone+" "," "," ");
+//        setValue("marketplace/"+uid+"/item/",item+" ");
+//        setValue("marketplace/"+uid+"/SC/",SC+" ");
+//        setValue("marketplace/"+uid+"/price/",price+" ");
+//        setValue("marketplace/"+uid+"/Remarks/",Remarks+" ");
+//        setValue("marketplace/"+uid+"/destination/",destination+" ");
+//        setValue("marketplace/"+uid+"/email/", emailToString(email)+" ");
+//        setValue("marketplace/"+uid+"/accepted/","0");
+//        setValue("marketplace/"+uid+"/phone/",phone+" ");
+//        setValue("marketplace/"+uid+"/deliveryboy/"," ");
+//        setValue("marketplace/"+uid+"/deliveryboyphone/"," ");
     }
 
     public static void acceptItemFromMarket(String UID){

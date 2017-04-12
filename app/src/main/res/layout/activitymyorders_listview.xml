@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/foodTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="20dp"
+        android:textSize="20dp"
+        android:text="Pizza"
+        android:textStyle="bold"
+        android:textColor="#000" />
+    <TextView
+        android:id="@+id/foodDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:textStyle="italic"
+        android:layout_below="@+id/foodTitle"
+        android:textSize="14dp"
+        android:text="23rd March 2017 5:00 pm"
+        android:textColor="#000" />
+</RelativeLayout>
