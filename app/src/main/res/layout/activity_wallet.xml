@@ -6,9 +6,10 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="50dp"
         android:orientation="vertical"
+        android:layout_gravity="center_vertical"
         android:weightSum="1">
 
         <TextView
@@ -19,6 +20,7 @@
             android:layout_centerVertical="true"
             android:layout_marginTop="40dp"
             android:fontFamily="sans-serif"
+            android:layout_margin="@dimen/activity_horizontal_margin"
             android:gravity="center"
             android:text="Settle your dues using\n Super Coins"
             android:textColor="#000000"
@@ -28,11 +30,12 @@
         <EditText
             android:id="@+id/email"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_centerVertical="true"
-            android:layout_margin="20dp"
+
+            android:layout_margin="@dimen/activity_horizontal_margin"
             android:layout_weight="0.02"
             android:fontFamily="sans-serif"
             android:gravity="center"
@@ -51,6 +54,7 @@
             android:fontFamily="sans-serif"
             android:gravity="center"
             android:hint="Enter Amount (in SCs)"
+            android:inputType="number"
             android:textColor="#000000" />
 
         <Button
