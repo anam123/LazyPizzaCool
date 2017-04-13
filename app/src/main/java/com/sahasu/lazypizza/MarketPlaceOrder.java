@@ -53,12 +53,12 @@ public class MarketPlaceOrder extends AppCompatActivity {
             timestamp = (TextView) findViewById(R.id.timestamp);
             accept_order = (Button) findViewById(R.id.button);
 
-            String f = "1 " + orderName;
-            String s = "PLACED BY : " + placeby;
-            String t = "ADDRESS : " + address;
-            String fo = "CONTACT : " + contact;
+            String f = orderName;
+            String s = "Placed by : " + placeby;
+            String t = "Address : " + address;
+            String fo = "Contact : " + contact;
             String fi = cost;
-            String si = "TimeStamp : " + ts;
+            String si = "Time : " + ts;
 
             order_name.setText(f);
             place_by.setText(s);
