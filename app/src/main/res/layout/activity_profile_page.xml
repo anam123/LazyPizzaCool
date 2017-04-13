@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#fff"
+        tools:context="com.sahasu.lazypizza.ProfilePage">
+
+        <View
+            android:id="@+id/myRectangleView"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:background="@drawable/backsolid"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="30dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Profile"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/slide_title"
+                    android:textStyle="bold" />
+=
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="@dimen/img_width_height"
+                android:layout_height="@dimen/img_width_height"
+                android:src="@drawable/usergrey"
+                android:id="@+id/profilePicture"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="@dimen/icons_margin_bottom"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:id="@+id/profileName"
+                android:layout_marginBottom="15dp"
+                android:text="Himanshu Pahadia"
+                android:textStyle="bold"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/text_primary_color"
+                android:textSize="20dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"/>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="20dp"
+
+                    android:textSize="20dp"
+                    android:text="E-mail"
+                    android:textColor="@color/text_primary_color" />
+
+                <TextView
+                    android:id="@+id/profilemail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+
+
+                    android:layout_marginTop="15dp"
+                    android:text="himanshu14045@iiitd.ac.in"
+                    android:textColor="@color/secondary_text_color"
+                    android:textSize="16dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="20dp"
+
+                    android:textSize="20dp"
+                    android:text="Phone no."
+                    android:textColor="@color/text_primary_color" />
+                <TextView
+                    android:id="@+id/profilePhone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:textSize="16dp"
+                    android:text="9898985544"
+                    android:textColor="@color/secondary_text_color" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="20dp"
+
+                    android:textSize="20dp"
+                    android:text="Balance"
+                    android:textColor="@color/text_primary_color" />
+                <TextView
+                    android:id="@+id/profileBalance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:textSize="16dp"
+                    android:text="45 SC"
+                    android:textColor="@color/secondary_text_color" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </RelativeLayout>

@@ -150,6 +150,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (id == R.id.profile) {
             // Handle the camera action
+            Intent myprofile = new Intent(getApplicationContext(), ProfilePage.class);
+            startActivity(myprofile);
         } else if (id == R.id.balance) {
             Intent mybalance = new Intent(getApplicationContext(), MyBalance.class);
             startActivity(mybalance);
