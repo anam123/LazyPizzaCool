@@ -2,17 +2,17 @@
     <tab
         id="@+id/tab_calls"
         icon="@drawable/ic_calls2"
-        title="Calls"
+        title="Market"
         activeColor="@color/colorPrimary"
         />
     <tab
         id="@+id/tab_groups"
         icon="@drawable/ic_groups3"
-        title="Groups"
+        title="Order"
         activeColor="@color/colorPrimary" />
     <tab
         id="@+id/tab_chats"
         icon="@drawable/ic_chats2"
-        title="Chats"
+        title="Wallet"
         activeColor="@color/colorPrimary"/>
 </tabs>
