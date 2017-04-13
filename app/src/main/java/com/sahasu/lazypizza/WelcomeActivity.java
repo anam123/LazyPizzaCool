@@ -121,14 +121,14 @@ public class WelcomeActivity extends AppCompatActivity {
     private void launchHomeScreen() {
         prefManager.setFirstTimeLaunch(false);
         boolean pressedhowtouse = prefManager.isPressedHowToUse();
-
+        startActivity(new Intent(WelcomeActivity.this, GoogleLogin.class));
         if(pressedhowtouse == true)
         {
-            startActivity(new Intent(WelcomeActivity.this, GoogleLogin.class));
+//            startActivity(new Intent(WelcomeActivity.this, GoogleLogin.class));
         }
         else
         {
-            startActivity(new Intent(WelcomeActivity.this, SplashScreen.class));
+//            startActivity(new Intent(WelcomeActivity.this, SplashScreen.class));
         }
         // start splash screen then open google login
 //        startActivity(new Intent(WelcomeActivity.this, SplashScreen.class));

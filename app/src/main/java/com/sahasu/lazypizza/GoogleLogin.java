@@ -268,6 +268,8 @@ public class GoogleLogin extends AppCompatActivity implements
             mDetailTextView.setText(user.getUid());
             findViewById(R.id.sign_in_button).setVisibility(View.GONE);
             findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
+            findViewById(R.id.googleLoginSplashScreen).setVisibility(View.VISIBLE);
+            findViewById(R.id.googleLoginScreen).setVisibility(View.INVISIBLE);
         } else {
             mStatusTextView.setText("Signed Out");
             mDetailTextView.setText(null);
