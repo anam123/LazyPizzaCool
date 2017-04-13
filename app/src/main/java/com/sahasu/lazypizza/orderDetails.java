@@ -3,6 +3,7 @@ package com.sahasu.lazypizza;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -27,8 +28,8 @@ public class orderDetails extends AppCompatActivity {
             destination = intent.getStringExtra("Destination");
             time = intent.getStringExtra("Time");
             accepted = intent.getStringExtra("Accepted");
-            deliveryemail = intent.getStringExtra("Deliveryemail");
-            deliveryphone = intent.getStringExtra("Deliveryphone");
+            deliveryemail = intent.getStringExtra("DeliveryEmail");
+            deliveryphone = intent.getStringExtra("DeliveryPhone");
             sc = intent.getStringExtra("SC");
 
             orderDetailsItem = (TextView)findViewById(R.id.orderDetailsTitle);
@@ -44,7 +45,15 @@ public class orderDetails extends AppCompatActivity {
             orderDetailsItem.setText(item);
             orderDetailsPrice.setText("Rs. " + price + " + SC " + sc);
             orderDetailsLocation.setText(destination);
-            orderDetailsTime.setText(time);
+
+            String hour = time.split("_")[1].substring(0,2);
+            String minutes = time.split("_")[1].substring(2,4);
+            String ts;
+            if(Integer.parseInt(hour) < 12)
+                ts = hour + ":" + minutes + " am";
+            else
+                ts = hour + ":" + minutes + " pm";
+            orderDetailsTime.setText(ts);
             if(accepted.equals("1"))
             {
                 orderDetailsAccepted.setText("Yes");

@@ -11,4 +11,5 @@ public class MarketInfo {
     String place_by;
     String phone_no;
     String UID;
+    String time_stamp;
 }

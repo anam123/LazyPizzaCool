@@ -75,6 +75,7 @@ public class MarketMain extends Fragment {
                 current.place_by = com.sahasu.lazypizza.data.market.get(i).get("email");
                 current.phone_no = com.sahasu.lazypizza.data.market.get(i).get("phone");
                 current.UID =  com.sahasu.lazypizza.data.market.get(i).get("UID");
+                current.time_stamp = com.sahasu.lazypizza.data.market.get(i).get("timestamp");
               //  Log.d("VERY EASY TO FIND TAG", com.sahasu.lazypizza.data.market.get(i).get("UID"));
                 data.add(current);
             }

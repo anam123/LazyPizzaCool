@@ -43,6 +43,14 @@ public class MarketAdaptor extends RecyclerView.Adapter<MarketAdaptor.MyViewHold
         viewHolder.order_name.setText(current.order_name);
         viewHolder.address.setText(current.address);
         viewHolder.cost.setText(current.cost);
+        String hour = current.time_stamp.split("_")[1].substring(0,2);
+        String minutes = current.time_stamp.split("_")[1].substring(2,4);
+        String ts;
+        if(Integer.parseInt(hour) < 12)
+            ts = hour + ":" + minutes + " am";
+        else
+            ts = hour + ":" + minutes + " pm";
+        viewHolder.timestamp.setText(ts);
 //        viewHolder.icon.setImageResource(current.img_id);
         viewHolder.ll.setBackgroundResource(current.img_id);
     }
@@ -59,6 +67,7 @@ public class MarketAdaptor extends RecyclerView.Adapter<MarketAdaptor.MyViewHold
         TextView address;
         TextView cost;
         TextView details;
+        TextView timestamp;
         LinearLayout ll;
 
         public MyViewHolder(View itemView) {
@@ -68,7 +77,7 @@ public class MarketAdaptor extends RecyclerView.Adapter<MarketAdaptor.MyViewHold
             order_name = (TextView) itemView.findViewById(R.id.orderName);
             address = (TextView) itemView.findViewById(R.id.address);
             cost = (TextView) itemView.findViewById(R.id.cost);
-
+            timestamp = (TextView) itemView.findViewById(R.id.timestamp);
             details.setOnClickListener(this);
         }
 
@@ -85,6 +94,7 @@ public class MarketAdaptor extends RecyclerView.Adapter<MarketAdaptor.MyViewHold
             intent.putExtra("contact", info.phone_no);
             intent.putExtra("cost", info.cost);
             intent.putExtra("UID",info.UID);
+            intent.putExtra("timestamp", info.time_stamp);
             v.getContext().startActivity(intent);
         }
     }

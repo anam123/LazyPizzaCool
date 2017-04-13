@@ -111,6 +111,7 @@ public class data {
                             current.place_by = com.sahasu.lazypizza.data.market.get(j).get("email");
                             current.phone_no = com.sahasu.lazypizza.data.market.get(j).get("phone");
                             current.UID =  com.sahasu.lazypizza.data.market.get(j).get("UID");
+                            current.time_stamp = com.sahasu.lazypizza.data.market.get(j).get("timestamp");
                             //  Log.d("VERY EASY TO FIND TAG", com.sahasu.lazypizza.data.market.get(i).get("UID"));
                             data.add(current);
                         }

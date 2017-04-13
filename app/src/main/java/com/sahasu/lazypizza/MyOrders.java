@@ -40,7 +40,14 @@ public class MyOrders extends AppCompatActivity {
                 {
                     HashMap<String,String> hashMap=new HashMap<String, String>();//create a hashmap to store the data in key value pair
                     hashMap.put("name",com.sahasu.lazypizza.data.market.get(i).get("item"));
-                    hashMap.put("desc","Rs. " + com.sahasu.lazypizza.data.market.get(i).get("price"));
+                    String hour = com.sahasu.lazypizza.data.market.get(i).get("timestamp").split("_")[1].substring(0,2);
+                    String minutes = com.sahasu.lazypizza.data.market.get(i).get("timestamp").split("_")[1].substring(2,4);
+                    String ts;
+                    if(Integer.parseInt(hour) < 12)
+                        ts = hour + ":" + minutes + " am";
+                    else
+                        ts = hour + ":" + minutes + " pm";
+                    hashMap.put("desc",ts);
                     arrayList.add(hashMap);
                     index.add(i);
                 }
@@ -51,7 +58,14 @@ public class MyOrders extends AppCompatActivity {
                 {
                     HashMap<String,String> hashMap=new HashMap<String, String>();//create a hashmap to store the data in key value pair
                     hashMap.put("name",com.sahasu.lazypizza.data.market.get(i).get("item"));
-                    hashMap.put("desc","Rs. " + com.sahasu.lazypizza.data.market.get(i).get("price"));
+                    String hour = com.sahasu.lazypizza.data.market.get(i).get("timestamp").split("_")[1].substring(0,2);
+                    String minutes = com.sahasu.lazypizza.data.market.get(i).get("timestamp").split("_")[1].substring(2,4);
+                    String ts;
+                    if(Integer.parseInt(hour) < 12)
+                        ts = hour + ":" + minutes + " am";
+                    else
+                        ts = hour + ":" + minutes + " pm";
+                    hashMap.put("desc",ts);
                     arrayList.add(hashMap);
                     index.add(i);
                 }
@@ -89,7 +103,7 @@ public class MyOrders extends AppCompatActivity {
                 orderDetails.putExtra("Price", com.sahasu.lazypizza.data.market.get(marketIndex).get("price"));
                 orderDetails.putExtra("Destination", com.sahasu.lazypizza.data.market.get(marketIndex).get("destination"));
                 orderDetails.putExtra("Accepted", com.sahasu.lazypizza.data.market.get(marketIndex).get("accepted"));
-                orderDetails.putExtra("Time", "1:42 AM");
+                orderDetails.putExtra("Time", com.sahasu.lazypizza.data.market.get(marketIndex).get("timestamp"));
                 orderDetails.putExtra("DeliveryEmail", com.sahasu.lazypizza.data.market.get(marketIndex).get("deliveryboy"));
                 orderDetails.putExtra("DeliveryPhone", com.sahasu.lazypizza.data.market.get(marketIndex).get("deliveryboyphone"));
                 orderDetails.putExtra("SC", com.sahasu.lazypizza.data.market.get(marketIndex).get("SC"));
