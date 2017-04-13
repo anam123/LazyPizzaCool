@@ -76,8 +76,6 @@ public class MarketPlaceOrder extends AppCompatActivity {
     public void onBackPressed()
     {
         finish();
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
 
     }
 }

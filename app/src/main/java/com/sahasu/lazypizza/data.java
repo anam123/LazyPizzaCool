@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -55,7 +56,7 @@ public class data {
                     i++;
                 }
                 itemsLoaded=true;
-                if(isOld && !GoogleLogin.loadedMain){
+                if(isOld && GoogleLogin.loadedMain<2){
                     if(marketLoaded&&itemsLoaded)
                         GoogleLogin.gotoMain(loginContext);
                 }
@@ -93,11 +94,30 @@ public class data {
                 }
                 marketLoaded=true;
                 //Call method to reload the marketplace here
-                if(isOld && !GoogleLogin.loadedMain){
+                if(isOld && GoogleLogin.loadedMain<2){
                     if(marketLoaded&&itemsLoaded)
                         GoogleLogin.gotoMain(loginContext);
-                }else if(GoogleLogin.loadedMain){
+                }else if(GoogleLogin.loadedMain>=2){
                     //@TODO Call Method to repopulate here
+                    List<MarketInfo> data = new ArrayList<>();
+                    if (com.sahasu.lazypizza.data.market!=null) {
+                        int[] icons = {R.drawable.pizza, R.drawable.pizza, R.drawable.cheezydibble, R.drawable.cheezydibble,R.drawable.food,R.drawable.cake,R.drawable.cheetos,R.drawable.cake,R.drawable.cheezydibble};
+                        for (int j = 0; j < com.sahasu.lazypizza.data.market.size(); j++) {
+                            MarketInfo current = new MarketInfo();
+                            current.img_id=icons[j%icons.length];
+                            current.order_name = com.sahasu.lazypizza.data.market.get(j).get("item");
+                            current.address = com.sahasu.lazypizza.data.market.get(j).get("destination");
+                            current.cost = "Rs " + com.sahasu.lazypizza.data.market.get(j).get("price") + " + " + com.sahasu.lazypizza.data.market.get(j).get("SC") + " SC";
+                            current.place_by = com.sahasu.lazypizza.data.market.get(j).get("email");
+                            current.phone_no = com.sahasu.lazypizza.data.market.get(j).get("phone");
+                            current.UID =  com.sahasu.lazypizza.data.market.get(j).get("UID");
+                            //  Log.d("VERY EASY TO FIND TAG", com.sahasu.lazypizza.data.market.get(i).get("UID"));
+                            data.add(current);
+                        }
+                        if(MarketAdaptor.mk!= null)
+                            MarketAdaptor.mk.swapItems(data);
+                    }
+
                 }
             }
             @Override

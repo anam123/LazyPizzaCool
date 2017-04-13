@@ -20,7 +20,8 @@ import java.util.List;
 public class MarketAdaptor extends RecyclerView.Adapter<MarketAdaptor.MyViewHolder> {
 
     private LayoutInflater inflator;
-    List<MarketInfo> data = Collections.emptyList();
+    static List<MarketInfo> data = Collections.emptyList();
+    public static MarketAdaptor mk;
 
     public MarketAdaptor(Context context, List<MarketInfo> data)
     {
@@ -32,6 +33,7 @@ public class MarketAdaptor extends RecyclerView.Adapter<MarketAdaptor.MyViewHold
     public MyViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View view = inflator.inflate(R.layout.custom_order, viewGroup, false);
         MyViewHolder holder = new MyViewHolder(view);
+        mk =this;
         return holder;
     }
 
@@ -85,5 +87,10 @@ public class MarketAdaptor extends RecyclerView.Adapter<MarketAdaptor.MyViewHold
             intent.putExtra("UID",info.UID);
             v.getContext().startActivity(intent);
         }
+    }
+    public void swapItems(List<MarketInfo> data)
+    {
+        mk.data = data;
+        notifyDataSetChanged();
     }
 }

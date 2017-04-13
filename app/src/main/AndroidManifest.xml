@@ -27,7 +27,8 @@
         <activity android:name=".PhoneNumber" />
         <activity android:name=".MyOrders" />
         <activity android:name=".orderDetails" />
-        <activity android:name=".MyBalance"></activity>
+        <activity android:name=".MyBalance" />
+        <activity android:name=".SplashScreen"></activity>
     </application>
 
 </manifest>

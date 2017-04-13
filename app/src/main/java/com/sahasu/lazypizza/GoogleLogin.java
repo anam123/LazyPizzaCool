@@ -206,11 +206,12 @@ public class GoogleLogin extends AppCompatActivity implements
                 });
     }
     int i=0;
-    public static boolean loadedMain=false;
+    public static int loadedMain=0;
     public static void gotoMain(Context context){
         Intent mainIntent=new Intent(context,MainActivity.class);
         mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        loadedMain=true;
+        loadedMain++;
+        mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(mainIntent);
     }
 

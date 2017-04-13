@@ -20,6 +20,10 @@ public class PrefManager {
 
     private static final String IS_FIRST_TIME_LAUNCH = "IsFirstTimeLaunch";
 
+    private static final String PRESSED_HOW_TO_USE = "PressedHowToUse";
+
+
+
     public PrefManager(Context c)
     {
         context = c;
@@ -30,6 +34,16 @@ public class PrefManager {
     {
         editor.putBoolean(IS_FIRST_TIME_LAUNCH, isFirstTime);
         editor.commit();
+    }
+    public  void setPressedHowToUse(boolean pressedHowToUse)
+    {
+        editor.putBoolean(PRESSED_HOW_TO_USE, pressedHowToUse);
+        editor.commit();
+    }
+
+    public boolean isPressedHowToUse()
+    {
+        return preferences.getBoolean(PRESSED_HOW_TO_USE, false);
     }
     public boolean isFirstTimeLaunch()
     {

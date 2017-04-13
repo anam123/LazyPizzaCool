@@ -2,6 +2,7 @@ package com.sahasu.lazypizza;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.IdRes;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
@@ -20,16 +22,22 @@ import com.roughike.bottombar.OnTabSelectListener;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private TextView textView;
     private BottomBar bottomBar;
+    private boolean exit = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
+        com.sahasu.lazypizza.PrefManager prefManager;
+        prefManager = new com.sahasu.lazypizza.PrefManager(this);
+        prefManager.setPressedHowToUse(false);
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        textView = (TextView)findViewById(R.id.textView);
+        textView = (TextView) findViewById(R.id.textView);
 
         bottomBar = (BottomBar) findViewById(R.id.bottomBar);
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
@@ -68,14 +76,50 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+        if (exit) {
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            if (drawer.isDrawerOpen(GravityCompat.START)) {
+                drawer.closeDrawer(GravityCompat.START);
+            } else {
+                super.onBackPressed();
+                finish();
+            }
+//            finish(); // finish activity
         } else {
-            super.onBackPressed();
-            finish();
+            Toast.makeText(this, "Press Back again to Exit.",
+                    Toast.LENGTH_SHORT).show();
+            exit = true;
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    exit = false;
+                }
+            }, 3 * 1000);
+
         }
+
     }
+
+//    @Override
+//    public void onBackPressed() {
+//        if (exit) {
+//            finish(); // finish activity
+//        } else {
+//            Toast.makeText(this, "Press Back
+// again to Exit.",
+//                    Toast.LENGTH_SHORT).show();
+//            exit = true;
+//            new Handler().postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    exit = false;
+//                }
+//            }, 3 * 1000);
+//
+//        }
+//
+//    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -107,18 +151,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.profile) {
             // Handle the camera action
         } else if (id == R.id.balance) {
-            Intent mybalance = new Intent(getApplicationContext(),MyBalance.class);
+            Intent mybalance = new Intent(getApplicationContext(), MyBalance.class);
             startActivity(mybalance);
         } else if (id == R.id.orders) {
-            Intent order = new Intent(getApplicationContext(),MyOrders.class);
+            Intent order = new Intent(getApplicationContext(), MyOrders.class);
             startActivity(order);
         } else if (id == R.id.use) {
 
             com.sahasu.lazypizza.PrefManager prefManager;
             prefManager = new com.sahasu.lazypizza.PrefManager(this);
             prefManager.setFirstTimeLaunch(true);
+            prefManager.setPressedHowToUse(true);
 
-            Intent welcome = new Intent(getApplicationContext(),WelcomeActivity.class);
+            Intent welcome = new Intent(getApplicationContext(), WelcomeActivity.class);
             startActivity(welcome);
         } else if (id == R.id.logout) {
 
@@ -128,4 +173,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
+
 }
