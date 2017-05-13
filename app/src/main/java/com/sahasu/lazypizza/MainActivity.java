@@ -168,7 +168,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent welcome = new Intent(getApplicationContext(), WelcomeActivity.class);
             startActivity(welcome);
         } else if (id == R.id.logout) {
-
+            GoogleLogin.logout();
+            Intent intent = new Intent(getApplicationContext(), GoogleLogin.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -37,7 +37,6 @@
             android:layout_marginLeft="20dp"
             android:layout_centerVertical="true"
             android:layout_below="@id/menuOrderName"
-            android:text="Rs 50 + Sc 3"
             android:textColor="#ffffff"
             android:textSize="15sp"
             android:textStyle="bold"/>

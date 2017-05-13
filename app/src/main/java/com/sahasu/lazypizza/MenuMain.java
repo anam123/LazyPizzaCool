@@ -34,11 +34,36 @@ public class MenuMain extends Fragment {
         List<MenuInfo> data = new ArrayList<>();
 
         if (com.sahasu.lazypizza.data.items!=null) {
-            int j;
-            int[] icons = {R.drawable.pizza, R.drawable.pizza, R.drawable.cheezydibble, R.drawable.cheezydibble,R.drawable.food,R.drawable.cake,R.drawable.cheetos,R.drawable.cake,R.drawable.cheezydibble};
+            int j=0;
+            int[] icons = {R.drawable.burger, R.drawable.sandwich, R.drawable.cheetos, R.drawable.cake, R.drawable.pizza};
             for (int i = 0; i < com.sahasu.lazypizza.data.items.size(); i++) {
                 MenuInfo current = new MenuInfo();
-                j=i%icons.length;
+
+                if(com.sahasu.lazypizza.data.items.get(i).get("name").equals("Burger"))
+                {
+                    j=0;
+                }
+                else if (com.sahasu.lazypizza.data.items.get(i).get("name").equals("Chips"))
+                {
+                    j=2;
+                }
+                else if( com.sahasu.lazypizza.data.items.get(i).get("name").equals("Chicken Sandwich"))
+                {
+                    j=1;
+                }
+                else if(com.sahasu.lazypizza.data.items.get(i).get("name").equals("Paneer Sandwich"))
+                {
+                    j=1;
+                }
+                else if(com.sahasu.lazypizza.data.items.get(i).get("name").equals("Pastry"))
+                {
+                    j=3;
+                }
+                else if(com.sahasu.lazypizza.data.items.get(i).get("name").equals("Pizza"))
+                {
+                    j=4;
+                }
+
                 current.setImage_id(icons[j]);
                 current.setOrder_name(com.sahasu.lazypizza.data.items.get(i).get("name"));
                 current.setCost(com.sahasu.lazypizza.data.items.get(i).get("price"));

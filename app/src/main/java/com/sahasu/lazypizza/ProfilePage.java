@@ -6,13 +6,14 @@ import android.widget.TextView;
 
 public class ProfilePage extends AppCompatActivity {
 
-    TextView profileMail, profilePhone, profileBalance;
+    TextView profileMail, profilePhone, profileBalance, profileName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_page);
 
+        profileName = (TextView) findViewById(R.id.profileName);
         profileMail = (TextView) findViewById(R.id.profilemail);
         profilePhone = (TextView) findViewById(R.id.profilePhone);
         profileBalance = (TextView) findViewById(R.id.profileBalance);
@@ -20,6 +21,6 @@ public class ProfilePage extends AppCompatActivity {
         profileMail.setText(data.email);
         profilePhone.setText(data.phone);
         profileBalance.setText(data.SC);
-
+        profileName.setText(data.name);
     }
 }

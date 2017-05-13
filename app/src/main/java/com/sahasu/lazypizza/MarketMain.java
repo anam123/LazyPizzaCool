@@ -65,10 +65,36 @@ public class MarketMain extends Fragment {
 //            data.add(current);
 //        }
         if (com.sahasu.lazypizza.data.market!=null) {
-            int[] icons = {R.drawable.pizza, R.drawable.pizza, R.drawable.cheezydibble, R.drawable.cheezydibble,R.drawable.food,R.drawable.cake,R.drawable.cheetos,R.drawable.cake,R.drawable.cheezydibble};
+            int[] icons = {R.drawable.burger, R.drawable.sandwich, R.drawable.cheetos, R.drawable.cake,R.drawable.pizza};
             for (int i = 0; i < com.sahasu.lazypizza.data.market.size(); i++) {
                 MarketInfo current = new MarketInfo();
-                current.img_id=icons[i%icons.length];
+                current.img_id=icons[0];
+                if(com.sahasu.lazypizza.data.market.get(i).get("item").equals("Burger "))
+                {
+                    current.img_id=icons[0];
+                }
+                else if (com.sahasu.lazypizza.data.market.get(i).get("item").equals("Chips "))
+                {
+                    current.img_id=icons[2];
+                }
+                else if( com.sahasu.lazypizza.data.market.get(i).get("item").equals("Chicken Sandwich "))
+                {
+                    current.img_id=icons[1];
+                }
+                else if(com.sahasu.lazypizza.data.market.get(i).get("item").equals("Paneer Sandwich "))
+                {
+                    current.img_id=icons[1];
+                }
+                else if(com.sahasu.lazypizza.data.market.get(i).get("item").equals("Pastry "))
+                {
+                    current.img_id=icons[3];
+                }
+                else if(com.sahasu.lazypizza.data.market.get(i).get("item").equals("Pizza "))
+                {
+                    current.img_id=icons[4];
+                }
+
+
                 current.order_name = com.sahasu.lazypizza.data.market.get(i).get("item");
                 current.address = com.sahasu.lazypizza.data.market.get(i).get("destination");
                 current.cost = "Rs " + com.sahasu.lazypizza.data.market.get(i).get("price") + " + " + com.sahasu.lazypizza.data.market.get(i).get("SC") + " SC";
@@ -77,7 +103,8 @@ public class MarketMain extends Fragment {
                 current.UID =  com.sahasu.lazypizza.data.market.get(i).get("UID");
                 current.time_stamp = com.sahasu.lazypizza.data.market.get(i).get("timestamp");
               //  Log.d("VERY EASY TO FIND TAG", com.sahasu.lazypizza.data.market.get(i).get("UID"));
-                data.add(current);
+                if(com.sahasu.lazypizza.data.market.get(i).get("accepted").equals("0"))
+                    data.add(current);
             }
         }
         return data;

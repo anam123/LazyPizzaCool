@@ -42,7 +42,7 @@ public class MenuAdaptor extends RecyclerView.Adapter<MenuAdaptor.MyHolder>{
     public void onBindViewHolder(MyHolder holder, int position) {
         MenuInfo menu= menuData.get(position);
         holder.title.setText(menu.getOrder_name());
-//        holder.icon.setImageResource(menu.getImageResId());
+        holder.icon.setBackgroundResource(menu.getImage_id());
     }
 
     @Override

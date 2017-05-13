@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.himan.LazyPizzaNew.PhoneNumber"
+    tools:context="com.sahasu.lazypizza.PhoneNumber"
     android:background="@color/colorPrimaryDark">
 
     <LinearLayout
@@ -26,7 +26,7 @@
         android:text="Hi, Mayank!"
         android:textAlignment="center"
         android:textColor="@android:color/white"
-        android:textSize="50dp" />
+        android:textSize="30dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -74,6 +74,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="23dp"
         android:ems="10"
+        android:hint="Phone number"
+        android:textColorHint="@android:color/white"
         android:textColor="#ffffff"
         android:inputType="phone" />
 

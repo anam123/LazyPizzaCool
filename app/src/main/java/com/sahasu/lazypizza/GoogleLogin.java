@@ -40,6 +40,7 @@ public class GoogleLogin extends AppCompatActivity implements
 
     private static final String TAG = "GoogleLogin";
     private static final int RC_SIGN_IN = 9001;
+    static GoogleLogin current;
 
     // [START declare_auth]
     private FirebaseAuth mAuth;
@@ -60,6 +61,7 @@ public class GoogleLogin extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_google_login);
         context = getApplicationContext();
+        current= this;
         // Views
         mStatusTextView = (TextView) findViewById(R.id.status);
         mDetailTextView = (TextView) findViewById(R.id.detail);
@@ -183,13 +185,13 @@ public class GoogleLogin extends AppCompatActivity implements
         mAuth.signOut();
 
         // Google sign out
-        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
+        /*Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
                 new ResultCallback<Status>() {
                     @Override
                     public void onResult(@NonNull Status status) {
                         updateUI(null);
                     }
-                });
+                });*/
     }
 
     private void revokeAccess() {
@@ -205,6 +207,11 @@ public class GoogleLogin extends AppCompatActivity implements
                     }
                 });
     }
+
+    public static void logout(){
+        current.signOut();
+    }
+
     int i=0;
     public static int loadedMain=0;
     public static void gotoMain(Context context){

@@ -5,10 +5,10 @@ package com.sahasu.lazypizza;
  */
 
 public class MenuInfo {
-    private int image_id;
-    private String order_name;
-    private String cost;
-    private String UID;
+    public int image_id;
+    public String order_name;
+    public String cost;
+    public String UID;
 
     public void setImage_id(int image_id) {
         this.image_id = image_id;
