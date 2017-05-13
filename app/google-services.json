@@ -67,6 +67,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "626132587912-05j7nbh142onc979vjvppejq6iadh4nl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sahasu.lazypizza",
+            "certificate_hash": "a0fce3ab5ffc1d7163b7022f690969403e4089b2"
+          }
+        },
+        {
+          "client_id": "626132587912-p06q5dd3ivq6n53tjnqovqmu4ne19ipa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sahasu.lazypizza",
+            "certificate_hash": "87e104c339344a3ceffba9ddaabfb2ff1b05278a"
+          }
+        },
+        {
           "client_id": "626132587912-jsdu6deotaacl0r2tc53gq7f7n74gh86.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

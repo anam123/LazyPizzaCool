@@ -175,6 +175,7 @@ public class GoogleLogin extends AppCompatActivity implements
 
     // [START signin]
     private void signIn() {
+        System.out.print("anam");
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
@@ -223,12 +224,14 @@ public class GoogleLogin extends AppCompatActivity implements
     }
 
     private void updateUI(FirebaseUser user) {
+        System.out.print("anam");
         if (user != null) {
             if(!user.getEmail().contains("@iiitd.ac.in")) {
                 revokeAccess();
                 return;
             }
 //            Toast.makeText(getApplicationContext(),"Update UI Called: "+(i++),Toast.LENGTH_SHORT).show();
+
             Log.d("Auth",user.getEmail());
             Log.d("Auth",user.getUid());
             data.email=user.getEmail();
@@ -297,6 +300,7 @@ public class GoogleLogin extends AppCompatActivity implements
     @Override
     public void onClick(View v) {
         int i = v.getId();
+
         if (i == R.id.sign_in_button) {
             signIn();
         } else if (i == R.id.sign_out_button) {
