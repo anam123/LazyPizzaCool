@@ -67,6 +67,7 @@ public class MenuMain extends Fragment {
                 current.setImage_id(icons[j]);
                 current.setOrder_name(com.sahasu.lazypizza.data.items.get(i).get("name"));
                 current.setCost(com.sahasu.lazypizza.data.items.get(i).get("price"));
+                current.setSource(com.sahasu.lazypizza.data.items.get(i).get("source"));
                 data.add(current);
             }
         }

@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
+
         com.sahasu.lazypizza.PrefManager prefManager;
         prefManager = new com.sahasu.lazypizza.PrefManager(this);
         prefManager.setPressedHowToUse(false);
@@ -38,8 +39,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
 
         textView = (TextView) findViewById(R.id.textView);
-
         bottomBar = (BottomBar) findViewById(R.id.bottomBar);
+
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelected(@IdRes int tabId) {

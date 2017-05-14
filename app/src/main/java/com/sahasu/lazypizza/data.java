@@ -52,6 +52,7 @@ public class data {
                     HashMap<String,String> temp=new HashMap<String,String>();
                     temp.put("name",counter.getKey().toString());
                     temp.put("price",counter.child("price").getValue().toString());
+                    temp.put("source",counter.child("source").getValue().toString());
                     items.add(i,temp);
                     i++;
                 }
@@ -270,7 +271,7 @@ public class data {
         myRef.addListenerForSingleValueEvent(postListener);
     }
 
-    public static void addItem(String name, String price){  //Adds a new item to the list of items
+    public static void addItem(String name, String price, String source){  //Adds a new item to the list of items
         setValue("items/"+name+"/",price);
     }
 //    public static ArrayList<HashMap<String,String>> getItems(){         //Deprecated. Just use data.items

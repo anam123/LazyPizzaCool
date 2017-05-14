@@ -1,18 +1,24 @@
 <tabs>
     <tab
         id="@+id/tab_calls"
-        icon="@drawable/ic_calls2"
+        icon="@drawable/ic_cart"
         title="Market"
-        activeColor="@color/colorPrimary"
+        activeColor="#fafafa"
+        barColorWhenSelected="@color/colorPrimary"/>
+
         />
     <tab
         id="@+id/tab_groups"
-        icon="@drawable/ic_groups3"
+        icon="@drawable/ic_food"
         title="Order"
-        activeColor="@color/colorPrimary" />
+        activeColor="#fafafa"
+        barColorWhenSelected="@color/colorPrimary"/>
     <tab
         id="@+id/tab_chats"
-        icon="@drawable/ic_chats2"
+        icon="@drawable/ic_wallet"
         title="Wallet"
-        activeColor="@color/colorPrimary"/>
+        activeColor="#fafafa"
+        barColorWhenSelected="@color/colorPrimary"/>
+        />
+
 </tabs>
