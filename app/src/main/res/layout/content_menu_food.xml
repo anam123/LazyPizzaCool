@@ -6,23 +6,80 @@ android:layout_height="match_parent"
 tools:showIn="@layout/activity_menu_food"
 tools:context=".MarketPlaceOrder">
 
-<TextView
+    <android.support.v7.widget.RecyclerView
+
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/tabHost"
+        android:layout_marginTop="34dp"
+        android:animateLayoutChanges="false"
+        android:scrollbars="vertical">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <TabHost
+        android:id="@+id/tabHost"
+        android:layout_width="200dip"
+        android:layout_height="300dip"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/orderTextView"
+        android:layout_marginTop="46dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TabWidget
+                android:id="@android:id/tabs"
+                style="@android:style/Widget.Holo.TabWidget"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:elevation="8dp"
+                android:minHeight="45dp"
+                android:padding="3dp"
+                android:visibility="visible" />
+
+            <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:id="@+id/tab1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="5dp">
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/tab2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/tab3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+            </FrameLayout>
+        </LinearLayout>
+    </TabHost>
+
+    <TextView
     android:id="@+id/orderTextView"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="available_orders" />
-
-<android.support.v7.widget.RecyclerView
-
-    android:scrollbars="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:animateLayoutChanges="false"
-    android:layout_marginTop="37dp"
-    android:layout_below="@+id/orderTextView"
-    android:layout_alignParentStart="true"
-    android:id="@+id/list">
-
-</android.support.v7.widget.RecyclerView>
 
 </RelativeLayout>

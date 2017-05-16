@@ -107,6 +107,7 @@ public class MarketMain extends Fragment {
                     data.add(current);
             }
         }
+
         return data;
     }
 

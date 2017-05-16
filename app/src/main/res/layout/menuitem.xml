@@ -1,19 +1,20 @@
-<LinearLayout xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/menuIcon"
     android:layout_width="match_parent"
-    android:layout_height="180dp"
-    android:layout_marginTop="5dp"
+    android:layout_height="200dp"
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
-
+    android:layout_marginTop="5dp"
     android:background="@drawable/samosa">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="110dp"
-        android:layout_marginTop="70dp"
-
+        android:layout_height="match_parent"
+        android:layout_marginBottom="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="124dp"
         android:background="@drawable/back">
 
         <TextView
@@ -25,51 +26,57 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif"
             android:text="Pizza"
-            android:textColor="#ffffff"
-            android:textSize="20sp"
+            android:textColor="@color/colorPrimary"
+            android:textSize="24sp"
             android:textStyle="bold" />
+
         <TextView
             android:id="@+id/menuCost"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="20dp"
-            android:layout_centerVertical="true"
-            android:layout_below="@id/menuOrderName"
-            android:textColor="#ffffff"
-            android:textSize="15sp"
-            android:textStyle="bold"/>
+            android:layout_marginLeft="0dp"
+            android:text="Rs."
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_below="@+id/menuOrderName"
+            android:layout_alignStart="@+id/menuOrderName" />
 
         <TextView
             android:id="@+id/menuAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_marginBottom="3dp"
-            android:layout_centerVertical="true"
-            android:layout_below="@+id/menuOrderName"
-            android:layout_marginTop="1dp"
-            android:layout_marginLeft="20dp"
-            android:textColor="#ffffff"
-            android:textSize="15sp" />
+            android:layout_alignBaseline="@+id/menuCost"
+            android:layout_alignBottom="@+id/menuCost"
+            android:layout_marginLeft="3dp"
+            android:layout_marginStart="4dp"
+            android:layout_toEndOf="@+id/menuCost"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/menuPlaceOrder"
             android:layout_width="wrap_content"
-            android:clickable="true"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginRight="1dp"
+            android:layout_marginEnd="21dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginRight="1dp"
+            android:background="@color/colorPrimary"
+            android:clickable="true"
+
+            android:padding="10dp"
             android:paddingBottom="50dp"
-            android:text="View Details"
+            android:text="Place Order"
+            android:textAlignment="viewStart"
             android:textColor="#ffffff"
             android:textSize="15sp"
-            android:layout_alignTop="@+id/menuAddress" />
+            android:textStyle="bold"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true" />
+
     </RelativeLayout>
 
 </LinearLayout>

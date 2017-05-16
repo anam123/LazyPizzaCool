@@ -42,7 +42,7 @@ public class MenuAdaptor extends RecyclerView.Adapter<MenuAdaptor.MyHolder>{
     public void onBindViewHolder(MyHolder holder, int position) {
         MenuInfo menu= menuData.get(position);
         holder.title.setText(menu.getOrder_name());
-        holder.cost.setText(menu.getSource());
+        holder.cost.setText(menu.getCost());
         holder.icon.setBackgroundResource(menu.getImage_id());
     }
 
@@ -62,7 +62,7 @@ public class MenuAdaptor extends RecyclerView.Adapter<MenuAdaptor.MyHolder>{
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.menuOrderName);
             icon = (LinearLayout) itemView.findViewById(R.id.menuIcon);
-            cost = (TextView) itemView.findViewById(R.id.menuCost);
+            cost = (TextView) itemView.findViewById(R.id.menuAddress);
             placeOrder = (TextView) itemView.findViewById(R.id.menuPlaceOrder);
 
             placeOrder.setOnClickListener(this);
