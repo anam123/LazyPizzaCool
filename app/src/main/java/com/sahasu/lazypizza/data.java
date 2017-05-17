@@ -81,6 +81,7 @@ public class data {
                     temp.put("Remarks",counter.child("Remarks").getValue().toString());
                     temp.put("accepted",counter.child("accepted").getValue().toString());
                     temp.put("SC",counter.child("SC").getValue().toString());
+                    temp.put("src",counter.child("src").getValue().toString());
                     temp.put("deliveryboy",counter.child("deliveryboy").getValue().toString());
                     temp.put("deliveryboyphone",counter.child("deliveryboyphone").getValue().toString());
                     temp.put("destination",counter.child("destination").getValue().toString());
@@ -112,6 +113,7 @@ public class data {
                             current.place_by = com.sahasu.lazypizza.data.market.get(j).get("email");
                             current.phone_no = com.sahasu.lazypizza.data.market.get(j).get("phone");
                             current.UID =  com.sahasu.lazypizza.data.market.get(j).get("UID");
+                            current.src =  com.sahasu.lazypizza.data.market.get(j).get("src");
                             current.time_stamp = com.sahasu.lazypizza.data.market.get(j).get("timestamp");
                             //  Log.d("VERY EASY TO FIND TAG", com.sahasu.lazypizza.data.market.get(i).get("UID"));
                             data.add(current);
@@ -142,11 +144,12 @@ public class data {
     }
 
     public static class marketItem{
-        public String item,SC,price,Remarks,destination,email,accepted,phone,deliveryboy,deliveryboyphone,timestamp;
+        public String item,SC,price,Remarks,destination,email,accepted,phone,deliveryboy,deliveryboyphone,timestamp,src;
         public marketItem(String item,String SC,String price,String Remarks,String destination,String email,String accepted,
-                          String phone,String deliveryboy,String deliveryboyphone){
+                          String phone,String deliveryboy,String deliveryboyphone, String src){
             this.item =item;
             this.SC = SC;
+            this.src = src;
             this.Remarks = Remarks;
             this.price= price;
             this.destination =destination;
@@ -162,10 +165,10 @@ public class data {
     }
 
     public static void setValues(String path, String item,String SC,String price,String Remarks,String destination,String email,String accepted,
-                                 String phone,String deliveryboy,String deliveryboyphone){
+                                 String phone,String deliveryboy,String deliveryboyphone,String src){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference(path);
-        marketItem current=new marketItem(item,SC,price,Remarks,destination,email,accepted,phone,deliveryboy,deliveryboyphone);
+        marketItem current=new marketItem(item,SC,price,Remarks,destination,email,accepted,phone,deliveryboy,deliveryboyphone,src);
         myRef.setValue(current);
     }
     public static void setValue(String path, String value){
@@ -258,8 +261,10 @@ public class data {
                 }else{
                     senderSCBalance-=transferAmount;
                     receiverSCBalance+=transferAmount;
+                    Log.d(String.valueOf(senderSCBalance),"ff1");
                     setValue("users/"+emailToString(receiverEmail)+"/SC/",String.valueOf(receiverSCBalance));
                     setValue("users/"+emailToString(senderEmail)+"/SC/",String.valueOf(senderSCBalance));
+                    Log.d(data.SC,"ff");
                 }
                 Wallet.incorrectEmail(1,"");
             }
@@ -278,7 +283,7 @@ public class data {
 //        return items;
 //    }
 
-    public static void addToMarket(final String item, final String SC, final String price, final String Remarks, final String destination){
+    public static void addToMarket(final String item, final String SC, final String price, final String Remarks, final String destination, final String source){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("users/");
         Log.d("LOGGING OUTSIDE" , "ASFKLJASLFKJAKLJSFLKJASlk");
@@ -293,7 +298,7 @@ public class data {
                 }
                 addToEscrow(Float.parseFloat(SC));
                 String uid=String.valueOf(Math.round(Math.random()*10e10));
-                setValues("marketplace/"+uid,item+" ",SC,price,Remarks+" ",destination+" ",emailToString(email),"0",phone+" "," "," ");
+                setValues("marketplace/"+uid,item+" ",SC,price,Remarks+" ",destination+" ",emailToString(email),"0",phone+" "," "," ",source+ " ");
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {

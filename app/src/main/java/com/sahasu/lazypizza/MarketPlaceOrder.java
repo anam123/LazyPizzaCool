@@ -34,6 +34,7 @@ public class MarketPlaceOrder extends AppCompatActivity {
             final String placeby = in.getStringExtra("placeBy");
             final String address = in.getStringExtra("address");
             final String contact = in.getStringExtra("contact");
+            final String src = in.getStringExtra("source");
             final String cost = in.getStringExtra("cost");
             final String UID = in.getStringExtra("UID");
             final String time_stamp = in.getStringExtra("timestamp");
@@ -60,6 +61,7 @@ public class MarketPlaceOrder extends AppCompatActivity {
             String fi = cost;
             String si = "Time : " + ts;
 
+            Toast.makeText(getApplicationContext(), "Source " + src, Toast.LENGTH_SHORT).show();
             order_name.setText(f);
             place_by.setText(s);
             contact_no.setText(fo);

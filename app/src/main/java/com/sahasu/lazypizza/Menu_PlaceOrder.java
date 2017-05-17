@@ -32,6 +32,7 @@ public class Menu_PlaceOrder extends AppCompatActivity {
             final String address = in.getStringExtra("address");
             final String contact = data.phone;
             final String cost = in.getStringExtra("cost");
+            final String source = in.getStringExtra("source");
             final String scs = in.getStringExtra("scs");
 
             order_name = (TextView) findViewById(R.id.orderSummName);
@@ -61,7 +62,7 @@ public class Menu_PlaceOrder extends AppCompatActivity {
 //                    data.orderCompleted(UID,placeby,data.email,cost.split(" ")[3]);
                     Log.d("LOGGING OUTSIDE" , "a");
 
-                    data.addToMarket(orderName,scs,cost," ",address);
+                    data.addToMarket(orderName,scs,cost," ",address,source);
                     Intent intent = new Intent(v.getContext(), MainActivity.class);
                     startActivity(intent);
                 }

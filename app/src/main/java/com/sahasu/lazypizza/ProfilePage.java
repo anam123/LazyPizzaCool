@@ -2,6 +2,7 @@ package com.sahasu.lazypizza;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 public class ProfilePage extends AppCompatActivity {
@@ -17,7 +18,7 @@ public class ProfilePage extends AppCompatActivity {
         profileMail = (TextView) findViewById(R.id.profilemail);
         profilePhone = (TextView) findViewById(R.id.profilePhone);
         profileBalance = (TextView) findViewById(R.id.profileBalance);
-
+        Log.d(data.SC,"sc");
         profileMail.setText(data.email);
         profilePhone.setText(data.phone);
         profileBalance.setText(data.SC);

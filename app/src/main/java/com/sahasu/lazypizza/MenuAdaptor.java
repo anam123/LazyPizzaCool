@@ -105,6 +105,7 @@ public class MenuAdaptor extends RecyclerView.Adapter<MenuAdaptor.MyHolder>{
                             info = menuData.get(getAdapterPosition());
                             intent.putExtra("orderName", info.getOrder_name());
                             intent.putExtra("cost", info.getCost());
+                            intent.putExtra("source", info.getSource());
                             intent.putExtra("scs",sc);
                             v.getContext().startActivity(intent);
 

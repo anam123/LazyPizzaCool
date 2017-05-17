@@ -44,9 +44,9 @@ public class MenuMain extends Fragment {
         host.addTab(spec);
 
         //Tab 3
-        spec = host.newTabSpec("TUCK SHOP");
+        spec = host.newTabSpec("Juice Shop");
         spec.setContent(R.id.tab3);
-        spec.setIndicator("TUCK SHOP");
+        spec.setIndicator("Juice Shop");
         host.addTab(spec);
 
         host.setCurrentTab(0);

@@ -8,6 +8,7 @@ public class MarketInfo {
     String order_name;
     String address;
     String cost;
+    String src;
     String place_by;
     String phone_no;
     String UID;

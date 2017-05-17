@@ -40,7 +40,7 @@ public class MarketAdaptor extends RecyclerView.Adapter<MarketAdaptor.MyViewHold
     @Override
     public void onBindViewHolder(MyViewHolder viewHolder, int i) {
         MarketInfo current = data.get(i);
-        viewHolder.order_name.setText(current.order_name);
+        viewHolder.order_name.setText(current.order_name + "| "+ current.src.toLowerCase());
         viewHolder.address.setText(current.address);
         viewHolder.cost.setText(current.cost);
         String hour = current.time_stamp.split("_")[1].substring(0,2);
@@ -84,6 +84,7 @@ public class MarketAdaptor extends RecyclerView.Adapter<MarketAdaptor.MyViewHold
         @Override
         public void onClick(View v) {
             Toast.makeText(itemView.getContext(), "Clicked button at position : " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
+
             Intent intent = new Intent(itemView.getContext(), MarketPlaceOrder.class);
             Bundle b = new Bundle();
             MarketInfo info = new MarketInfo();
@@ -92,6 +93,7 @@ public class MarketAdaptor extends RecyclerView.Adapter<MarketAdaptor.MyViewHold
             intent.putExtra("placeBy", info.place_by);
             intent.putExtra("address", info.address);
             intent.putExtra("contact", info.phone_no);
+            intent.putExtra("source", info.src);
             intent.putExtra("cost", info.cost);
             intent.putExtra("UID",info.UID);
             intent.putExtra("timestamp", info.time_stamp);

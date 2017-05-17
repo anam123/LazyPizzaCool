@@ -15,7 +15,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class MarketMain extends Fragment {
@@ -39,6 +44,7 @@ public class MarketMain extends Fragment {
 
         return v;
     }
+
 
 
     public static List<MarketInfo> getData()
@@ -102,11 +108,26 @@ public class MarketMain extends Fragment {
                 current.phone_no = com.sahasu.lazypizza.data.market.get(i).get("phone");
                 current.UID =  com.sahasu.lazypizza.data.market.get(i).get("UID");
                 current.time_stamp = com.sahasu.lazypizza.data.market.get(i).get("timestamp");
+                current.src = com.sahasu.lazypizza.data.market.get(i).get("src");
+                Log.d(current.src,"ff");
               //  Log.d("VERY EASY TO FIND TAG", com.sahasu.lazypizza.data.market.get(i).get("UID"));
                 if(com.sahasu.lazypizza.data.market.get(i).get("accepted").equals("0"))
                     data.add(current);
             }
         }
+
+        Collections.sort(data, new Comparator<MarketInfo>() {
+            DateFormat f = new SimpleDateFormat("yyyyMMdd_HHmmss");
+            @Override
+            public int compare(MarketInfo o1, MarketInfo o2) {
+                try {
+                    return f.parse(o1.time_stamp).compareTo(f.parse(o2.time_stamp));
+                } catch (ParseException e) {
+                    throw new IllegalArgumentException(e);
+                }
+            }
+        });
+        Collections.reverse(data);
 
         return data;
     }
