@@ -7,10 +7,13 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,18 +21,77 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 
-public class MenuAdaptor extends RecyclerView.Adapter<MenuAdaptor.MyHolder>{
+public class MenuAdaptor extends RecyclerView.Adapter<MenuAdaptor.MyHolder> implements Filterable{
 
     private List<MenuInfo> menuData;
+    private List<MenuInfo> menuData1;
     private LayoutInflater inflater;
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+
+            @SuppressWarnings("unchecked")
+            @Override
+            protected void publishResults(CharSequence constraint,FilterResults results) {
+
+                menuData1 = (ArrayList<MenuInfo>) results.values; // has the filtered values
+                notifyDataSetChanged();  // notifies the data with new filtered values
+            }
+
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                FilterResults results = new FilterResults();        // Holds the results of a filtering operation in values
+               List<MenuInfo> FilteredArrList = new ArrayList<MenuInfo>();
+
+                if (menuData == null) {
+                    menuData = new ArrayList<MenuInfo>(menuData1); // saves the original data in mOriginalValues
+                }
+
+                /********
+                 *
+                 *  If constraint(CharSequence that is received) is null returns the mOriginalValues(Original) values
+                 *  else does the Filtering and returns FilteredArrList(Filtered)
+                 *
+                 ********/
+                if (constraint == null || constraint.length() == 0) {
+
+                    // set the Original result to return
+                    results.count = menuData.size();
+                    results.values = menuData;
+                } else {
+                    constraint = constraint.toString().toLowerCase();
+                    for (int i = 0; i < menuData.size(); i++) {
+                        String data = menuData.get(i).order_name;
+
+                        if (data.toLowerCase().startsWith(constraint.toString().toLowerCase())) {
+                            Log.d(constraint.toString().toLowerCase(),"vf");
+                            Log.d(data,"vf");
+                            FilteredArrList.add(new MenuInfo(menuData.get(i).getOrder_name(),menuData.get(i).getCost(),menuData.get(i).getSource(),menuData.get(i).getUID(),menuData.get(i).getImage_id()));
+                        }
+                    }
+                    // set the Filtered result to return
+                    results.count = FilteredArrList.size();
+                    System.out.println(results.count);
+                    results.values = FilteredArrList;
+                    System.out.println(results.values);
+                }
+                return results;
+            }
+        };
+    }
 
     public MenuAdaptor(List<MenuInfo> menuData, Context c)
     {
         this.inflater = LayoutInflater.from(c);
         this.menuData = menuData;
+        this.menuData1 = menuData;
+
     }
 
     @Override
@@ -40,15 +102,18 @@ public class MenuAdaptor extends RecyclerView.Adapter<MenuAdaptor.MyHolder>{
 
     @Override
     public void onBindViewHolder(MyHolder holder, int position) {
-        MenuInfo menu= menuData.get(position);
+        MenuInfo menu= menuData1.get(position);
         holder.title.setText(menu.getOrder_name());
         holder.cost.setText(menu.getCost());
         holder.icon.setBackgroundResource(menu.getImage_id());
     }
 
+
+
+
     @Override
     public int getItemCount() {
-        return menuData.size();
+        return menuData1.size();
     }
 
     class MyHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -102,7 +167,7 @@ public class MenuAdaptor extends RecyclerView.Adapter<MenuAdaptor.MyHolder>{
                         public void onClick(DialogInterface dialog, int whichButton) {
                             String sc=input2.getText().toString();
                             MenuInfo info;
-                            info = menuData.get(getAdapterPosition());
+                            info = menuData1.get(getAdapterPosition());
                             intent.putExtra("orderName", info.getOrder_name());
                             intent.putExtra("cost", info.getCost());
                             intent.putExtra("source", info.getSource());
@@ -130,6 +195,10 @@ public class MenuAdaptor extends RecyclerView.Adapter<MenuAdaptor.MyHolder>{
             });
             alert.show();
         }
+
+
+
+
     }
 
 }

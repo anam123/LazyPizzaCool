@@ -11,6 +11,16 @@ public class MenuInfo {
     public String source;
     public String UID;
 
+    public MenuInfo(String order_name, String cost,String source,String UID,int image_id) {
+        super();
+        this.order_name = order_name;
+        this.cost = cost;
+        this.source=source;
+        this.image_id=image_id;
+        this.UID=UID;
+    }
+
+
     public void setImage_id(int image_id) {
         this.image_id = image_id;
     }
