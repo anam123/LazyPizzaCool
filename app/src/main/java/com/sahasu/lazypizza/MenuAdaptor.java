@@ -165,16 +165,37 @@ public class MenuAdaptor extends RecyclerView.Adapter<MenuAdaptor.MyHolder> impl
 
                     alert2.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
-                            String sc=input2.getText().toString();
-                            MenuInfo info;
-                            info = menuData1.get(getAdapterPosition());
-                            intent.putExtra("orderName", info.getOrder_name());
-                            intent.putExtra("cost", info.getCost());
-                            intent.putExtra("source", info.getSource());
-                            intent.putExtra("scs",sc);
-                            v.getContext().startActivity(intent);
+
+                                String sc=input2.getText().toString();
+                                intent.putExtra("scs",sc);
+                                final AlertDialog.Builder alert3 = new AlertDialog.Builder(itemView.getContext());
+                                alert3.setTitle("Enter Remarks");
+
+                                final EditText input3 = new EditText (itemView.getContext());
+                                input3.setRawInputType(InputType.TYPE_CLASS_TEXT);
+                                alert3.setView(input3.getRootView());
+                                alert3.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                        String remarks = input3.getText().toString();
+                                        MenuInfo info;
+                                        info = menuData1.get(getAdapterPosition());
+                                        intent.putExtra("orderName", info.getOrder_name());
+                                        intent.putExtra("cost", info.getCost());
+                                        intent.putExtra("source", info.getSource());
+                                        intent.putExtra("remarks", remarks);
+                                        v.getContext().startActivity(intent);
+                                    }
+                                });
+
+                            alert3.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    dialog.dismiss();
+                                }
+                            });
+                            alert3.show();
 
                         }
+
                     });
 
 

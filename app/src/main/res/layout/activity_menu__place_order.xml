@@ -67,8 +67,8 @@
             android:fontFamily="sans-serif-condensed"
             android:textStyle="normal|bold"
             android:textSize="80px"
-            android:layout_marginTop="44dp"
-            android:layout_below="@+id/orderSummAdd"
+            android:layout_marginTop="48dp"
+            android:layout_below="@+id/orderSummContact"
             android:layout_centerHorizontal="true" />
 
         <TextView
@@ -104,5 +104,13 @@
             android:background="@android:color/holo_blue_dark"
             android:padding="10dp"
             android:textSize="35px" />
+
+        <TextView
+            android:id="@+id/remark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/orderSummContact"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="12dp" />
     </RelativeLayout>
 </LinearLayout>

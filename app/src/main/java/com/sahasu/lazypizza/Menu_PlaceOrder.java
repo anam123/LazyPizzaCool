@@ -17,6 +17,7 @@ public class Menu_PlaceOrder extends AppCompatActivity {
     TextView contact_no;
     TextView cost_value;
     TextView add;
+    TextView rem;
     public static Context context;
 
     @Override
@@ -33,9 +34,11 @@ public class Menu_PlaceOrder extends AppCompatActivity {
             final String contact = data.phone;
             final String cost = in.getStringExtra("cost");
             final String source = in.getStringExtra("source");
+            final String remarks = in.getStringExtra("remarks");
             final String scs = in.getStringExtra("scs");
 
             order_name = (TextView) findViewById(R.id.orderSummName);
+            rem=(TextView) findViewById(R.id.remark);
             place_by = (TextView) findViewById(R.id.orderSummUsr);
             contact_no = (TextView) findViewById(R.id.orderSummContact);
             cost_value = (TextView) findViewById(R.id.orderSummCost);
@@ -47,12 +50,14 @@ public class Menu_PlaceOrder extends AppCompatActivity {
             String t = "LOCATION : " + address;
             String fo = "CONTACT : " + contact;
             String fi = cost;
+            String rm= "REMARKS : " + remarks;
 
             order_name.setText(f);
             place_by.setText(s);
             contact_no.setText(fo);
             cost_value.setText("Rs. "+fi+" + "+scs+" SC");
             add.setText(t);
+            rem.setText(rm);
 
             button.setText("Place Order");
             button.setOnClickListener(new View.OnClickListener() {
@@ -62,7 +67,7 @@ public class Menu_PlaceOrder extends AppCompatActivity {
 //                    data.orderCompleted(UID,placeby,data.email,cost.split(" ")[3]);
                     Log.d("LOGGING OUTSIDE" , "a");
 
-                    data.addToMarket(orderName,scs,cost," ",address,source);
+                    data.addToMarket(orderName,scs,cost,remarks,address,source);
                     Intent intent = new Intent(v.getContext(), MainActivity.class);
                     startActivity(intent);
                 }
