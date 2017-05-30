@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.messaging.FirebaseMessaging;
+
 public class Menu_PlaceOrder extends AppCompatActivity {
 
     TextView order_name;
@@ -66,10 +68,11 @@ public class Menu_PlaceOrder extends AppCompatActivity {
                     Toast.makeText(v.getContext(), "ORDER PLACED", Toast.LENGTH_SHORT).show();
 //                    data.orderCompleted(UID,placeby,data.email,cost.split(" ")[3]);
                     Log.d("LOGGING OUTSIDE" , "a");
-
                     data.addToMarket(orderName,scs,cost,remarks,address,source);
                     Intent intent = new Intent(v.getContext(), MainActivity.class);
+
                     startActivity(intent);
+
                 }
             });
         }

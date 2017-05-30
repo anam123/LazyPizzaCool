@@ -1,13 +1,18 @@
 package com.sahasu.lazypizza;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.NumberPicker;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -82,22 +87,55 @@ public class MarketAdaptor extends RecyclerView.Adapter<MarketAdaptor.MyViewHold
         }
 
         @Override
-        public void onClick(View v) {
+        public void onClick(final View v) {
             Toast.makeText(itemView.getContext(), "Clicked button at position : " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
 
-            Intent intent = new Intent(itemView.getContext(), MarketPlaceOrder.class);
-            Bundle b = new Bundle();
-            MarketInfo info = new MarketInfo();
-            info = data.get(getAdapterPosition());
-            intent.putExtra("orderName", info.order_name);
-            intent.putExtra("placeBy", info.place_by);
-            intent.putExtra("address", info.address);
-            intent.putExtra("contact", info.phone_no);
-            intent.putExtra("source", info.src);
-            intent.putExtra("cost", info.cost);
-            intent.putExtra("UID",info.UID);
-            intent.putExtra("timestamp", info.time_stamp);
-            v.getContext().startActivity(intent);
+            RelativeLayout linearLayout = new RelativeLayout(v.getContext());
+            final NumberPicker aNumberPicker = new NumberPicker(v.getContext());
+            aNumberPicker.setMaxValue(30);
+            aNumberPicker.setMinValue(1);
+
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(50, 50);
+            RelativeLayout.LayoutParams numPicerParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+            numPicerParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+
+            linearLayout.setLayoutParams(params);
+            linearLayout.addView(aNumberPicker,numPicerParams);
+
+            final AlertDialog.Builder alert = new AlertDialog.Builder(itemView.getContext());
+            alert.setTitle("Enter Potential Wait Time (In Mins)");
+            alert.setView(linearLayout);
+            final Intent intent = new Intent(itemView.getContext(), MarketPlaceOrder.class);
+            alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+
+                    String time=String.valueOf(aNumberPicker.getValue());
+                    intent.putExtra("expected", time);
+                    Bundle b = new Bundle();
+                    MarketInfo info = new MarketInfo();
+                    info = data.get(getAdapterPosition());
+                    intent.putExtra("orderName", info.order_name);
+                    intent.putExtra("placeBy", info.place_by);
+                    intent.putExtra("address", info.address);
+                    intent.putExtra("contact", info.phone_no);
+                    intent.putExtra("source", info.src);
+                    intent.putExtra("cost", info.cost);
+                    intent.putExtra("UID",info.UID);
+                    intent.putExtra("timestamp", info.time_stamp);
+                    v.getContext().startActivity(intent);
+
+                }
+            });
+
+            alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    dialog.dismiss();
+                }
+            });
+            alert.show();
+
+
+
         }
     }
     public void swapItems(List<MarketInfo> data)

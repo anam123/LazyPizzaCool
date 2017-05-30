@@ -10,6 +10,7 @@ public class MarketInfo {
     String cost;
     String remarks;
     String src;
+    String expected;
     String place_by;
     String phone_no;
     String UID;

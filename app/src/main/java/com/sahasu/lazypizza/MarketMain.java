@@ -109,7 +109,9 @@ public class MarketMain extends Fragment {
                 current.UID =  com.sahasu.lazypizza.data.market.get(i).get("UID");
                 current.time_stamp = com.sahasu.lazypizza.data.market.get(i).get("timestamp");
                 current.src = com.sahasu.lazypizza.data.market.get(i).get("src");
+
                 Log.d(current.src,"ff");
+                Log.d(current.expected,"ff1");
               //  Log.d("VERY EASY TO FIND TAG", com.sahasu.lazypizza.data.market.get(i).get("UID"));
                 if(com.sahasu.lazypizza.data.market.get(i).get("accepted").equals("0"))
                     data.add(current);

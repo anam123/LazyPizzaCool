@@ -30,6 +30,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 /**
  * Demonstrate Firebase Authentication using a Google ID Token.
@@ -226,10 +227,10 @@ public class GoogleLogin extends AppCompatActivity implements
     private void updateUI(FirebaseUser user) {
         System.out.print("anam");
         if (user != null) {
-            if(!user.getEmail().contains("@iiitd.ac.in")) {
-                revokeAccess();
-                return;
-            }
+//            if(!user.getEmail().contains("@iiitd.ac.in")) {
+//                revokeAccess();
+//                return;
+//            }
 //            Toast.makeText(getApplicationContext(),"Update UI Called: "+(i++),Toast.LENGTH_SHORT).show();
 
             Log.d("Auth",user.getEmail());
@@ -243,17 +244,26 @@ public class GoogleLogin extends AppCompatActivity implements
 //            data.orderCompleted("43205258084","sarthak14094@iiitd.ac.in","sarthak14094@iiitd.ac.in","2");
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference myRef = database.getReference("users/");
+            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+            data.setValue("users/"+data.emailToString(data.email)+"/token",refreshedToken);
 //            Toast.makeText(getApplicationContext(),"Ready",Toast.LENGTH_SHORT).show();
 //            Toast.makeText(getApplicationContext(),data.emailToString(data.email),Toast.LENGTH_SHORT).show();
 //              data.transferSC("sarthak14094@iiitd.ac.in","anam14113@iiitd.ac.in",2.2f);
             ValueEventListener postListener = new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    DatabaseReference myRef = database.getReference("users/");
+                    String refreshedToken = FirebaseInstanceId.getInstance().getToken();
                     if(!snapshot.child(data.emailToString(data.email)).exists()){            //New User
+
+                        data.setValue("users/"+data.emailToString(data.email)+"/token",refreshedToken);
                         data.createNewUser(context);
                         data.initialize();
 //                        Toast.makeText(getApplicationContext(),"New User",Toast.LENGTH_SHORT).show();
                     }else{                                                                  //Old User
+
+                        data.setValue("users/"+data.emailToString(data.email)+"/token",refreshedToken);
                         data.SC=snapshot.child(data.emailToString(data.email)).child("SC").getValue().toString()+" ";
                         data.phone=snapshot.child(data.emailToString(data.email)).child("phone").getValue().toString()+" ";
                         data.initialize();

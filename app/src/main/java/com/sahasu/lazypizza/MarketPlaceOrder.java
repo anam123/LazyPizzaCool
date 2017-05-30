@@ -33,6 +33,7 @@ public class MarketPlaceOrder extends AppCompatActivity {
             final String orderName = in.getStringExtra("orderName");
             final String placeby = in.getStringExtra("placeBy");
             final String address = in.getStringExtra("address");
+            final String exp = in.getStringExtra("expected");
             final String contact = in.getStringExtra("contact");
             final String src = in.getStringExtra("source");
             final String cost = in.getStringExtra("cost");
@@ -73,10 +74,12 @@ public class MarketPlaceOrder extends AppCompatActivity {
             accept_order.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    data.setValue("marketplace/"+UID+"/expected",exp);
                     Toast.makeText(v.getContext(), UID, Toast.LENGTH_SHORT).show();
                     Log.d("ANOTHER EASY TAG", "/"+cost+"/");
 
                     data.acceptItemFromMarket(UID);
+
                     //data.orderCompleted(UID,placeby,data.email,cost.split(" ")[3]);
                     Intent intent = new Intent(v.getContext(), MainActivity.class);
                     startActivity(intent);

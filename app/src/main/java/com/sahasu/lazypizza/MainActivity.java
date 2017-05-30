@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
@@ -29,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
-
+        FirebaseMessaging.getInstance().subscribeToTopic("pushNotifications");
         com.sahasu.lazypizza.PrefManager prefManager;
         prefManager = new com.sahasu.lazypizza.PrefManager(this);
         prefManager.setPressedHowToUse(false);

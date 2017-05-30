@@ -31,6 +31,8 @@ public class data {
     public static Uri PhotoURL;
     public static String SC;
     public static String phone;
+    public static String token;
+    public static String expected;
     public static ArrayList<HashMap<String,String>> market; //count,data key, data value
     public static ArrayList<HashMap<String,String>> items;
     public static Context loginContext;
@@ -82,6 +84,7 @@ public class data {
                     temp.put("accepted",counter.child("accepted").getValue().toString());
                     temp.put("SC",counter.child("SC").getValue().toString());
                     temp.put("src",counter.child("src").getValue().toString());
+                    temp.put("expected",counter.child("expected").getValue().toString());
                     temp.put("deliveryboy",counter.child("deliveryboy").getValue().toString());
                     temp.put("deliveryboyphone",counter.child("deliveryboyphone").getValue().toString());
                     temp.put("destination",counter.child("destination").getValue().toString());
@@ -144,12 +147,13 @@ public class data {
     }
 
     public static class marketItem{
-        public String item,SC,price,Remarks,destination,email,accepted,phone,deliveryboy,deliveryboyphone,timestamp,src;
+        public String item,SC,price,Remarks,destination,email,accepted,phone,deliveryboy,deliveryboyphone,timestamp,src,expected;
         public marketItem(String item,String SC,String price,String Remarks,String destination,String email,String accepted,
-                          String phone,String deliveryboy,String deliveryboyphone, String src){
+                          String phone,String deliveryboy,String deliveryboyphone, String src, String expected){
             this.item =item;
             this.SC = SC;
             this.src = src;
+            this.expected = expected;
             this.Remarks = Remarks;
             this.price= price;
             this.destination =destination;
@@ -165,10 +169,10 @@ public class data {
     }
 
     public static void setValues(String path, String item,String SC,String price,String Remarks,String destination,String email,String accepted,
-                                 String phone,String deliveryboy,String deliveryboyphone,String src){
+                                 String phone,String deliveryboy,String deliveryboyphone,String src,String expected){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference(path);
-        marketItem current=new marketItem(item,SC,price,Remarks,destination,email,accepted,phone,deliveryboy,deliveryboyphone,src);
+        marketItem current=new marketItem(item,SC,price,Remarks,destination,email,accepted,phone,deliveryboy,deliveryboyphone,src,expected);
         myRef.setValue(current);
     }
     public static void setValue(String path, String value){
@@ -298,7 +302,7 @@ public class data {
                 }
                 addToEscrow(Float.parseFloat(SC));
                 String uid=String.valueOf(Math.round(Math.random()*10e10));
-                setValues("marketplace/"+uid,item+" ",SC,price,Remarks+" ",destination+" ",emailToString(email),"0",phone+" "," "," ",source+ " ");
+                setValues("marketplace/"+uid,item+" ",SC,price,Remarks+" ",destination+" ",emailToString(email),"0",phone+" "," "," ",source+ " ","");
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
