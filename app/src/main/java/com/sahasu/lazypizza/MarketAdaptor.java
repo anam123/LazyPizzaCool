@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,12 +26,12 @@ import java.util.List;
 public class MarketAdaptor extends RecyclerView.Adapter<MarketAdaptor.MyViewHolder> {
 
     private LayoutInflater inflator;
-    static List<MarketInfo> data = Collections.emptyList();
+    static List<MarketInfo> data1 = Collections.emptyList();
     public static MarketAdaptor mk;
 
-    public MarketAdaptor(Context context, List<MarketInfo> data)
+    public MarketAdaptor(Context context, List<MarketInfo> data1)
     {
-        this.data = data;
+        this.data1 = data1;
         inflator = LayoutInflater.from(context);
     }
 
@@ -44,7 +45,7 @@ public class MarketAdaptor extends RecyclerView.Adapter<MarketAdaptor.MyViewHold
 
     @Override
     public void onBindViewHolder(MyViewHolder viewHolder, int i) {
-        MarketInfo current = data.get(i);
+        MarketInfo current = data1.get(i);
         viewHolder.order_name.setText(current.order_name + "| "+ current.src.toLowerCase());
         viewHolder.address.setText(current.address);
         viewHolder.cost.setText(current.cost);
@@ -63,7 +64,7 @@ public class MarketAdaptor extends RecyclerView.Adapter<MarketAdaptor.MyViewHold
     @Override
     public int getItemCount() {
 
-        return data.size();
+        return data1.size();
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -90,6 +91,21 @@ public class MarketAdaptor extends RecyclerView.Adapter<MarketAdaptor.MyViewHold
         public void onClick(final View v) {
             Toast.makeText(itemView.getContext(), "Clicked button at position : " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
 
+            int count=0;
+            for (int i = 0; i < com.sahasu.lazypizza.data.market.size(); i++) {
+                if (com.sahasu.lazypizza.data.market.get(i).get("accepted").equals("1")) {
+                    String x=data.email;
+                    Log.d(x,"email");
+                    Log.d(com.sahasu.lazypizza.data.market.get(i).get("deliveryboy"),"del");
+                    if (data.stringToEmail(com.sahasu.lazypizza.data.market.get(i).get("deliveryboy")).equals(x)) {
+
+                        count=1;
+                        break;
+                    }
+
+                }
+            }
+            if(count==0){
             RelativeLayout linearLayout = new RelativeLayout(v.getContext());
             final NumberPicker aNumberPicker = new NumberPicker(v.getContext());
             aNumberPicker.setMaxValue(30);
@@ -113,7 +129,7 @@ public class MarketAdaptor extends RecyclerView.Adapter<MarketAdaptor.MyViewHold
                     intent.putExtra("expected", time);
                     Bundle b = new Bundle();
                     MarketInfo info = new MarketInfo();
-                    info = data.get(getAdapterPosition());
+                    info = data1.get(getAdapterPosition());
                     intent.putExtra("orderName", info.order_name);
                     intent.putExtra("placeBy", info.place_by);
                     intent.putExtra("address", info.address);
@@ -132,15 +148,20 @@ public class MarketAdaptor extends RecyclerView.Adapter<MarketAdaptor.MyViewHold
                     dialog.dismiss();
                 }
             });
-            alert.show();
+            alert.show();}
+
+            else{
+
+                Toast.makeText(itemView.getContext(), "You are already delivering an Order.", Toast.LENGTH_SHORT).show();
+            }
 
 
 
         }
     }
-    public void swapItems(List<MarketInfo> data)
+    public void swapItems(List<MarketInfo> data1)
     {
-        mk.data = data;
+        mk.data1 = data1;
         notifyDataSetChanged();
     }
 }

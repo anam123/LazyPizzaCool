@@ -14,10 +14,19 @@
             android:id="@+id/orders"
             android:icon="@drawable/order"
             android:title="My Orders" />
+
+        <item
+            android:id="@+id/delivery"
+            android:icon="@drawable/ic_cart"
+            android:title="Current Delivery" />
+
+
         <item
             android:id="@+id/use"
             android:icon="@drawable/howto"
             android:title="How To Use" />
+
+
         <item
             android:id="@+id/logout"
             android:icon="@drawable/logout"

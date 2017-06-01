@@ -3,6 +3,9 @@
     package="com.sahasu.lazypizza">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
+
 
     <application
         android:allowBackup="true"
@@ -31,6 +34,7 @@
         <activity android:name=".orderDetails" />
         <activity android:name=".MyBalance" />
         <activity android:name=".SplashScreen" />
+        <activity android:name=".Current_Delivery" />
         <service android:name=".MyFirebaseMessagingService" android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

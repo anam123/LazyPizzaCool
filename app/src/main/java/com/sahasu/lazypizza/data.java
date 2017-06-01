@@ -239,7 +239,7 @@ public class data {
     }
 
     //Transfer SC from one account to the other
-    public static void transferSC(final String senderEmail, final String receiverEmail, final float transferAmount){
+    public static void transferSC(final String senderEmail, final String receiverEmail, final float transferAmount,final int wall){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("users/");
         Log.d("LOGGING OUTSIDE" , "ASFKLJASLFKJAKLJSFLKJASlk");
@@ -270,7 +270,12 @@ public class data {
                     setValue("users/"+emailToString(senderEmail)+"/SC/",String.valueOf(senderSCBalance));
                     Log.d(data.SC,"ff");
                 }
-                Wallet.incorrectEmail(1,"");
+                if(wall==1) {
+                    Wallet.incorrectEmail(1, "");
+                }
+                else{
+
+                }
             }
 
             @Override
@@ -300,7 +305,7 @@ public class data {
                     Toast.makeText(Menu_PlaceOrder.context ,"Not Enough Balance!", Toast.LENGTH_SHORT).show();;
                     return;
                 }
-                addToEscrow(Float.parseFloat(SC));
+
                 String uid=String.valueOf(Math.round(Math.random()*10e10));
                 setValues("marketplace/"+uid,item+" ",SC,price,Remarks+" ",destination+" ",emailToString(email),"0",phone+" "," "," ",source+ " ","");
             }
@@ -328,9 +333,8 @@ public class data {
         setValue("marketplace/"+UID+"/deliveryboyphone/",phone+" ");
     }
 
-    public static void orderCompleted(String UID, String email, String deliveryboyemail, String SC){
-        Log.d("THE VALUE OF SC UID", "/"+SC+"/");
-        getFromEscrow(Float.valueOf(SC),deliveryboyemail,email);
+    public static void orderCompleted(String UID){
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         Log.d("THE VALUE OF UID", "/"+UID+"/");
         DatabaseReference myRef = database.getReference("marketplace/" + UID + "/");

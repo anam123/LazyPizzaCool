@@ -14,7 +14,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="30dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:id="@+id/linearLayout4">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -213,5 +214,29 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/button3"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/linearLayout4"
+        android:layout_below="@+id/linearLayout4"
+        android:layout_marginEnd="50dp"
+        android:layout_marginTop="69dp"
+        android:text="Pay SC " />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/button3"
+        android:layout_alignBottom="@+id/button3"
+        android:layout_marginEnd="51dp"
+        android:layout_toStartOf="@+id/button3"
+        android:text="Order Delivered?"
+        android:textColor="@color/bb_darkBackgroundColor"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
 </RelativeLayout>

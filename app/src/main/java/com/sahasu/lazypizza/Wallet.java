@@ -30,7 +30,7 @@ public class Wallet extends Fragment {
             @Override
             public void onClick(View v) {
                 //Toast.makeText(v.getContext(), Email.getText().toString(), Toast.LENGTH_SHORT).show();
-                data.transferSC(data.email,Email.getText().toString(),Float.parseFloat(amountSC.getText().toString()));
+                data.transferSC(data.email,Email.getText().toString(),Float.parseFloat(amountSC.getText().toString()),1);
                 Email.setText("");
                 amountSC.setText("");
                 Email.setHint("Enter Email Address");

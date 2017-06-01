@@ -13,7 +13,12 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 
 public class MyOrders extends AppCompatActivity {
@@ -23,7 +28,9 @@ public class MyOrders extends AppCompatActivity {
     String[] orderTitle = {"If", "you", "are", "seeing", "this", "something is", "not", "right!"};
     String[] orderDescription = {"","","","","","","",""};
     ArrayList<HashMap<String,String>> arrayList=new ArrayList<>();
+
     ArrayList<Integer> index = new ArrayList<Integer>();
+    ArrayList<Integer> index1 = new ArrayList<Integer>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +50,11 @@ public class MyOrders extends AppCompatActivity {
                     String hour = com.sahasu.lazypizza.data.market.get(i).get("timestamp").split("_")[1].substring(0,2);
                     String minutes = com.sahasu.lazypizza.data.market.get(i).get("timestamp").split("_")[1].substring(2,4);
                     String ts;
-                    if(Integer.parseInt(hour) < 12)
-                        ts = hour + ":" + minutes + " am";
-                    else
-                        ts = hour + ":" + minutes + " pm";
+//                    if(Integer.parseInt(hour) < 12)
+//                        ts = hour + ":" + minutes + " am";
+//                    else
+//                        ts = hour + ":" + minutes + " pm";
+                    ts=com.sahasu.lazypizza.data.market.get(i).get("timestamp");
                     hashMap.put("desc",ts);
                     arrayList.add(hashMap);
                     index.add(i);
@@ -61,17 +69,48 @@ public class MyOrders extends AppCompatActivity {
                     String hour = com.sahasu.lazypizza.data.market.get(i).get("timestamp").split("_")[1].substring(0,2);
                     String minutes = com.sahasu.lazypizza.data.market.get(i).get("timestamp").split("_")[1].substring(2,4);
                     String ts;
-                    if(Integer.parseInt(hour) < 12)
-                        ts = hour + ":" + minutes + " am";
-                    else
-                        ts = hour + ":" + minutes + " pm";
+//                    if(Integer.parseInt(hour) < 12)
+//                        ts = hour + ":" + minutes + " am";
+//                    else
+//                        ts = hour + ":" + minutes + " pm";
+                    ts=com.sahasu.lazypizza.data.market.get(i).get("timestamp");
+                    Log.d(ts,"Dd");
                     hashMap.put("desc",ts);
                     arrayList.add(hashMap);
                     index.add(i);
                 }
             }
         }
+        Log.d(index.toString(),"laa");
+        ArrayList<HashMap<String,String>> arrayList1=new ArrayList<>(arrayList);
+        Collections.sort(arrayList1, new Comparator<HashMap<String,String>>() {
+            DateFormat f = new SimpleDateFormat("yyyyMMdd_HHmmss");
+            @Override
+            public int compare(HashMap<String,String> o1, HashMap<String,String> o2) {
+                try {
+                    return f.parse(o1.get("desc")).compareTo(f.parse(o2.get("desc")));
+                } catch (ParseException e) {
+                    throw new IllegalArgumentException(e);
+                }
+            }
+        });
+        Collections.reverse(arrayList1);
+        for(int i=0;i<arrayList1.size();i++)
+        {
+            Log.d(arrayList1.get(i).get("desc")+" "+arrayList1.get(i).get("name"),"das");
+        }
 
+
+        for(int i=0;i<arrayList1.size();i++)
+        {
+            int j=arrayList.indexOf(arrayList1.get(i));
+            Log.d(Integer.toString(j),"Dda");
+            int k=index.get(j);
+            Log.d(Integer.toString(k),"Dda");
+            index1.add(k);
+
+
+        }
         /*for (int i=0;i<orderTitle.length;i++)
         {
             HashMap<String,String> hashMap=new HashMap<>();//create a hashmap to store the data in key value pair
@@ -82,7 +121,7 @@ public class MyOrders extends AppCompatActivity {
         String[] from={"name","desc"}; //string array
         int[] to={R.id.foodTitle, R.id.foodDesc}; //int array of views id's
         SimpleAdapter simpleAdapter = null;
-        simpleAdapter = new SimpleAdapter(this,arrayList,R.layout.activitymyorders_listview,from,to);//Create object and set the parameters for simpleAdapter
+        simpleAdapter = new SimpleAdapter(this,arrayList1,R.layout.activitymyorders_listview,from,to);//Create object and set the parameters for simpleAdapter
         if(simpleAdapter == null)
             Log.d("SIMPLE","Null simple adapter");
         if(simpleListView == null)
@@ -97,9 +136,10 @@ public class MyOrders extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),position+" is the position",Toast.LENGTH_LONG).show();//show the selected image in toast according to position
 
                 // Open the order details activity from here and pass the details
-                int marketIndex = index.get(position);
+                int marketIndex = index1.get(position);
                 Intent orderDetails = new Intent(getApplicationContext(), com.sahasu.lazypizza.orderDetails.class);
                 orderDetails.putExtra("Item",com.sahasu.lazypizza.data.market.get(marketIndex).get("item"));
+                orderDetails.putExtra("UID",com.sahasu.lazypizza.data.market.get(marketIndex).get("UID"));
                 orderDetails.putExtra("Price", com.sahasu.lazypizza.data.market.get(marketIndex).get("price"));
                 orderDetails.putExtra("Destination", com.sahasu.lazypizza.data.market.get(marketIndex).get("destination"));
                 orderDetails.putExtra("Accepted", com.sahasu.lazypizza.data.market.get(marketIndex).get("accepted"));

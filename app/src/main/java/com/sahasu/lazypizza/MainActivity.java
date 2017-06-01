@@ -161,7 +161,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.orders) {
             Intent order = new Intent(getApplicationContext(), MyOrders.class);
             startActivity(order);
-        } else if (id == R.id.use) {
+        }
+        else if (id==R.id.delivery){
+
+            Intent curr = new Intent(getApplicationContext(), Current_Delivery.class);
+            startActivity(curr);
+        }
+
+        else if (id == R.id.use) {
 
             com.sahasu.lazypizza.PrefManager prefManager;
             prefManager = new com.sahasu.lazypizza.PrefManager(this);

@@ -1,8 +1,12 @@
 package com.sahasu.lazypizza;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -77,12 +81,34 @@ public class MarketPlaceOrder extends AppCompatActivity {
                     data.setValue("marketplace/"+UID+"/expected",exp);
                     Toast.makeText(v.getContext(), UID, Toast.LENGTH_SHORT).show();
                     Log.d("ANOTHER EASY TAG", "/"+cost+"/");
+                    int count=0;
 
-                    data.acceptItemFromMarket(UID);
+
+                        data.acceptItemFromMarket(UID);
+
+                    NotificationCompat.Builder mBuilder =
+                            new NotificationCompat.Builder(v.getContext());
+
+//Create the intent that’ll fire when the user taps the notification//
+
+                    Intent intent = new Intent(v.getContext(), MainActivity.class);
+                    PendingIntent pendingIntent = PendingIntent.getActivity(v.getContext(), 0, intent, 0);
+
+                    mBuilder.setContentIntent(pendingIntent);
+
+                    mBuilder.setSmallIcon(R.drawable.logo);
+                    mBuilder.setContentTitle("You have accepted an order.");
+                    mBuilder.setContentText("Expected Delivery Time: "+exp+" "+"mins");
+
+                    NotificationManager mNotificationManager =
+
+                            (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+                    mNotificationManager.notify(001, mBuilder.build());
 
                     //data.orderCompleted(UID,placeby,data.email,cost.split(" ")[3]);
-                    Intent intent = new Intent(v.getContext(), MainActivity.class);
-                    startActivity(intent);
+                    Intent intent1 = new Intent(v.getContext(), MainActivity.class);
+                    startActivity(intent1);
                 }
             });
         }
