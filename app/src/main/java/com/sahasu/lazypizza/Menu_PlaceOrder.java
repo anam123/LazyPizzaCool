@@ -47,7 +47,7 @@ public class Menu_PlaceOrder extends AppCompatActivity {
             add = (TextView) findViewById(R.id.orderSummAdd);
             Button button = (Button) findViewById(R.id.orderSummButton);
 
-            String f = "1 " + orderName;
+            String f = orderName;
             String s = "PLACED BY : " + placeby;
             String t = "LOCATION : " + address;
             String fo = "CONTACT : " + contact;

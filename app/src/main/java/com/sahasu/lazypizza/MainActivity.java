@@ -1,5 +1,6 @@
 package com.sahasu.lazypizza;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,10 +10,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,10 +26,20 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private TextView textView;
     private BottomBar bottomBar;
     private boolean exit = false;
+    String ordername;
+    String cnt;
+    int count;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,6 +145,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -137,8 +154,224 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_cart) {
+
+
+            try {
+
+                FileInputStream fileIn = openFileInput("cart.txt");
+                InputStreamReader InputRead = new InputStreamReader(fileIn);
+
+                char[] inputBuffer = new char[10000];
+                String s = "";
+                int charRead;
+
+                while ((charRead = InputRead.read(inputBuffer)) > 0) {
+                    // char to string conversion
+                    String readstring = String.copyValueOf(inputBuffer, 0, charRead);
+                    s += readstring;
+                }
+                InputRead.close();
+                System.out.print(s);
+                final String[] arr0 = s.split("\n");
+                final String[] arr=new String[arr0.length];
+
+                final String src;
+                String src1="";
+                final String order="";
+                count=0;
+                ordername="";
+
+
+                for (int i = 0; i < arr0.length; i++)
+                {
+
+                    String[] arr1=arr0[i].split(",");
+                    arr[i]=arr1[0];
+                    src1=arr1[1];
+                    System.out.println(src1);
+                }
+                for (int i = 0; i < arr0.length; i++)
+                {
+
+                    String[] arr1=arr0[i].split(",");
+
+                        arr[i]=arr1[0];
+
+                    String[] first=arr[i].split("----");
+                    ordername=ordername+first[0]+" | ";
+                    count=count+Integer.parseInt(first[1]);
+                    src1=arr1[1];
+                    System.out.println(src1);
+                }
+                src=src1;
+
+                System.out.println("ordername "+ordername);
+                System.out.println("price "+count);
+                cnt=Integer.toString(count);
+
+                final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Cart");
+                builder.setIcon(R.drawable.ic_launcher);
+
+// add a checkbox list
+
+                boolean[] checked= new boolean[arr.length];
+                for(int i=0;i<checked.length;i++)
+                {
+                    checked[i]=false;
+                }
+
+                final ArrayList<Integer> selected=new ArrayList<>();
+                builder.setMultiChoiceItems(arr, checked, new DialogInterface.OnMultiChoiceClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                        // user checked or unchecked a box
+                        if (isChecked) {
+                            selected.add(++which);
+                        } else if (selected.contains(which)) {
+                            selected.remove(Integer.valueOf(++which));
+                        }
+
+                        System.out.println(selected);
+
+
+                    }
+                });
+
+// add OK and Cancel buttons
+                builder.setPositiveButton("PLACE ORDER", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+
+                        // user clicked OK
+                final Intent intent = new Intent(MainActivity.this, Menu_PlaceOrder.class);
+
+                final AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this, R.style.MyAlertDialogStyle);
+                alert.setTitle("Enter Location");
+
+                final EditText input_loc = new EditText(getApplicationContext());
+                alert.setView(input_loc.getRootView());
+                //alert.setView(input_loc);
+
+                alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        String loc = input_loc.getText().toString();
+                        intent.putExtra("address", loc);
+//                    MenuInfo info;
+//                    info = menuData.get(getAdapterPosition());
+//                    intent.putExtra("orderName", info.getOrder_name());
+//                    intent.putExtra("cost", info.getCost());
+//                    v.getContext().startActivity(intent);
+                        final AlertDialog.Builder alert2 = new AlertDialog.Builder(MainActivity.this, R.style.MyAlertDialogStyle);
+                        alert2.setTitle("Enter Super Coins");
+
+                        final EditText input2 = new EditText(getApplicationContext());
+                        input2.setRawInputType(InputType.TYPE_CLASS_NUMBER);
+                        alert2.setView(input2.getRootView());
+
+                        alert2.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+
+                                String sc = input2.getText().toString();
+                                intent.putExtra("scs", sc);
+                                final AlertDialog.Builder alert3 = new AlertDialog.Builder(MainActivity.this, R.style.MyAlertDialogStyle);
+                                alert3.setTitle("Enter Remarks");
+
+                                final EditText input3 = new EditText(getApplicationContext());
+                                input3.setRawInputType(InputType.TYPE_CLASS_TEXT);
+                                alert3.setView(input3.getRootView());
+                                alert3.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                        String remarks = input3.getText().toString();
+
+                                        intent.putExtra("orderName", ordername);
+                                        intent.putExtra("cost", cnt);
+                                        intent.putExtra("source", src);
+                                        intent.putExtra("remarks", remarks);
+                                       MainActivity.this.startActivity(intent);
+                                    }
+                                });
+
+                                alert3.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                        dialog.dismiss();
+                                    }
+                                });
+                                alert3.show();
+
+                            }
+
+                        });
+
+
+                        alert2.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                dialog.dismiss();
+                            }
+                        });
+                        alert2.show();
+
+                    }
+                });
+
+                alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        dialog.dismiss();
+                    }
+                });
+                alert.show();
+                    }
+                });
+                builder.setNegativeButton("REMOVE SELECTED",new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        ArrayList<String> a=new ArrayList<>(Arrays.asList(arr));
+                        ArrayList<String> b=new ArrayList<>(a);
+                        for (int i = 0; i < selected.size(); i++) {
+                            int select = selected.get(i);
+
+                            a.remove(b.get(select-1));
+
+
+
+                        }
+
+                        System.out.println("size: "+ a.size());
+
+                        try {
+                            FileOutputStream fileout=getApplicationContext().openFileOutput("cart.txt", getApplicationContext().MODE_PRIVATE);
+                            OutputStreamWriter outputWriter=new OutputStreamWriter(fileout);
+
+                            if(a.size()==0)
+                            {
+                                getApplicationContext().deleteFile("cart.txt");
+                            }
+                            for(int i=0;i<a.size();i++)
+                            {
+                                outputWriter.write(a.get(i)+"\n");
+                            }
+                            outputWriter.close();
+
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        // user clicked OK
+                    }
+                });
+
+// create and show the alert dialog
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
 

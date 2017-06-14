@@ -3,7 +3,7 @@ package com.sahasu.lazypizza;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Bundle;
+import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
@@ -11,25 +11,27 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
-import java.lang.reflect.Array;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.os.ParcelFileDescriptor.MODE_APPEND;
+import static android.os.ParcelFileDescriptor.MODE_WORLD_READABLE;
 
-public class MenuAdaptor extends RecyclerView.Adapter<MenuAdaptor.MyHolder> implements Filterable{
+
+public class MenuAdaptor extends RecyclerView.Adapter<MenuAdaptor.MyHolder> implements Filterable {
 
     private List<MenuInfo> menuData;
     private List<MenuInfo> menuData1;
+    FileOutputStream fileout;
     private LayoutInflater inflater;
 
     @Override
@@ -38,7 +40,7 @@ public class MenuAdaptor extends RecyclerView.Adapter<MenuAdaptor.MyHolder> impl
 
             @SuppressWarnings("unchecked")
             @Override
-            protected void publishResults(CharSequence constraint,FilterResults results) {
+            protected void publishResults(CharSequence constraint, FilterResults results) {
 
                 menuData1 = (ArrayList<MenuInfo>) results.values; // has the filtered values
                 notifyDataSetChanged();  // notifies the data with new filtered values
@@ -47,7 +49,7 @@ public class MenuAdaptor extends RecyclerView.Adapter<MenuAdaptor.MyHolder> impl
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
                 FilterResults results = new FilterResults();        // Holds the results of a filtering operation in values
-               List<MenuInfo> FilteredArrList = new ArrayList<MenuInfo>();
+                List<MenuInfo> FilteredArrList = new ArrayList<MenuInfo>();
 
                 if (menuData == null) {
                     menuData = new ArrayList<MenuInfo>(menuData1); // saves the original data in mOriginalValues
@@ -70,9 +72,9 @@ public class MenuAdaptor extends RecyclerView.Adapter<MenuAdaptor.MyHolder> impl
                         String data = menuData.get(i).order_name;
 
                         if (data.toLowerCase().startsWith(constraint.toString().toLowerCase())) {
-                            Log.d(constraint.toString().toLowerCase(),"vf");
-                            Log.d(data,"vf");
-                            FilteredArrList.add(new MenuInfo(menuData.get(i).getOrder_name(),menuData.get(i).getCost(),menuData.get(i).getSource(),menuData.get(i).getUID(),menuData.get(i).getImage_id()));
+                            Log.d(constraint.toString().toLowerCase(), "vf");
+                            Log.d(data, "vf");
+                            FilteredArrList.add(new MenuInfo(menuData.get(i).getOrder_name(), menuData.get(i).getCost(), menuData.get(i).getSource(), menuData.get(i).getUID()));
                         }
                     }
                     // set the Filtered result to return
@@ -86,8 +88,7 @@ public class MenuAdaptor extends RecyclerView.Adapter<MenuAdaptor.MyHolder> impl
         };
     }
 
-    public MenuAdaptor(List<MenuInfo> menuData, Context c)
-    {
+    public MenuAdaptor(List<MenuInfo> menuData, Context c) {
         this.inflater = LayoutInflater.from(c);
         this.menuData = menuData;
         this.menuData1 = menuData;
@@ -96,19 +97,17 @@ public class MenuAdaptor extends RecyclerView.Adapter<MenuAdaptor.MyHolder> impl
 
     @Override
     public MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.menuitem,parent,false);
+        View view = inflater.inflate(R.layout.menuitem, parent, false);
         return new MyHolder(view);
     }
 
     @Override
     public void onBindViewHolder(MyHolder holder, int position) {
-        MenuInfo menu= menuData1.get(position);
+        MenuInfo menu = menuData1.get(position);
         holder.title.setText(menu.getOrder_name());
         holder.cost.setText(menu.getCost());
-        holder.icon.setBackgroundResource(menu.getImage_id());
+
     }
-
-
 
 
     @Override
@@ -116,110 +115,62 @@ public class MenuAdaptor extends RecyclerView.Adapter<MenuAdaptor.MyHolder> impl
         return menuData1.size();
     }
 
-    class MyHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    class MyHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView title;
-        private LinearLayout icon;
+
         private TextView cost;
         private TextView placeOrder;
+        private Button addcart;
+
+
 
         public MyHolder(View itemView) {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.menuOrderName);
-            icon = (LinearLayout) itemView.findViewById(R.id.menuIcon);
+
             cost = (TextView) itemView.findViewById(R.id.menuAddress);
             placeOrder = (TextView) itemView.findViewById(R.id.menuPlaceOrder);
 
             placeOrder.setOnClickListener(this);
 
+
         }
+
 
         @Override
         public void onClick(final View v) {
 
-            Toast.makeText(itemView.getContext(), "Clicked button at position : " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
-            final Intent intent = new Intent(itemView.getContext(), Menu_PlaceOrder.class);
 
-            final AlertDialog.Builder alert = new AlertDialog.Builder(itemView.getContext());
-            alert.setTitle("Enter Location");
+            if (v == placeOrder) {
 
-            final EditText input_loc = new EditText(itemView.getContext());
-            alert.setView(input_loc.getRootView());
-            //alert.setView(input_loc);
+                MenuInfo info;
+                String file = "mydata";
+                info = menuData1.get(getAdapterPosition());
+                String name=info.getOrder_name();
+                String cost=info.getCost();
+                String source=info.getSource();
 
-            alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int whichButton) {
-                    String loc=input_loc.getText().toString();
-                    intent.putExtra("address",loc);
-//                    MenuInfo info;
-//                    info = menuData.get(getAdapterPosition());
-//                    intent.putExtra("orderName", info.getOrder_name());
-//                    intent.putExtra("cost", info.getCost());
-//                    v.getContext().startActivity(intent);
-                    final AlertDialog.Builder alert2 = new AlertDialog.Builder(itemView.getContext());
-                    alert2.setTitle("Enter Super Coins");
+                try {
+                    fileout=itemView.getContext().openFileOutput("cart.txt", itemView.getContext().MODE_APPEND);
+                    OutputStreamWriter outputWriter=new OutputStreamWriter(fileout);
+                    outputWriter.write(name+"----"+cost+","+source+"\n");
+                    outputWriter.close();
 
-                    final EditText input2 = new EditText (itemView.getContext());
-                    input2.setRawInputType(InputType.TYPE_CLASS_NUMBER);
-                    alert2.setView(input2.getRootView());
+                    //display file saved message
+                    Toast.makeText(itemView.getContext(), "Added to cart!",
+                            Toast.LENGTH_SHORT).show();
 
-                    alert2.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int whichButton) {
-
-                                String sc=input2.getText().toString();
-                                intent.putExtra("scs",sc);
-                                final AlertDialog.Builder alert3 = new AlertDialog.Builder(itemView.getContext());
-                                alert3.setTitle("Enter Remarks");
-
-                                final EditText input3 = new EditText (itemView.getContext());
-                                input3.setRawInputType(InputType.TYPE_CLASS_TEXT);
-                                alert3.setView(input3.getRootView());
-                                alert3.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int whichButton) {
-                                        String remarks = input3.getText().toString();
-                                        MenuInfo info;
-                                        info = menuData1.get(getAdapterPosition());
-                                        intent.putExtra("orderName", info.getOrder_name());
-                                        intent.putExtra("cost", info.getCost());
-                                        intent.putExtra("source", info.getSource());
-                                        intent.putExtra("remarks", remarks);
-                                        v.getContext().startActivity(intent);
-                                    }
-                                });
-
-                            alert3.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int whichButton) {
-                                    dialog.dismiss();
-                                }
-                            });
-                            alert3.show();
-
-                        }
-
-                    });
-
-
-                    alert2.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int whichButton) {
-                            dialog.dismiss();
-                        }
-                    });
-                    alert2.show();
-
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            });
 
-            alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int whichButton) {
-                    dialog.dismiss();
-                }
-            });
-            alert.show();
+
+
+            }
+
+
         }
 
-
-
-
     }
-
 }

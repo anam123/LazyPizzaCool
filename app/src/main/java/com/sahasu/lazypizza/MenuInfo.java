@@ -5,29 +5,24 @@ package com.sahasu.lazypizza;
  */
 
 public class MenuInfo {
-    public int image_id;
+
     public String order_name;
     public String cost;
     public String source;
     public String UID;
 
-    public MenuInfo(String order_name, String cost,String source,String UID,int image_id) {
+    public MenuInfo(String order_name, String cost,String source,String UID) {
         super();
         this.order_name = order_name;
         this.cost = cost;
         this.source=source;
-        this.image_id=image_id;
+
         this.UID=UID;
     }
 
 
-    public void setImage_id(int image_id) {
-        this.image_id = image_id;
-    }
 
-    public int getImage_id() {
-        return image_id;
-    }
+
 
     public String getOrder_name() {
         return order_name;
