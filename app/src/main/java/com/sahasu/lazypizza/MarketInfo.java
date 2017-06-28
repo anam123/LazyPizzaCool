@@ -4,7 +4,7 @@ package com.sahasu.lazypizza;
  * Created by asd on 4/7/2017.
  */
 public class MarketInfo {
-    int img_id;
+
     String order_name;
     String address;
     String cost;
@@ -14,5 +14,6 @@ public class MarketInfo {
     String place_by;
     String phone_no;
     String UID;
+    String exp_timestamp;
     String time_stamp;
 }

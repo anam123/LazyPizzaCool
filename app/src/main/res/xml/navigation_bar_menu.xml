@@ -2,7 +2,7 @@
     <tab
         id="@+id/tab_calls"
         icon="@drawable/ic_cart"
-        title="Market"
+        title="Deliver"
         activeColor="#fafafa"
         barColorWhenSelected="@color/colorPrimary"/>
 
@@ -12,6 +12,7 @@
         icon="@drawable/ic_food"
         title="Order"
         activeColor="#fafafa"
+
         barColorWhenSelected="@color/colorPrimary"/>
     <tab
         id="@+id/tab_chats"

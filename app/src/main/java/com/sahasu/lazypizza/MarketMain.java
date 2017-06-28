@@ -1,18 +1,23 @@
 package com.sahasu.lazypizza;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TabHost;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.DateFormat;
@@ -29,25 +34,85 @@ public class MarketMain extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    TabHost tabHost;
     private MarketAdaptor adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View v= inflater.inflate(R.layout.market_act_main,container,false);
+        final View v= inflater.inflate(R.layout.market_act_main,container,false);
         recyclerView= (RecyclerView) v.findViewById(R.id.orderList);
-
-        adapter = new MarketAdaptor(v.getContext(),getData());
+        final TabHost host = (TabHost)v.findViewById(R.id.th1);
+        adapter = new MarketAdaptor(v.getContext(),getData("Canteen "));
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(v.getContext()));
+
+        host.setup();
+
+        //Tab 1
+        TabHost.TabSpec spec = host.newTabSpec("Canteen");
+        spec.setContent(R.id.tab1);
+        spec.setIndicator("Canteen");
+        host.addTab(spec);
+
+        //Tab 2
+        spec = host.newTabSpec("CDX");
+        spec.setContent(R.id.tab2);
+        spec.setIndicator("CDX");
+        host.addTab(spec);
+
+        //Tab 3
+        spec = host.newTabSpec("Juice Shop");
+        spec.setContent(R.id.tab3);
+        spec.setIndicator("Juice Shop");
+        host.addTab(spec);
+
+        host.setCurrentTab(0);
+
+        host.getTabWidget().getChildAt(host.getCurrentTab()).setBackgroundColor(Color.parseColor("#FF7C4DFF")); // selected
+        TextView tv = (TextView) host.getCurrentTabView().findViewById(android.R.id.title); //for Selected Tab
+        tv.setTextColor(Color.parseColor("#ffffff"));
+
+        host.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+            @Override
+            public void onTabChanged(String tabId) {
+                // display the name of the tab whenever a tab is changed
+
+                if(tabId.equals(tabId)){
+
+
+                    recyclerView= (RecyclerView) v.findViewById(R.id.orderList);
+                    adapter = new MarketAdaptor(v.getContext(),getData(tabId+" "));
+                    recyclerView.setAdapter(adapter);
+
+
+                    recyclerView.setLayoutManager(new LinearLayoutManager(v.getContext()));
+
+
+                }
+
+                for (int i = 0; i < host.getTabWidget().getChildCount(); i++) {
+                    host.getTabWidget().getChildAt(i).setBackgroundColor(Color.parseColor("#ffffff")); // unselected
+                    TextView tv = (TextView) host.getTabWidget().getChildAt(i).findViewById(android.R.id.title); //Unselected Tabs
+                    tv.setTextColor(Color.parseColor("#000000"));
+                }
+
+                host.getTabWidget().getChildAt(host.getCurrentTab()).setBackgroundColor(Color.parseColor("#FF7C4DFF")); // selected
+                TextView tv = (TextView) host.getCurrentTabView().findViewById(android.R.id.title); //for Selected Tab
+                tv.setTextColor(Color.parseColor("#ffffff"));
+
+
+            }
+        });
+
 
         return v;
     }
 
 
 
-    public static List<MarketInfo> getData()
+    public static List<MarketInfo> getData(String tab)
     {
         List<MarketInfo> data = new ArrayList<>();
 
@@ -74,47 +139,24 @@ public class MarketMain extends Fragment {
             int[] icons = {R.drawable.burger, R.drawable.sandwich, R.drawable.cheetos, R.drawable.cake,R.drawable.pizza};
             for (int i = 0; i < com.sahasu.lazypizza.data.market.size(); i++) {
                 MarketInfo current = new MarketInfo();
-                current.img_id=icons[0];
-                if(com.sahasu.lazypizza.data.market.get(i).get("item").equals("Burger "))
-                {
-                    current.img_id=icons[0];
-                }
-                else if (com.sahasu.lazypizza.data.market.get(i).get("item").equals("Chips "))
-                {
-                    current.img_id=icons[2];
-                }
-                else if( com.sahasu.lazypizza.data.market.get(i).get("item").equals("Chicken Sandwich "))
-                {
-                    current.img_id=icons[1];
-                }
-                else if(com.sahasu.lazypizza.data.market.get(i).get("item").equals("Paneer Sandwich "))
-                {
-                    current.img_id=icons[1];
-                }
-                else if(com.sahasu.lazypizza.data.market.get(i).get("item").equals("Pastry "))
-                {
-                    current.img_id=icons[3];
-                }
-                else if(com.sahasu.lazypizza.data.market.get(i).get("item").equals("Pizza "))
-                {
-                    current.img_id=icons[4];
-                }
 
 
-                current.order_name = com.sahasu.lazypizza.data.market.get(i).get("item");
-                current.address = com.sahasu.lazypizza.data.market.get(i).get("destination");
-                current.cost = "Rs " + com.sahasu.lazypizza.data.market.get(i).get("price") + " + " + com.sahasu.lazypizza.data.market.get(i).get("SC") + " SC";
-                current.place_by = com.sahasu.lazypizza.data.market.get(i).get("email");
-                current.phone_no = com.sahasu.lazypizza.data.market.get(i).get("phone");
-                current.UID =  com.sahasu.lazypizza.data.market.get(i).get("UID");
-                current.time_stamp = com.sahasu.lazypizza.data.market.get(i).get("timestamp");
-                current.src = com.sahasu.lazypizza.data.market.get(i).get("src");
+                if(com.sahasu.lazypizza.data.market.get(i).get("src").equals(tab)) {
+                    current.order_name = com.sahasu.lazypizza.data.market.get(i).get("item");
+                    current.address = com.sahasu.lazypizza.data.market.get(i).get("destination");
+                    current.cost = "Rs " + com.sahasu.lazypizza.data.market.get(i).get("price") + " + " + com.sahasu.lazypizza.data.market.get(i).get("SC") + " SC";
+                    current.place_by = com.sahasu.lazypizza.data.market.get(i).get("email");
+                    current.phone_no = com.sahasu.lazypizza.data.market.get(i).get("phone");
+                    current.UID = com.sahasu.lazypizza.data.market.get(i).get("UID");
+                    current.time_stamp = com.sahasu.lazypizza.data.market.get(i).get("timestamp");
+                    current.src = com.sahasu.lazypizza.data.market.get(i).get("src");
 
-                Log.d(current.src,"ff");
-                Log.d(current.expected,"ff1");
-              //  Log.d("VERY EASY TO FIND TAG", com.sahasu.lazypizza.data.market.get(i).get("UID"));
-                if(com.sahasu.lazypizza.data.market.get(i).get("accepted").equals("0"))
-                    data.add(current);
+                    Log.d(current.src, "ff");
+                    Log.d(current.expected, "ff1");
+                    //  Log.d("VERY EASY TO FIND TAG", com.sahasu.lazypizza.data.market.get(i).get("UID"));
+                    if (com.sahasu.lazypizza.data.market.get(i).get("accepted").equals("0"))
+                        data.add(current);
+                }
             }
         }
 

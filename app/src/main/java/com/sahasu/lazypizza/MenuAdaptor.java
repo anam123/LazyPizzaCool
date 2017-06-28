@@ -18,7 +18,12 @@ import android.widget.Filterable;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -144,27 +149,90 @@ public class MenuAdaptor extends RecyclerView.Adapter<MenuAdaptor.MyHolder> impl
 
             if (v == placeOrder) {
 
+
+
                 MenuInfo info;
                 String file = "mydata";
                 info = menuData1.get(getAdapterPosition());
                 String name=info.getOrder_name();
                 String cost=info.getCost();
                 String source=info.getSource();
+                String wtf;
 
+
+                String s="";
+                String src1="";
+                int lines;
                 try {
-                    fileout=itemView.getContext().openFileOutput("cart.txt", itemView.getContext().MODE_APPEND);
-                    OutputStreamWriter outputWriter=new OutputStreamWriter(fileout);
-                    outputWriter.write(name+"----"+cost+","+source+"\n");
-                    outputWriter.close();
 
-                    //display file saved message
-                    Toast.makeText(itemView.getContext(), "Added to cart!",
-                            Toast.LENGTH_SHORT).show();
+                    FileInputStream fileIn = itemView.getContext().openFileInput("cart.txt");
+                    InputStreamReader InputRead = new InputStreamReader(fileIn);
 
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    char[] inputBuffer = new char[10000];
+
+                    int charRead;
+
+                    while ((charRead = InputRead.read(inputBuffer)) > 0) {
+                        // char to string conversion
+                        String readstring = String.copyValueOf(inputBuffer, 0, charRead);
+                        s += readstring;
+                    }
+                    InputRead.close();
                 }
+                catch(IOException e)
+                {
 
+                }
+                    System.out.println("as: "+s);
+                    final String[] arr0 = s.split("\n");
+                for (int i = 0; i < arr0.length; i++)
+                {
+
+                    System.out.println("arr0 "+arr0[i]);
+                    if(arr0[i].equals(""))
+                    {
+
+                    }
+                    else {
+                        String[] arr1 = arr0[i].split(",");
+                        src1 = arr1[1];
+                        System.out.println("src: " + src1);
+                    }
+                }
+                lines=arr0.length;
+                System.out.println("lines: "+lines);
+
+
+
+
+                if(lines<=2 && ( source.equals(src1) || src1.equals(""))) {
+                    try {
+                        fileout = itemView.getContext().openFileOutput("cart.txt", itemView.getContext().MODE_APPEND);
+                        OutputStreamWriter outputWriter = new OutputStreamWriter(fileout);
+                        wtf = name + "----" + cost + "," + source + "\n";
+                        System.out.println("wtf :" + wtf);
+                        outputWriter.write(wtf);
+                        outputWriter.close();
+
+                        //display file saved message
+                        Toast.makeText(itemView.getContext(), "Added to cart!",
+                                Toast.LENGTH_SHORT).show();
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                else
+                {
+                    if(lines>2) {
+                        Toast.makeText(v.getContext(), "Cart Reached Max Limit, i.e 3!", Toast.LENGTH_SHORT).show();
+                    }
+                    else if(!source.equals(src1))
+                    {
+                        Toast.makeText(v.getContext(), "Order from one shop at a time.", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
 
 
             }

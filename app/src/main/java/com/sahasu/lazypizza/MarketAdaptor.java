@@ -3,6 +3,8 @@ package com.sahasu.lazypizza;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.lang.reflect.Field;
 import java.util.Collections;
 import java.util.List;
 
@@ -46,7 +49,7 @@ public class MarketAdaptor extends RecyclerView.Adapter<MarketAdaptor.MyViewHold
     @Override
     public void onBindViewHolder(MyViewHolder viewHolder, int i) {
         MarketInfo current = data1.get(i);
-        viewHolder.order_name.setText(current.order_name + "| "+ current.src.toLowerCase());
+        viewHolder.order_name.setText(current.order_name);
         viewHolder.address.setText(current.address);
         viewHolder.cost.setText(current.cost);
         String hour = current.time_stamp.split("_")[1].substring(0,2);
@@ -58,7 +61,7 @@ public class MarketAdaptor extends RecyclerView.Adapter<MarketAdaptor.MyViewHold
             ts = hour + ":" + minutes + " pm";
         viewHolder.timestamp.setText(ts);
 //        viewHolder.icon.setImageResource(current.img_id);
-        viewHolder.ll.setBackgroundResource(current.img_id);
+
     }
 
     @Override
@@ -66,6 +69,7 @@ public class MarketAdaptor extends RecyclerView.Adapter<MarketAdaptor.MyViewHold
 
         return data1.size();
     }
+
 
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
@@ -89,7 +93,7 @@ public class MarketAdaptor extends RecyclerView.Adapter<MarketAdaptor.MyViewHold
 
         @Override
         public void onClick(final View v) {
-            Toast.makeText(itemView.getContext(), "Clicked button at position : " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(itemView.getContext(), "Clicked button at position : " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
 
             int count=0;
             for (int i = 0; i < com.sahasu.lazypizza.data.market.size(); i++) {
@@ -108,12 +112,14 @@ public class MarketAdaptor extends RecyclerView.Adapter<MarketAdaptor.MyViewHold
             if(count==0){
             RelativeLayout linearLayout = new RelativeLayout(v.getContext());
             final NumberPicker aNumberPicker = new NumberPicker(v.getContext());
+
             aNumberPicker.setMaxValue(30);
             aNumberPicker.setMinValue(1);
 
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(50, 50);
             RelativeLayout.LayoutParams numPicerParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
             numPicerParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+
 
             linearLayout.setLayoutParams(params);
             linearLayout.addView(aNumberPicker,numPicerParams);

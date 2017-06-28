@@ -1,37 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#2A343C">
+    android:background="#fff">
 
-    <RelativeLayout
+    <View
+        android:id="@+id/myRectangleView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="65dp"
+        android:background="@drawable/backsolid"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="Your Order"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/slide_title"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="46dp"
+        android:layout_below="@+id/myRectangleView"
+        android:layout_alignParentStart="true">
+
+        <ImageView
+            android:id="@+id/foodicon"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="10dp"
+            android:src="@drawable/foodcolor" />
 
         <TextView
-            android:text="1 Samosa"
+            android:id="@+id/orderSummName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/orderSummName"
-            android:textColor="@android:color/background_light"
-            android:textStyle="normal|bold"
-            android:fontFamily="serif"
-            android:layout_marginTop="52dp"
-            android:layout_below="@+id/textView0"
-            android:layout_centerHorizontal="true"
-            android:textSize="80px" />
+            android:layout_below="@+id/foodicon"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="10dp"
+            android:text="Samosa"
+            android:textColor="@android:color/black"
+            android:textSize="20sp" />
+
+
 
         <TextView
             android:text="Placed By : Sarthak Madan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/orderSummUsr"
-            android:textColor="@android:color/background_light"
-            android:fontFamily="sans-serif-smallcaps"
-            android:textStyle="normal|bold"
-            android:textSize="40px"
-            android:layout_below="@+id/orderSummName"
-            android:layout_centerHorizontal="true"
+            android:textColor="@android:color/black"
+            android:textSize="15dp"
+            android:layout_marginLeft="20dp"
+            android:layout_below="@+id/textView2"
             android:layout_marginTop="15dp" />
 
         <TextView
@@ -39,78 +79,60 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/orderSummAdd"
-            android:textSize="40px"
-            android:fontFamily="sans-serif-smallcaps"
-            android:textStyle="normal|bold"
-            android:textColor="@android:color/background_light"
-            android:layout_below="@+id/orderSummUsr"
-            android:layout_centerHorizontal="true" />
+            android:textSize="15dp"
+            android:layout_marginLeft="20dp"
+            android:textColor="@android:color/black"
+            android:layout_below="@+id/textView3" />
 
         <TextView
             android:text="Contact : 9999029972"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/orderSummContact"
-            android:textSize="40px"
-            android:fontFamily="sans-serif-smallcaps"
-            android:textColor="@android:color/background_light"
-            android:textStyle="normal|bold"
-            android:layout_below="@+id/orderSummAdd"
-            android:layout_alignEnd="@+id/orderSummCost" />
+            android:textSize="15dp"
+            android:layout_marginLeft="20dp"
+            android:textColor="@android:color/black"
+            android:layout_below="@+id/textView7"
+            />
+
+        <TextView
+            android:text=""
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/remark"
+            android:textSize="15dp"
+            android:layout_marginLeft="20dp"
+            android:textColor="@android:color/black"
+            android:layout_below="@+id/textView8"
+            />
 
         <TextView
             android:text="Rs. 50.0 | 5 SC"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/orderSummCost"
-            android:textColor="@android:color/background_light"
-            android:fontFamily="sans-serif-condensed"
-            android:textStyle="normal|bold"
-            android:textSize="80px"
-            android:layout_marginTop="48dp"
-            android:layout_below="@+id/orderSummContact"
-            android:layout_centerHorizontal="true" />
+            android:textColor="@android:color/black"
+            android:textSize="30dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:layout_below="@+id/textView8" />
 
-        <TextView
-            android:text="Order Details"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView0"
-            android:textColor="@android:color/background_light"
-            android:textStyle="normal|bold"
 
-            android:fontFamily="sans-serif-condensed"
-            android:lineSpacingExtra="10sp"
-            android:textAlignment="textStart"
-            android:textAppearance="@android:style/TextAppearance.DeviceDefault"
-            android:textSize="90px"
-            android:layout_marginTop="63dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignStart="@+id/orderSummCost" />
 
         <Button
             android:text="Place Order"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/orderSummCost"
+            android:layout_below="@+id/textView4"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="52dp"
+            android:layout_marginTop="25dp"
             android:id="@+id/orderSummButton"
             style="@android:style/Widget.Holo.Light.Button.Toggle"
             android:elevation="22dp"
-            android:fontFamily="sans-serif-condensed"
-            android:textStyle="normal|bold"
+            android:layout_gravity="center_horizontal"
             android:textColor="@android:color/background_light"
-            android:background="@android:color/holo_blue_dark"
+            android:background="@color/colorAccent"
             android:padding="10dp"
-            android:textSize="35px" />
-
-        <TextView
-            android:id="@+id/remark"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/orderSummContact"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="12dp" />
-    </RelativeLayout>
-</LinearLayout>
+            android:textSize="20dp" />
+    </LinearLayout>
+</RelativeLayout>

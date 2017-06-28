@@ -1,40 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="100dp" >
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="@drawable/back"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true">
+        android:background="@drawable/back"
+        android:elevation="24dp"
+        android:scrollbars="vertical">
 
         <TextView
             android:id="@+id/menuOrderName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_above="@+id/menuCost"
+            android:layout_alignParentStart="true"
             android:layout_marginLeft="20dp"
+            android:layout_marginStart="19dp"
             android:fontFamily="sans-serif"
             android:text="Pizza"
             android:textColor="@color/colorPrimary"
             android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_above="@+id/menuCost"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="19dp" />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/menuCost"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/menuPlaceOrder"
+            android:layout_alignStart="@+id/menuOrderName"
             android:layout_marginLeft="0dp"
             android:text="Rs."
             android:textColor="#000000"
             android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_alignBottom="@+id/menuPlaceOrder"
-            android:layout_alignStart="@+id/menuOrderName" />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/menuAddress"
@@ -55,16 +58,15 @@
             style="@style/Widget.AppCompat.Button.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="20dp"
             android:layout_marginRight="7dp"
             android:background="@drawable/round_button"
             android:text="+"
             android:textColor="@color/common_google_signin_btn_text_dark_default"
             android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="20dp" />
+            android:textStyle="bold" />
 
 
     </RelativeLayout>

@@ -16,6 +16,12 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class MarketPlaceOrder extends AppCompatActivity {
 
     TextView order_name;
@@ -78,37 +84,56 @@ public class MarketPlaceOrder extends AppCompatActivity {
             accept_order.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    data.setValue("marketplace/"+UID+"/expected",exp);
-                    Toast.makeText(v.getContext(), UID, Toast.LENGTH_SHORT).show();
-                    Log.d("ANOTHER EASY TAG", "/"+cost+"/");
-                    int count=0;
+
+                    Log.d(data.email,"aa");
+                    Log.d(placeby,"ll");
+
+                    if(data.email.equals(placeby)){
+
+
+                        System.out.print("ss");
+                        Toast.makeText(v.getContext(), "Cannot deliver order placed by you.", Toast.LENGTH_SHORT).show();
+                        Intent intent1 = new Intent(v.getContext(), MainActivity.class);
+                        startActivity(intent1);
+
+                    }
+                    else {
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+                        String currentDateandTime = sdf.format(new Date());
+
+                        data.setValue("marketplace/" + UID + "/exp_timestamp", currentDateandTime);
+                        data.setValue("marketplace/" + UID + "/expected", exp);
+                        Toast.makeText(v.getContext(), UID, Toast.LENGTH_SHORT).show();
+                        Log.d("ANOTHER EASY TAG", "/" + cost + "/");
+                        int count = 0;
 
 
                         data.acceptItemFromMarket(UID);
 
-                    NotificationCompat.Builder mBuilder =
-                            new NotificationCompat.Builder(v.getContext());
+                        NotificationCompat.Builder mBuilder =
+                                new NotificationCompat.Builder(v.getContext());
 
 //Create the intent that’ll fire when the user taps the notification//
 
-                    Intent intent = new Intent(v.getContext(), MainActivity.class);
-                    PendingIntent pendingIntent = PendingIntent.getActivity(v.getContext(), 0, intent, 0);
+                        Intent intent = new Intent(v.getContext(), MainActivity.class);
+                        PendingIntent pendingIntent = PendingIntent.getActivity(v.getContext(), 0, intent, 0);
 
-                    mBuilder.setContentIntent(pendingIntent);
+                        mBuilder.setContentIntent(pendingIntent);
 
-                    mBuilder.setSmallIcon(R.drawable.logo);
-                    mBuilder.setContentTitle("You have accepted an order.");
-                    mBuilder.setContentText("Expected Delivery Time: "+exp+" "+"mins");
+                        mBuilder.setSmallIcon(R.drawable.logo);
+                        mBuilder.setContentTitle("You have accepted an order.");
+                        mBuilder.setContentText("Expected Delivery Time: " + exp + " " + "mins");
 
-                    NotificationManager mNotificationManager =
+                        NotificationManager mNotificationManager =
 
-                            (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-                    mNotificationManager.notify(001, mBuilder.build());
+                        mNotificationManager.notify(001, mBuilder.build());
 
-                    //data.orderCompleted(UID,placeby,data.email,cost.split(" ")[3]);
-                    Intent intent1 = new Intent(v.getContext(), MainActivity.class);
-                    startActivity(intent1);
+                        //data.orderCompleted(UID,placeby,data.email,cost.split(" ")[3]);
+                        Intent intent1 = new Intent(v.getContext(), MainActivity.class);
+                        startActivity(intent1);
+                    }
                 }
             });
         }

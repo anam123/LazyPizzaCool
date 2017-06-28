@@ -2,11 +2,15 @@ package com.sahasu.lazypizza;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.IdRes;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -17,11 +21,19 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.NumberPicker;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
@@ -30,6 +42,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -45,7 +58,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-
         FirebaseMessaging.getInstance().subscribeToTopic("pushNotifications");
         com.sahasu.lazypizza.PrefManager prefManager;
         prefManager = new com.sahasu.lazypizza.PrefManager(this);
@@ -58,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         textView = (TextView) findViewById(R.id.textView);
         bottomBar = (BottomBar) findViewById(R.id.bottomBar);
 
+        bottomBar.setVisibility(View.VISIBLE);
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelected(@IdRes int tabId) {
@@ -87,9 +100,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
     }
 
     @Override
@@ -146,6 +159,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
+    public static boolean setNumberPickerTextColor(NumberPicker numberPicker, int color)
+    {
+        final int count = numberPicker.getChildCount();
+        for(int i = 0; i < count; i++){
+            View child = numberPicker.getChildAt(i);
+            if(child instanceof EditText){
+                try{
+                    Field selectorWheelPaintField = numberPicker.getClass()
+                            .getDeclaredField("mSelectorWheelPaint");
+                    selectorWheelPaintField.setAccessible(true);
+                    ((Paint)selectorWheelPaintField.get(numberPicker)).setColor(color);
+                    ((EditText)child).setTextColor(color);
+                    numberPicker.invalidate();
+                    return true;
+                }
+                catch(NoSuchFieldException e){
+                    Log.w("setNumberPikerTextColor", e);
+                }
+                catch(IllegalAccessException e){
+                    Log.w("setNumberPikerTextColor", e);
+                }
+                catch(IllegalArgumentException e){
+                    Log.w("setNumberPikerTextColor", e);
+                }
+            }
+        }
+        return false;
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -172,7 +214,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     s += readstring;
                 }
                 InputRead.close();
-                System.out.print(s);
+                System.out.print("as: "+s);
                 final String[] arr0 = s.split("\n");
                 final String[] arr=new String[arr0.length];
 
@@ -186,10 +228,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 for (int i = 0; i < arr0.length; i++)
                 {
 
+                    System.out.println("arr0 "+arr0[i]);
                     String[] arr1=arr0[i].split(",");
                     arr[i]=arr1[0];
                     src1=arr1[1];
-                    System.out.println(src1);
+                    System.out.println("src: "+src1);
                 }
                 for (int i = 0; i < arr0.length; i++)
                 {
@@ -202,7 +245,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     ordername=ordername+first[0]+" | ";
                     count=count+Integer.parseInt(first[1]);
                     src1=arr1[1];
-                    System.out.println(src1);
+                    System.out.println("src "+src1);
                 }
                 src=src1;
 
@@ -216,7 +259,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 // add a checkbox list
 
-                boolean[] checked= new boolean[arr.length];
+                final boolean[] checked= new boolean[arr.length];
                 for(int i=0;i<checked.length;i++)
                 {
                     checked[i]=false;
@@ -227,11 +270,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     @Override
                     public void onClick(DialogInterface dialog, int which, boolean isChecked) {
                         // user checked or unchecked a box
-                        if (isChecked) {
-                            selected.add(++which);
-                        } else if (selected.contains(which)) {
-                            selected.remove(Integer.valueOf(++which));
+                        System.out.println("which: "+which);
+                        selected.clear();
+                        for(int i=0;i<checked.length;i++)
+                        {
+                            if(checked[i]==true){
+
+                                selected.add(i+1);
+                            }
                         }
+
 
                         System.out.println(selected);
 
@@ -264,17 +312,71 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //                    intent.putExtra("orderName", info.getOrder_name());
 //                    intent.putExtra("cost", info.getCost());
 //                    v.getContext().startActivity(intent);
-                        final AlertDialog.Builder alert2 = new AlertDialog.Builder(MainActivity.this, R.style.MyAlertDialogStyle);
-                        alert2.setTitle("Enter Super Coins");
+//                        final AlertDialog.Builder alert2 = new AlertDialog.Builder(MainActivity.this, R.style.MyAlertDialogStyle);
+//                        alert2.setTitle("Select Super Coins");
+//
+//                        final EditText input2 = new EditText(getApplicationContext());
+//                        input2.setRawInputType(InputType.TYPE_CLASS_NUMBER);
+//                        alert2.setView(input2.getRootView());
+                        RelativeLayout linearLayout = new RelativeLayout(getApplicationContext());
+                        final NumberPicker aNumberPicker = new NumberPicker(getApplicationContext());
+                        String email=data.email;
 
-                        final EditText input2 = new EditText(getApplicationContext());
-                        input2.setRawInputType(InputType.TYPE_CLASS_NUMBER);
-                        alert2.setView(input2.getRootView());
+                        FirebaseDatabase database = FirebaseDatabase.getInstance();
+                        DatabaseReference myRef = database.getReference("users/");
+
+
+                        ValueEventListener mp2 = new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                String scs="";
+                                for (DataSnapshot counter: dataSnapshot.getChildren()) {
+
+
+                                    if(data.email.equals(data.stringToEmail(counter.getKey().toString())))
+                                    {
+                                        scs=counter.child("SC").getValue().toString();
+
+
+
+                                    }
+
+                                }
+
+                                String m=scs.replaceAll("\\s+","");
+                                int max = ((int) Double.parseDouble(m));
+                                aNumberPicker.setMaxValue(max);
+
+
+
+                            }
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                            }
+                        };
+                        myRef.addListenerForSingleValueEvent(mp2);
+
+
+
+                        aNumberPicker.setMinValue(0);
+
+                        setNumberPickerTextColor(aNumberPicker, Color.BLACK);
+                        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(50, 50);
+                        RelativeLayout.LayoutParams numPicerParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                        numPicerParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+
+                        linearLayout.setLayoutParams(params);
+                        linearLayout.addView(aNumberPicker,numPicerParams);
+
+                        final AlertDialog.Builder alert2 = new AlertDialog.Builder(MainActivity.this);
+                        alert2.setTitle("Enter Super Coins");
+                        alert2.setView(linearLayout);
 
                         alert2.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
 
-                                String sc = input2.getText().toString();
+                                String sc = String.valueOf(aNumberPicker.getValue());
                                 intent.putExtra("scs", sc);
                                 final AlertDialog.Builder alert3 = new AlertDialog.Builder(MainActivity.this, R.style.MyAlertDialogStyle);
                                 alert3.setTitle("Enter Remarks");
@@ -328,7 +430,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        ArrayList<String> a=new ArrayList<>(Arrays.asList(arr));
+                        ArrayList<String> a=new ArrayList<>(Arrays.asList(arr0));
                         ArrayList<String> b=new ArrayList<>(a);
                         for (int i = 0; i < selected.size(); i++) {
                             int select = selected.get(i);
@@ -386,19 +488,55 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (id == R.id.profile) {
             // Handle the camera action
-            Intent myprofile = new Intent(getApplicationContext(), ProfilePage.class);
-            startActivity(myprofile);
-        } else if (id == R.id.balance) {
-            Intent mybalance = new Intent(getApplicationContext(), MyBalance.class);
-            startActivity(mybalance);
+//            Intent myprofile = new Intent(getApplicationContext(), ProfilePage.class);
+//            startActivity(myprofile);
+
+            Fragment fragment = null;
+            fragment = new ProfilePage();
+
+            if (fragment != null) {
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.contentContainer, fragment);
+                bottomBar.setVisibility(View.INVISIBLE);
+                ft.commit();
+            }
+        }
+
+        else if (id == R.id.home) {
+            Intent ma = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(ma);
+            }
+
+        else if (id == R.id.balance) {
+            Fragment fragment = null;
+            fragment = new MyBalance();
+            if (fragment != null) {
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.contentContainer, fragment);
+                bottomBar.setVisibility(View.INVISIBLE);
+                ft.commit();
+            }
+
         } else if (id == R.id.orders) {
-            Intent order = new Intent(getApplicationContext(), MyOrders.class);
-            startActivity(order);
+            Fragment fragment = null;
+            fragment = new MyOrders();
+            if (fragment != null) {
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.contentContainer, fragment);
+                bottomBar.setVisibility(View.INVISIBLE);
+                ft.commit();
+            }
         }
         else if (id==R.id.delivery){
+            Fragment fragment = null;
+            fragment = new Current_Delivery();
+            if (fragment != null) {
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.contentContainer, fragment);
+                bottomBar.setVisibility(View.INVISIBLE);
+                ft.commit();
+            }
 
-            Intent curr = new Intent(getApplicationContext(), Current_Delivery.class);
-            startActivity(curr);
         }
 
         else if (id == R.id.use) {
@@ -407,9 +545,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             prefManager = new com.sahasu.lazypizza.PrefManager(this);
             prefManager.setFirstTimeLaunch(true);
             prefManager.setPressedHowToUse(true);
-
             Intent welcome = new Intent(getApplicationContext(), WelcomeActivity.class);
             startActivity(welcome);
+
         } else if (id == R.id.logout) {
             GoogleLogin.logout();
             Intent intent = new Intent(getApplicationContext(), GoogleLogin.class);

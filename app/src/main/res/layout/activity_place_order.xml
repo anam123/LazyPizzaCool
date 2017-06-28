@@ -51,15 +51,15 @@
             android:src="@drawable/foodcolor" />
 
         <TextView
-            android:text="Samosa"
+            android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView2"
-            android:textColor="@android:color/black"
             android:layout_below="@+id/foodicon"
             android:layout_gravity="center_horizontal"
             android:layout_margin="10dp"
-            android:textSize="30dp" />
+            android:text="Samosa"
+            android:textColor="@android:color/black"
+            android:textSize="20dp" />
 
 
 

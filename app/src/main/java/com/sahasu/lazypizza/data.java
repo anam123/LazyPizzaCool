@@ -32,6 +32,7 @@ public class data {
     public static String SC;
     public static String phone;
     public static String token;
+
     public static String expected;
     public static ArrayList<HashMap<String,String>> market; //count,data key, data value
     public static ArrayList<HashMap<String,String>> items;
@@ -91,6 +92,10 @@ public class data {
                     temp.put("item",counter.child("item").getValue().toString());
                     temp.put("phone",counter.child("phone").getValue().toString());
                     temp.put("price",counter.child("price").getValue().toString());
+
+                    if(counter.child("exp_timestamp").getValue()!=null)
+                        temp.put("exp_timestamp",counter.child("exp_timestamp").getValue().toString());
+
                     if(counter.child("timestamp").getValue()!=null)
                         temp.put("timestamp",counter.child("timestamp").getValue().toString());
                     market.add(i,temp);
@@ -109,7 +114,7 @@ public class data {
                         int[] icons = {R.drawable.pizza, R.drawable.pizza, R.drawable.cheezydibble, R.drawable.cheezydibble,R.drawable.food,R.drawable.cake,R.drawable.cheetos,R.drawable.cake,R.drawable.cheezydibble};
                         for (int j = 0; j < com.sahasu.lazypizza.data.market.size(); j++) {
                             MarketInfo current = new MarketInfo();
-                            current.img_id=icons[j%icons.length];
+
                             current.order_name = com.sahasu.lazypizza.data.market.get(j).get("item");
                             current.address = com.sahasu.lazypizza.data.market.get(j).get("destination");
                             current.cost = "Rs " + com.sahasu.lazypizza.data.market.get(j).get("price") + " + " + com.sahasu.lazypizza.data.market.get(j).get("SC") + " SC";
@@ -117,6 +122,7 @@ public class data {
                             current.phone_no = com.sahasu.lazypizza.data.market.get(j).get("phone");
                             current.UID =  com.sahasu.lazypizza.data.market.get(j).get("UID");
                             current.src =  com.sahasu.lazypizza.data.market.get(j).get("src");
+                            current.exp_timestamp =  com.sahasu.lazypizza.data.market.get(j).get("exp_timestamp");
                             current.time_stamp = com.sahasu.lazypizza.data.market.get(j).get("timestamp");
                             //  Log.d("VERY EASY TO FIND TAG", com.sahasu.lazypizza.data.market.get(i).get("UID"));
                             data.add(current);
@@ -147,9 +153,9 @@ public class data {
     }
 
     public static class marketItem{
-        public String item,SC,price,Remarks,destination,email,accepted,phone,deliveryboy,deliveryboyphone,timestamp,src,expected;
+        public String item,SC,price,Remarks,destination,email,accepted,phone,deliveryboy,deliveryboyphone,timestamp,src,expected,exp_timestamp;
         public marketItem(String item,String SC,String price,String Remarks,String destination,String email,String accepted,
-                          String phone,String deliveryboy,String deliveryboyphone, String src, String expected){
+                          String phone,String deliveryboy,String deliveryboyphone, String src, String expected,String exp_timestamp){
             this.item =item;
             this.SC = SC;
             this.src = src;
@@ -161,6 +167,7 @@ public class data {
             this.accepted = accepted;
             this.phone = phone;
             this.deliveryboy = deliveryboy;
+            this.exp_timestamp = exp_timestamp;
             this.deliveryboyphone = deliveryboyphone;
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
             String currentDateandTime = sdf.format(new Date());
@@ -169,10 +176,10 @@ public class data {
     }
 
     public static void setValues(String path, String item,String SC,String price,String Remarks,String destination,String email,String accepted,
-                                 String phone,String deliveryboy,String deliveryboyphone,String src,String expected){
+                                 String phone,String deliveryboy,String deliveryboyphone,String src,String expected,String exp_timestamp){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference(path);
-        marketItem current=new marketItem(item,SC,price,Remarks,destination,email,accepted,phone,deliveryboy,deliveryboyphone,src,expected);
+        marketItem current=new marketItem(item,SC,price,Remarks,destination,email,accepted,phone,deliveryboy,deliveryboyphone,src,expected,exp_timestamp);
         myRef.setValue(current);
     }
     public static void setValue(String path, String value){
@@ -307,7 +314,7 @@ public class data {
                 }
 
                 String uid=String.valueOf(Math.round(Math.random()*10e10));
-                setValues("marketplace/"+uid,item+" ",SC,price,Remarks+" ",destination+" ",emailToString(email),"0",phone+" "," "," ",source+ " ","");
+                setValues("marketplace/"+uid,item+" ",SC,price,Remarks+" ",destination+" ",emailToString(email),"0",phone+" "," "," ",source+ " ",""," ");
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {

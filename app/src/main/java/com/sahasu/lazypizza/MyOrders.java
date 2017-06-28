@@ -1,16 +1,21 @@
 package com.sahasu.lazypizza;
 
 import android.content.Intent;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.DateFormat;
@@ -21,7 +26,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 
-public class MyOrders extends AppCompatActivity {
+public class MyOrders extends Fragment {
 
     ListView simpleListView;
     // Array of strings...
@@ -33,11 +38,24 @@ public class MyOrders extends AppCompatActivity {
     ArrayList<Integer> index1 = new ArrayList<Integer>();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_orders);
+    public void onViewCreated(View view, Bundle savedInstanceState) {
 
-        simpleListView=(ListView)findViewById(R.id.simpleListView);
+        super.onViewCreated(view, savedInstanceState);
+
+        getActivity().setTitle("Orders");
+
+    }
+
+
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+
+
+        final View v = inflater.inflate(R.layout.activity_my_orders, container, false);
+        simpleListView=(ListView)v.findViewById(R.id.simpleListView);
 
 
         for (int i = 0; i < com.sahasu.lazypizza.data.market.size(); i++) {
@@ -121,7 +139,7 @@ public class MyOrders extends AppCompatActivity {
         String[] from={"name","desc"}; //string array
         int[] to={R.id.foodTitle, R.id.foodDesc}; //int array of views id's
         SimpleAdapter simpleAdapter = null;
-        simpleAdapter = new SimpleAdapter(this,arrayList1,R.layout.activitymyorders_listview,from,to);//Create object and set the parameters for simpleAdapter
+        simpleAdapter = new SimpleAdapter(v.getContext(),arrayList1,R.layout.activitymyorders_listview,from,to);//Create object and set the parameters for simpleAdapter
         if(simpleAdapter == null)
             Log.d("SIMPLE","Null simple adapter");
         if(simpleListView == null)
@@ -133,11 +151,11 @@ public class MyOrders extends AppCompatActivity {
         simpleListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Toast.makeText(getApplicationContext(),position+" is the position",Toast.LENGTH_LONG).show();//show the selected image in toast according to position
+                Toast.makeText(v.getContext(),position+" is the position",Toast.LENGTH_LONG).show();//show the selected image in toast according to position
 
                 // Open the order details activity from here and pass the details
                 int marketIndex = index1.get(position);
-                Intent orderDetails = new Intent(getApplicationContext(), com.sahasu.lazypizza.orderDetails.class);
+                Intent orderDetails = new Intent(v.getContext(), com.sahasu.lazypizza.orderDetails.class);
                 orderDetails.putExtra("Item",com.sahasu.lazypizza.data.market.get(marketIndex).get("item"));
                 orderDetails.putExtra("UID",com.sahasu.lazypizza.data.market.get(marketIndex).get("UID"));
                 orderDetails.putExtra("Price", com.sahasu.lazypizza.data.market.get(marketIndex).get("price"));
@@ -145,19 +163,21 @@ public class MyOrders extends AppCompatActivity {
                 orderDetails.putExtra("Accepted", com.sahasu.lazypizza.data.market.get(marketIndex).get("accepted"));
                 orderDetails.putExtra("Time", com.sahasu.lazypizza.data.market.get(marketIndex).get("timestamp"));
                 orderDetails.putExtra("DeliveryEmail", com.sahasu.lazypizza.data.market.get(marketIndex).get("deliveryboy"));
+                orderDetails.putExtra("Expectedtime", com.sahasu.lazypizza.data.market.get(marketIndex).get("exp_timestamp"));
+                orderDetails.putExtra("exp", com.sahasu.lazypizza.data.market.get(marketIndex).get("expected"));
                 orderDetails.putExtra("DeliveryPhone", com.sahasu.lazypizza.data.market.get(marketIndex).get("deliveryboyphone"));
                 orderDetails.putExtra("SC", com.sahasu.lazypizza.data.market.get(marketIndex).get("SC"));
                 startActivity(orderDetails);
             }
         });
+
+
+        return v;
+
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
