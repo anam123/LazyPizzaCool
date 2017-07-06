@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
@@ -108,9 +109,12 @@ public class MenuAdaptor extends RecyclerView.Adapter<MenuAdaptor.MyHolder> impl
 
     @Override
     public void onBindViewHolder(MyHolder holder, int position) {
+
         MenuInfo menu = menuData1.get(position);
         holder.title.setText(menu.getOrder_name());
         holder.cost.setText(menu.getCost());
+
+
 
     }
 
@@ -136,6 +140,11 @@ public class MenuAdaptor extends RecyclerView.Adapter<MenuAdaptor.MyHolder> impl
 
             cost = (TextView) itemView.findViewById(R.id.menuAddress);
             placeOrder = (TextView) itemView.findViewById(R.id.menuPlaceOrder);
+            Typeface type = Typeface.createFromAsset(itemView.getContext().getAssets(),"Arcon-Regular.otf");
+
+
+            title.setTypeface(type);
+            cost.setTypeface(type);placeOrder.setTypeface(type);
 
             placeOrder.setOnClickListener(this);
 

@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.IdRes;
@@ -22,6 +23,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.NumberPicker;
@@ -51,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private BottomBar bottomBar;
     private boolean exit = false;
     String ordername;
+    private final ArrayList<View> mMenuItems = new ArrayList<>(7);
     String cnt;
     int count;
 
@@ -59,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         FirebaseMessaging.getInstance().subscribeToTopic("pushNotifications");
+        TypefaceUtil.overrideFont(getApplicationContext(), "SERIF", "Arcon-Regular.otf"); // font from assets: "assets/fonts/Roboto-Regular.ttf
         com.sahasu.lazypizza.PrefManager prefManager;
         prefManager = new com.sahasu.lazypizza.PrefManager(this);
         prefManager.setPressedHowToUse(false);
@@ -67,9 +71,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        TextView yourTextView = null;
+
+        final Typeface typeFace1=Typeface.createFromAsset(getAssets(),"King-Basil-Lite.otf");
+        final Typeface type=Typeface.createFromAsset(getAssets(),"Arcon-Regular.otf");
+
+        try {
+            Field f = toolbar.getClass().getDeclaredField("mTitleTextView");
+            f.setAccessible(true);
+            yourTextView = (TextView) f.get(toolbar);
+            yourTextView.setTypeface(typeFace1);
+        } catch (NoSuchFieldException e) {
+        } catch (IllegalAccessException e) {
+        }
+
         textView = (TextView) findViewById(R.id.textView);
         bottomBar = (BottomBar) findViewById(R.id.bottomBar);
 
+        bottomBar.setTabTitleTypeface(type);
         bottomBar.setVisibility(View.VISIBLE);
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
@@ -100,36 +119,38 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-    }
+        navigationView.getMenu().getItem(0).setChecked(true);
 
-    @Override
-    public void onBackPressed() {
-        if (exit) {
-            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-            if (drawer.isDrawerOpen(GravityCompat.START)) {
-                drawer.closeDrawer(GravityCompat.START);
-            } else {
-                super.onBackPressed();
-                finish();
-            }
-//            finish(); // finish activity
-        } else {
-            Toast.makeText(this, "Press Back again to Exit.",
-                    Toast.LENGTH_SHORT).show();
-            exit = true;
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    exit = false;
+        final Menu navMenu = navigationView.getMenu();
+        navigationView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                // Remember to remove the installed OnGlobalLayoutListener
+                navigationView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                // Loop through and find each MenuItem View
+
+                // Loop through each MenuItem View and apply your custom Typeface
+
+                for (int i = 0, length = 7; i < length; i++) {
+                    final String id = "menuItem" + (i + 1);
+                    final MenuItem item = navMenu.findItem(getResources().getIdentifier(id, "id", getPackageName()));
+                    navigationView.findViewsWithText(mMenuItems, item.getTitle(), View.FIND_VIEWS_WITH_TEXT);
                 }
-            }, 3 * 1000);
+                // Loop through each MenuItem View and apply your custom Typeface
+                for (final View menuItem : mMenuItems) {
+                    ((TextView) menuItem).setTypeface(type);
+                }
 
-        }
+
+            }
+        });
 
     }
+
+
 
 //    @Override
 //    public void onBackPressed() {
@@ -224,6 +245,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 count=0;
                 ordername="";
 
+                int len=arr0.length;
+                System.out.println("len "+arr0.length);
 
                 for (int i = 0; i < arr0.length; i++)
                 {
@@ -242,23 +265,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         arr[i]=arr1[0];
 
                     String[] first=arr[i].split("----");
-                    ordername=ordername+first[0]+" | ";
+
+                    ordername = ordername + first[0] + " | ";
+
                     count=count+Integer.parseInt(first[1]);
                     src1=arr1[1];
                     System.out.println("src "+src1);
                 }
                 src=src1;
 
+
+                ordername=ordername.substring(0,ordername.length()-3);
                 System.out.println("ordername "+ordername);
                 System.out.println("price "+count);
                 cnt=Integer.toString(count);
 
                 final AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("Cart");
-                builder.setIcon(R.drawable.ic_launcher);
+                builder.setIcon(R.mipmap.ic_launcher );
 
 // add a checkbox list
 
+                for(int i=0;i<arr.length;i++)
+                {
+                    String abc=arr[i].split("----")[0];
+                    String pqr=arr[i].split("----")[1];
+                    arr[i]=abc+" : "+"Rs. "+pqr;
+                }
                 final boolean[] checked= new boolean[arr.length];
                 for(int i=0;i<checked.length;i++)
                 {
@@ -267,9 +300,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 final ArrayList<Integer> selected=new ArrayList<>();
                 builder.setMultiChoiceItems(arr, checked, new DialogInterface.OnMultiChoiceClickListener() {
+
                     @Override
                     public void onClick(DialogInterface dialog, int which, boolean isChecked) {
                         // user checked or unchecked a box
+
                         System.out.println("which: "+which);
                         selected.clear();
                         for(int i=0;i<checked.length;i++)
@@ -297,16 +332,40 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 final Intent intent = new Intent(MainActivity.this, Menu_PlaceOrder.class);
 
                 final AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this, R.style.MyAlertDialogStyle);
-                alert.setTitle("Enter Location");
+
+
+                        alert.setTitle("Enter Location");
+
 
                 final EditText input_loc = new EditText(getApplicationContext());
+                        input_loc.setTextColor(Color.WHITE);
+                        Typeface type=Typeface.createFromAsset(getAssets(),"Arcon-Regular.otf");
+                        input_loc.setTypeface(type);
                 alert.setView(input_loc.getRootView());
                 //alert.setView(input_loc);
 
                 alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        String loc = input_loc.getText().toString();
-                        intent.putExtra("address", loc);
+
+                        if (input_loc.getText().toString().equals("")) {
+
+                            Toast.makeText(getApplicationContext(), "Location field can't be left empty.", Toast.LENGTH_LONG).show();
+                            final AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this, R.style.MyAlertDialogStyle);
+
+
+                            alert.setTitle("Enter Location");
+
+
+                            final EditText input_loc = new EditText(getApplicationContext());
+                            input_loc.setTextColor(Color.WHITE);
+                            Typeface type=Typeface.createFromAsset(getAssets(),"Arcon-Regular.otf");
+                            input_loc.setTypeface(type);
+                            alert.setView(input_loc.getRootView());
+                            
+
+                        } else {
+                            String loc = input_loc.getText().toString();
+                            intent.putExtra("address", loc);
 //                    MenuInfo info;
 //                    info = menuData.get(getAdapterPosition());
 //                    intent.putExtra("orderName", info.getOrder_name());
@@ -318,103 +377,107 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //                        final EditText input2 = new EditText(getApplicationContext());
 //                        input2.setRawInputType(InputType.TYPE_CLASS_NUMBER);
 //                        alert2.setView(input2.getRootView());
-                        RelativeLayout linearLayout = new RelativeLayout(getApplicationContext());
-                        final NumberPicker aNumberPicker = new NumberPicker(getApplicationContext());
-                        String email=data.email;
+                            RelativeLayout linearLayout = new RelativeLayout(getApplicationContext());
+                            final NumberPicker aNumberPicker = new NumberPicker(getApplicationContext());
+                            String email = data.email;
 
-                        FirebaseDatabase database = FirebaseDatabase.getInstance();
-                        DatabaseReference myRef = database.getReference("users/");
-
-
-                        ValueEventListener mp2 = new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                                String scs="";
-                                for (DataSnapshot counter: dataSnapshot.getChildren()) {
+                            FirebaseDatabase database = FirebaseDatabase.getInstance();
+                            DatabaseReference myRef = database.getReference("users/");
 
 
-                                    if(data.email.equals(data.stringToEmail(counter.getKey().toString())))
-                                    {
-                                        scs=counter.child("SC").getValue().toString();
+                            ValueEventListener mp2 = new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                    String scs = "";
+                                    for (DataSnapshot counter : dataSnapshot.getChildren()) {
 
 
+                                        if (data.email.equals(data.stringToEmail(counter.getKey().toString()))) {
+                                            scs = counter.child("SC").getValue().toString();
+
+
+                                        }
 
                                     }
+
+                                    String m = scs.replaceAll("\\s+", "");
+                                    int max = ((int) Double.parseDouble(m));
+                                    aNumberPicker.setMaxValue(max);
+
 
                                 }
 
-                                String m=scs.replaceAll("\\s+","");
-                                int max = ((int) Double.parseDouble(m));
-                                aNumberPicker.setMaxValue(max);
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+                                }
+                            };
+                            myRef.addListenerForSingleValueEvent(mp2);
 
 
+                            aNumberPicker.setMinValue(0);
 
-                            }
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-                            }
-                        };
-                        myRef.addListenerForSingleValueEvent(mp2);
+                            setNumberPickerTextColor(aNumberPicker, Color.BLACK);
+                            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(50, 50);
+                            RelativeLayout.LayoutParams numPicerParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                            numPicerParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
 
+                            linearLayout.setLayoutParams(params);
+                            linearLayout.addView(aNumberPicker, numPicerParams);
 
-
-                        aNumberPicker.setMinValue(0);
-
-                        setNumberPickerTextColor(aNumberPicker, Color.BLACK);
-                        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(50, 50);
-                        RelativeLayout.LayoutParams numPicerParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-                        numPicerParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
-
-                        linearLayout.setLayoutParams(params);
-                        linearLayout.addView(aNumberPicker,numPicerParams);
-
-                        final AlertDialog.Builder alert2 = new AlertDialog.Builder(MainActivity.this);
-                        alert2.setTitle("Enter Super Coins");
-                        alert2.setView(linearLayout);
-
-                        alert2.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int whichButton) {
-
-                                String sc = String.valueOf(aNumberPicker.getValue());
-                                intent.putExtra("scs", sc);
-                                final AlertDialog.Builder alert3 = new AlertDialog.Builder(MainActivity.this, R.style.MyAlertDialogStyle);
-                                alert3.setTitle("Enter Remarks");
-
-                                final EditText input3 = new EditText(getApplicationContext());
-                                input3.setRawInputType(InputType.TYPE_CLASS_TEXT);
-                                alert3.setView(input3.getRootView());
-                                alert3.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int whichButton) {
-                                        String remarks = input3.getText().toString();
-
-                                        intent.putExtra("orderName", ordername);
-                                        intent.putExtra("cost", cnt);
-                                        intent.putExtra("source", src);
-                                        intent.putExtra("remarks", remarks);
-                                       MainActivity.this.startActivity(intent);
-                                    }
-                                });
-
-                                alert3.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int whichButton) {
-                                        dialog.dismiss();
-                                    }
-                                });
-                                alert3.show();
-
-                            }
-
-                        });
+                            final AlertDialog.Builder alert2 = new AlertDialog.Builder(MainActivity.this);
 
 
-                        alert2.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                dialog.dismiss();
-                            }
-                        });
-                        alert2.show();
+                            alert2.setTitle("Enter Super Coins");
+                            alert2.setView(linearLayout);
 
+                            alert2.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+
+                                    String sc = String.valueOf(aNumberPicker.getValue());
+                                    intent.putExtra("scs", sc);
+                                    final AlertDialog.Builder alert3 = new AlertDialog.Builder(MainActivity.this, R.style.MyAlertDialogStyle);
+                                    alert3.setTitle("Enter Remarks");
+
+
+                                    final EditText input3 = new EditText(getApplicationContext());
+                                    Typeface type = Typeface.createFromAsset(getAssets(), "Arcon-Regular.otf");
+                                    input3.setTypeface(type);
+                                    input3.setTextColor(Color.WHITE);
+                                    input3.setRawInputType(InputType.TYPE_CLASS_TEXT);
+                                    alert3.setView(input3.getRootView());
+                                    alert3.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int whichButton) {
+                                            String remarks = input3.getText().toString();
+
+                                            intent.putExtra("orderName", ordername);
+                                            intent.putExtra("cost", cnt);
+                                            intent.putExtra("source", src);
+                                            intent.putExtra("remarks", remarks);
+                                            MainActivity.this.startActivity(intent);
+                                        }
+                                    });
+
+                                    alert3.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int whichButton) {
+                                            dialog.dismiss();
+                                        }
+                                    });
+                                    alert3.show();
+
+                                }
+
+                            });
+
+
+                            alert2.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    dialog.dismiss();
+                                }
+                            });
+                            alert2.show();
+
+                        }
                     }
                 });
 
@@ -480,13 +543,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            drawer.openDrawer(GravityCompat.START);
+        }
+    }
+
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.profile) {
+        if (id == R.id.menuItem2) {
             // Handle the camera action
 //            Intent myprofile = new Intent(getApplicationContext(), ProfilePage.class);
 //            startActivity(myprofile);
@@ -502,12 +576,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         }
 
-        else if (id == R.id.home) {
+        else if (id == R.id.menuItem1) {
             Intent ma = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(ma);
             }
 
-        else if (id == R.id.balance) {
+        else if (id == R.id.menuItem3) {
             Fragment fragment = null;
             fragment = new MyBalance();
             if (fragment != null) {
@@ -517,7 +591,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 ft.commit();
             }
 
-        } else if (id == R.id.orders) {
+        } else if (id == R.id.menuItem4) {
             Fragment fragment = null;
             fragment = new MyOrders();
             if (fragment != null) {
@@ -527,7 +601,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 ft.commit();
             }
         }
-        else if (id==R.id.delivery){
+        else if (id==R.id.menuItem5){
             Fragment fragment = null;
             fragment = new Current_Delivery();
             if (fragment != null) {
@@ -539,7 +613,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         }
 
-        else if (id == R.id.use) {
+        else if (id == R.id.menuItem6) {
 
             com.sahasu.lazypizza.PrefManager prefManager;
             prefManager = new com.sahasu.lazypizza.PrefManager(this);
@@ -548,7 +622,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent welcome = new Intent(getApplicationContext(), WelcomeActivity.class);
             startActivity(welcome);
 
-        } else if (id == R.id.logout) {
+        } else if (id == R.id.menuItem7) {
             GoogleLogin.logout();
             Intent intent = new Intent(getApplicationContext(), GoogleLogin.class);
             startActivity(intent);

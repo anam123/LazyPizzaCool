@@ -1,6 +1,7 @@
 package com.sahasu.lazypizza;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -26,7 +27,10 @@ public class PhoneNumber extends AppCompatActivity
         userNameText = (TextView)findViewById(R.id.txtview_helloUser);
         phoneTextBox = (EditText)findViewById(R.id.phoneNumber);
         saveBtn = (Button) findViewById(R.id.saveBtn);
+        final Typeface type=Typeface.createFromAsset(getAssets(),"Arcon-Regular.otf");
 
+
+        phoneTextBox.setTypeface(type);
         if(data.name != null)
         {
             userNameText.setText("Hi, "+data.name+"!");

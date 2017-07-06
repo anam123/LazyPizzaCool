@@ -11,6 +11,7 @@ public class SplashScreen extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        TypefaceUtil.overrideFont(getApplicationContext(), "SERIF", "Arcon-Regular.otf");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 

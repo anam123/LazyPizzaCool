@@ -1,5 +1,6 @@
 package com.sahasu.lazypizza;
 
+import android.graphics.Typeface;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -18,7 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MyBalance extends Fragment {
 
-    TextView balanceSc;
+    TextView balanceSc,sc,uh,bt;
     String scs;
 
 
@@ -72,6 +73,15 @@ public class MyBalance extends Fragment {
         myRef.addListenerForSingleValueEvent(mp2);
 
         balanceSc = (TextView)v.findViewById(R.id.balanceSc);
+        uh = (TextView)v.findViewById(R.id.uh);
+        sc = (TextView)v.findViewById(R.id.sc);
+        bt = (TextView)v.findViewById(R.id.bt);
+        final Typeface type=Typeface.createFromAsset(v.getContext().getAssets(),"Arcon-Regular.otf");
+        balanceSc.setTypeface(type);
+        bt.setTypeface(type);
+        uh.setTypeface(type);
+        sc.setTypeface(type);
+
 
 
         return v;

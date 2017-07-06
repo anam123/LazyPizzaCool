@@ -11,17 +11,19 @@
         android:textSize="20dp"
         android:text="Pizza"
         android:textStyle="bold"
-        android:textColor="#000" />
+        android:textColor="#000"
+        android:textColorHighlight="#fff"/>
+
     <TextView
         android:id="@+id/foodDesc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/foodTitle"
+        android:layout_marginBottom="5dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="5dp"
-        android:textStyle="italic"
-        android:layout_below="@+id/foodTitle"
-        android:textSize="14dp"
         android:text="23rd March 2017 5:00 pm"
-        android:textColor="#000" />
+        android:textColor="#000"
+        android:textSize="14dp"
+        android:textColorHighlight="#fff"/>
 </RelativeLayout>

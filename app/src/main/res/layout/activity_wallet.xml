@@ -14,9 +14,11 @@
         android:layout_margin="50dp"
 
         android:orientation="vertical"
-        android:weightSum="1">
+        android:weightSum="1"
+        android:layout_weight="0.50">
 
         <TextView
+            android:id="@+id/tvv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -64,7 +66,7 @@
         <Button
             android:id="@+id/walletButton"
             style="@android:style/Widget.Holo.Light.Button.Toggle"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_margin="20dp"

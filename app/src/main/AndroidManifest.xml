@@ -9,14 +9,15 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
             android:name=".WelcomeActivity"
-            android:label="Lazy Pizza">
+            android:label="LazyPizza" android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,16 +26,27 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name" android:theme="@style/AppTheme.TransNav" />
-        <activity android:name=".MarketPlaceOrder" />
-        <activity android:name=".Menu_PlaceOrder" />
-        <activity android:name=".GoogleLogin" />
-        <activity android:name=".PhoneNumber" />
-        <activity android:name=".MyOrders" />
-        <activity android:name=".orderDetails" />
-        <activity android:name=".MyBalance" />
-        <activity android:name=".SplashScreen" />
-        <activity android:name=".Current_Delivery" />
+            android:label="@string/app_name" android:theme="@style/AppTheme.TransNav"  android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".MarketPlaceOrder" android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Menu_PlaceOrder" android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity android:name=".GoogleLogin" android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity android:name=".PhoneNumber" android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity android:name=".MyOrders" android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity android:name=".orderDetails" android:configChanges="orientation"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".MyBalance" android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity android:name=".SplashScreen" android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Current_Delivery" android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
         <service android:name=".MyFirebaseMessagingService" android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -45,7 +57,8 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-        <activity android:name=".ProfilePage"></activity>
+        <activity android:name=".ProfilePage" android:configChanges="orientation"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

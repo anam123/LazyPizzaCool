@@ -1,7 +1,7 @@
 <tabs>
     <tab
         id="@+id/tab_calls"
-        icon="@drawable/ic_cart"
+        icon="@drawable/cart1"
         title="Deliver"
         activeColor="#fafafa"
         barColorWhenSelected="@color/colorPrimary"/>
@@ -9,14 +9,14 @@
         />
     <tab
         id="@+id/tab_groups"
-        icon="@drawable/ic_food"
+        icon="@drawable/food1"
         title="Order"
         activeColor="#fafafa"
 
         barColorWhenSelected="@color/colorPrimary"/>
     <tab
         id="@+id/tab_chats"
-        icon="@drawable/ic_wallet"
+        icon="@drawable/wallet"
         title="Wallet"
         activeColor="#fafafa"
         barColorWhenSelected="@color/colorPrimary"/>

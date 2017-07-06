@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -56,7 +57,6 @@ public class MyOrders extends Fragment {
 
         final View v = inflater.inflate(R.layout.activity_my_orders, container, false);
         simpleListView=(ListView)v.findViewById(R.id.simpleListView);
-
 
         for (int i = 0; i < com.sahasu.lazypizza.data.market.size(); i++) {
             if(com.sahasu.lazypizza.data.market.get(i).get("accepted").equals("1"))
@@ -129,6 +129,24 @@ public class MyOrders extends Fragment {
 
 
         }
+
+        for(int i=0;i<arrayList1.size();i++)
+        {
+            String hour=arrayList1.get(i).get("desc").split("_")[1].substring(0,2);
+            String minutes=arrayList1.get(i).get("desc").split("_")[1].substring(2,4);
+            String day=arrayList1.get(i).get("desc").split("_")[0];
+
+            String ts;
+            if(Integer.parseInt(hour) < 12)
+                        ts = hour + ":" + minutes + " am";
+                    else
+                        ts = hour + ":" + minutes + " pm";
+
+            arrayList1.get(i).put("desc",ts+ " | " + day);
+
+
+
+        }
         /*for (int i=0;i<orderTitle.length;i++)
         {
             HashMap<String,String> hashMap=new HashMap<>();//create a hashmap to store the data in key value pair
@@ -139,6 +157,9 @@ public class MyOrders extends Fragment {
         String[] from={"name","desc"}; //string array
         int[] to={R.id.foodTitle, R.id.foodDesc}; //int array of views id's
         SimpleAdapter simpleAdapter = null;
+
+        TextView tv1=(TextView)v.findViewById(R.id.foodDesc);
+        TextView tv2=(TextView)v.findViewById(R.id.foodTitle);
         simpleAdapter = new SimpleAdapter(v.getContext(),arrayList1,R.layout.activitymyorders_listview,from,to);//Create object and set the parameters for simpleAdapter
         if(simpleAdapter == null)
             Log.d("SIMPLE","Null simple adapter");
@@ -147,11 +168,14 @@ public class MyOrders extends Fragment {
 
         simpleListView.setAdapter(simpleAdapter);//sets the adapter for listView
 
+
+
         //perform listView item click event
         simpleListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Toast.makeText(v.getContext(),position+" is the position",Toast.LENGTH_LONG).show();//show the selected image in toast according to position
+//                Toast.makeText(v.getContext(),position+" is the position",Toast.LENGTH_LONG).show();//show the selected image in toast according to position
 
                 // Open the order details activity from here and pass the details
                 int marketIndex = index1.get(position);
@@ -170,6 +194,9 @@ public class MyOrders extends Fragment {
                 startActivity(orderDetails);
             }
         });
+
+
+
 
 
         return v;

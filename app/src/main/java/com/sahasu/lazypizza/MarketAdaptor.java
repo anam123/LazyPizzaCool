@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -64,7 +65,11 @@ public class MarketAdaptor extends RecyclerView.Adapter<MarketAdaptor.MyViewHold
 
     }
 
-    @Override
+
+
+
+
+        @Override
     public int getItemCount() {
 
         return data1.size();
@@ -88,6 +93,12 @@ public class MarketAdaptor extends RecyclerView.Adapter<MarketAdaptor.MyViewHold
             address = (TextView) itemView.findViewById(R.id.address);
             cost = (TextView) itemView.findViewById(R.id.cost);
             timestamp = (TextView) itemView.findViewById(R.id.timestamp);
+            Typeface type = Typeface.createFromAsset(itemView.getContext().getAssets(),"Arcon-Regular.otf");
+            details.setTypeface(type);
+            order_name.setTypeface(type);
+            address.setTypeface(type);
+            cost.setTypeface(type);
+            timestamp.setTypeface(type);
             details.setOnClickListener(this);
         }
 

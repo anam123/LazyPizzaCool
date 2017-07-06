@@ -55,21 +55,55 @@
         android:layout_height="match_parent"
         android:id="@+id/googleLoginScreen"
         android:visibility="visible"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/colorPrimary">
 
-    <LinearLayout
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:weightSum="1"
+            android:layout_marginTop="44dp"
+            android:layout_below="@+id/linearLayout9"
+            android:layout_alignParentStart="true">
+
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="match_parent"
+                android:layout_height="194dp"
+                app:srcCompat="@drawable/user_white" />
+
+            <com.google.android.gms.common.SignInButton
+                android:id="@+id/sign_in_button"
+
+                android:layout_width="132dp"
+                android:layout_height="62dp"
+                android:layout_marginTop="15dp"
+                android:animationCache="false">
+
+            </com.google.android.gms.common.SignInButton>
+
+        </LinearLayout>
+
+        <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:layout_marginTop="45dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:id="@+id/linearLayout9">
 
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/signin_title"
-            android:textColor="@color/text_primary_color"
+            android:textColor="#ffffff"
             android:textSize="@dimen/slide_title"
             android:textStyle="bold" />
 
@@ -81,36 +115,12 @@
             android:paddingRight="@dimen/desc_padding"
             android:text="@string/signin_desc"
             android:textAlignment="center"
-            android:textColor="@color/secondary_text_color"
+            android:textColor="@color/divider_color"
             android:textSize="@dimen/slide_desc" />
 
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:gravity="center_horizontal"
-        android:id="@+id/linearLayout"
-        android:orientation="vertical"
-        android:weightSum="1">
 
-
-
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="@dimen/img_width_height"
-            android:layout_height="@dimen/img_width_height"
-            android:layout_margin="@dimen/icons_margin_bottom"
-            android:src="@drawable/user" />
-
-        <com.google.android.gms.common.SignInButton
-            android:id="@+id/sign_in_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
-
-    <TextView
+        <TextView
         android:id="@+id/status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -151,7 +161,7 @@
         android:text="Sign out and disconnect"
         android:visibility="invisible" />
 
-    <TextView
+        <TextView
         android:id="@+id/detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -160,6 +170,7 @@
         android:layout_marginTop="10dp"
         android:text="Detail"
         android:visibility="invisible" />
+
     </RelativeLayout>
 
 </RelativeLayout>

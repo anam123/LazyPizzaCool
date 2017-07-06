@@ -1,6 +1,7 @@
 package com.sahasu.lazypizza;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -54,6 +55,15 @@ public class MenuMain extends Fragment {
         host.addTab(spec);
 
         host.setCurrentTab(0);
+
+        Typeface type = Typeface.createFromAsset(getActivity().getAssets(),"Arcon-Regular.otf");
+        filt.setTypeface(type);
+
+        for (int i = 0; i < host.getTabWidget().getChildCount(); i++) {
+            TextView tv = (TextView) host.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
+            tv.setTypeface(type);
+        }
+
         recyclerView = (RecyclerView) v.findViewById(R.id.list);
             adaptor = new MenuAdaptor(getData("Canteen"), v.getContext());
             recyclerView.setAdapter(adaptor);

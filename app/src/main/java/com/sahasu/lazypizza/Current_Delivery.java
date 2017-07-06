@@ -2,6 +2,7 @@ package com.sahasu.lazypizza;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
 import android.os.Bundle;
@@ -49,7 +50,7 @@ public class Current_Delivery extends Fragment{
 
         super.onViewCreated(view, savedInstanceState);
 
-        getActivity().setTitle("Balance");
+        getActivity().setTitle("Current Delivery");
 
     }
 
@@ -76,6 +77,19 @@ public class Current_Delivery extends Fragment{
 
         call=(Button)v.findViewById(R.id.call);
         cancel=(Button)v.findViewById(R.id.cancel);
+
+        final Typeface type=Typeface.createFromAsset(v.getContext().getAssets(),"Arcon-Regular.otf");
+        contact.setTypeface(type);
+        time.setTypeface(type);
+        location.setTypeface(type);
+        orderdetails.setTypeface(type);
+        price.setTypeface(type);
+        dd.setTypeface(type);
+        havent.setTypeface(type);
+        call.setTypeface(type);
+        cancel.setTypeface(type);
+
+
 
 
 

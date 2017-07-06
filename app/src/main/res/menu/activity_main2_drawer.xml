@@ -4,36 +4,36 @@
     <group android:checkableBehavior="single">
 
         <item
-            android:id="@+id/home"
+            android:id="@+id/menuItem1"
             android:icon="@drawable/home"
             android:title="Home" />
         <item
-            android:id="@+id/profile"
+            android:id="@+id/menuItem2"
             android:icon="@drawable/profile"
             android:title="Profile" />
         <item
-            android:id="@+id/balance"
+            android:id="@+id/menuItem3"
             android:icon="@drawable/balance"
             android:title="Balance" />
         <item
-            android:id="@+id/orders"
+            android:id="@+id/menuItem4"
             android:icon="@drawable/order"
             android:title="Current Orders" />
 
         <item
-            android:id="@+id/delivery"
+            android:id="@+id/menuItem5"
             android:icon="@drawable/ic_cart"
             android:title="Current Delivery" />
 
 
         <item
-            android:id="@+id/use"
+            android:id="@+id/menuItem6"
             android:icon="@drawable/howto"
             android:title="How To Use" />
 
 
         <item
-            android:id="@+id/logout"
+            android:id="@+id/menuItem7"
             android:icon="@drawable/logout"
             android:title="Log Out" />
     </group>

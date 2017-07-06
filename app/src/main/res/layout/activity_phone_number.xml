@@ -5,43 +5,42 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.sahasu.lazypizza.PhoneNumber"
-    android:background="@color/colorPrimaryDark">
+    android:background="#ffffff">
 
     <LinearLayout
+        android:id="@+id/linearLayout7"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
         <!--change this text view to Hi, username! -->
-    <TextView
-        android:id="@+id/txtview_helloUser"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:paddingLeft="@dimen/desc_padding"
-        android:paddingRight="@dimen/desc_padding"
-        android:text="Hi, Mayank!"
-        android:textAlignment="center"
-        android:textColor="@android:color/white"
-        android:textSize="30dp" />
+        <TextView
+            android:id="@+id/txtview_helloUser"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:paddingLeft="@dimen/desc_padding"
+            android:paddingRight="@dimen/desc_padding"
+            android:text="Hi, Mayank!"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimary"
+            android:textSize="30dp"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_marginTop="32dp"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:id="@+id/linearLayout2">
-
-        <ImageView
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:src="@drawable/user_white"
-            android:layout_margin="@dimen/icons_margin_bottom"/>
+        android:weightSum="1"
+        android:layout_below="@+id/linearLayout7"
+        android:layout_alignParentStart="true">
 
         <!--<TextView-->
         <!--android:layout_width="wrap_content"-->
@@ -51,47 +50,71 @@
         <!--android:textSize="@dimen/slide_title"-->
         <!--android:textStyle="bold" />-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:paddingLeft="@dimen/desc_padding"
-            android:paddingRight="@dimen/desc_padding"
-            android:text="@string/enterPhone"
-            android:textAlignment="center"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/slide_desc" />
-
-
 
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/phoneNumber"
-        style="@style/Widget.AppCompat.Light.AutoCompleteTextView"
+    <TextView
+        android:id="@+id/textView11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/linearLayout2"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="23dp"
-        android:ems="10"
-        android:hint="Phone number"
-        android:inputType="phone"
-        android:textAppearance="@style/TextAppearance.AppCompat"
-        android:textColorHint="@android:color/white"
-        android:visibility="visible" />
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/imageView2"
+        android:layout_margin="10dp"
+        android:layout_marginTop="27dp"
+        android:layout_toEndOf="@+id/linearLayout2"
+        android:layout_weight="0.31"
+        android:text="@string/enterPhone"
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/slide_desc" />
 
-    <Button
-        android:id="@+id/saveBtn"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/phoneNumber"
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="122dp"
+        android:layout_height="120dp"
+        android:layout_alignTop="@+id/linearLayout2"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="21dp"
-        android:background="#ffffff"
-        android:text="Save"
-        android:textColor="@color/bg_screen1" />
+        android:layout_marginLeft="@dimen/icons_margin_bottom"
+        android:layout_marginRight="@dimen/icons_margin_bottom"
+        android:layout_marginTop="26dp"
+        android:src="@drawable/user" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView11"
+        android:layout_marginTop="27dp"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/phoneNumber"
+            style="@style/Widget.AppCompat.AutoCompleteTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="20dp"
+            android:ems="10"
+            android:inputType="phone"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/bb_darkBackgroundColor"
+            android:textColorHint="@android:color/white"
+            android:visibility="visible" />
+
+        <Button
+            android:id="@+id/saveBtn"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_margin="10dp"
+            android:layout_weight="0.21"
+            android:text="Save"
+            android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
+            android:textColor="@color/common_google_signin_btn_text_dark_default" />
+
+    </LinearLayout>
 
 
 </RelativeLayout>

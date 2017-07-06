@@ -59,6 +59,7 @@ public class GoogleLogin extends AppCompatActivity implements
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        TypefaceUtil.overrideFont(getApplicationContext(), "SERIF", "Arcon-Regular.otf");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_google_login);
         context = getApplicationContext();
@@ -69,6 +70,7 @@ public class GoogleLogin extends AppCompatActivity implements
 
         // Button listeners
         findViewById(R.id.sign_in_button).setOnClickListener(this);
+
         findViewById(R.id.sign_out_button).setOnClickListener(this);
         findViewById(R.id.disconnect_button).setOnClickListener(this);
 
@@ -107,6 +109,12 @@ public class GoogleLogin extends AppCompatActivity implements
             }
         };
         // [END auth_state_listener]
+    }
+
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+
     }
 
     // [START on_start_add_listener]
@@ -227,10 +235,10 @@ public class GoogleLogin extends AppCompatActivity implements
     private void updateUI(FirebaseUser user) {
         System.out.print("anam");
         if (user != null) {
-//            if(!user.getEmail().contains("@iiitd.ac.in")) {
-//                revokeAccess();
-//                return;
-//            }
+            if(!user.getEmail().contains("@iiitd.ac.in")) {
+                revokeAccess();
+                return;
+            }
 //            Toast.makeText(getApplicationContext(),"Update UI Called: "+(i++),Toast.LENGTH_SHORT).show();
 
             Log.d("Auth",user.getEmail());
@@ -244,8 +252,7 @@ public class GoogleLogin extends AppCompatActivity implements
 //            data.orderCompleted("43205258084","sarthak14094@iiitd.ac.in","sarthak14094@iiitd.ac.in","2");
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference myRef = database.getReference("users/");
-            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-            data.setValue("users/"+data.emailToString(data.email)+"/token",refreshedToken);
+
 //            Toast.makeText(getApplicationContext(),"Ready",Toast.LENGTH_SHORT).show();
 //            Toast.makeText(getApplicationContext(),data.emailToString(data.email),Toast.LENGTH_SHORT).show();
 //              data.transferSC("sarthak14094@iiitd.ac.in","anam14113@iiitd.ac.in",2.2f);
@@ -257,12 +264,14 @@ public class GoogleLogin extends AppCompatActivity implements
                     String refreshedToken = FirebaseInstanceId.getInstance().getToken();
                     if(!snapshot.child(data.emailToString(data.email)).exists()){            //New User
 
-                        data.setValue("users/"+data.emailToString(data.email)+"/token",refreshedToken);
+                        System.out.println("new");
                         data.createNewUser(context);
+                        data.setValue("users/"+data.emailToString(data.email)+"/token",refreshedToken);
                         data.initialize();
 //                        Toast.makeText(getApplicationContext(),"New User",Toast.LENGTH_SHORT).show();
                     }else{                                                                  //Old User
 
+                        System.out.println("old");
                         data.setValue("users/"+data.emailToString(data.email)+"/token",refreshedToken);
                         data.SC=snapshot.child(data.emailToString(data.email)).child("SC").getValue().toString()+" ";
                         data.phone=snapshot.child(data.emailToString(data.email)).child("phone").getValue().toString()+" ";
@@ -303,7 +312,7 @@ public class GoogleLogin extends AppCompatActivity implements
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         // An unresolvable error has occurred and Google APIs (including Sign-In) will not
         // be available.
-        Log.d(TAG, "onConnectionFailed:" + connectionResult);
+        Log.d(TAG, "oznConnectionFailed:" + connectionResult);
         Toast.makeText(this, "Google Play Services error.", Toast.LENGTH_SHORT).show();
     }
 

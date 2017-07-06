@@ -2,6 +2,7 @@ package com.sahasu.lazypizza;
 
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -49,6 +50,7 @@ public class MarketMain extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(v.getContext()));
 
         host.setup();
+        Typeface type = Typeface.createFromAsset(getActivity().getAssets(),"Arcon-Regular.otf");
 
         //Tab 1
         TabHost.TabSpec spec = host.newTabSpec("Canteen");
@@ -60,6 +62,7 @@ public class MarketMain extends Fragment {
         spec = host.newTabSpec("CDX");
         spec.setContent(R.id.tab2);
         spec.setIndicator("CDX");
+
         host.addTab(spec);
 
         //Tab 3
@@ -70,6 +73,10 @@ public class MarketMain extends Fragment {
 
         host.setCurrentTab(0);
 
+        for (int i = 0; i < host.getTabWidget().getChildCount(); i++) {
+            TextView tv = (TextView) host.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
+            tv.setTypeface(type);
+        }
         host.getTabWidget().getChildAt(host.getCurrentTab()).setBackgroundColor(Color.parseColor("#FF7C4DFF")); // selected
         TextView tv = (TextView) host.getCurrentTabView().findViewById(android.R.id.title); //for Selected Tab
         tv.setTextColor(Color.parseColor("#ffffff"));

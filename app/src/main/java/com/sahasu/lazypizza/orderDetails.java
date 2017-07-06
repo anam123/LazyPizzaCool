@@ -30,10 +30,14 @@ public class orderDetails extends AppCompatActivity {
     Button pay;
     Button cancel;
     Button call;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_details);
+
 
         if(getIntent() != null)
         {
@@ -76,7 +80,7 @@ public class orderDetails extends AppCompatActivity {
             orderDetailsTime.setText(ts);
             if(accepted.equals("1"))
             {
-                orderDetailsAccepted.setText("Yes");
+                orderDetailsAccepted.setText("Order Accepted");
                 ll.setVisibility(View.VISIBLE);
                 orderDetailsDeliveryBoy.setText(deliveryemail);
                 orderDetailsDeliveryBoyPhone.setText(deliveryphone);
@@ -105,7 +109,7 @@ public class orderDetails extends AppCompatActivity {
             }
             else
             {
-                orderDetailsAccepted.setText("No");
+                orderDetailsAccepted.setText("Present in MarketPlace");
                 ll.setVisibility(View.INVISIBLE);
             }
 
@@ -283,4 +287,7 @@ public class orderDetails extends AppCompatActivity {
 
 
     }
+
+
+
 }
